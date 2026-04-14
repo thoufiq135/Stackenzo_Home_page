@@ -823,14 +823,7 @@ function Workshops() {
                                     Register Free →
                                   </Link>
                                 )}
-                                <motion.button onClick={() => setSelectedWorkshop(workshop)} whileHover={{ scale: 1.02 }} whileTap={{ scale: .98 }}
-                                  className="w-full px-4 py-2.5 sm:py-3 text-white rounded-lg text-sm font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 group/btn"
-                                  style={{ background: `linear-gradient(135deg,${C.dark},${C.mid})` }}>
-                                  <span>View Details</span>
-                                  <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                                    <ChevronRight className="w-4 h-4" />
-                                  </motion.div>
-                                </motion.button>
+                                
                                 <motion.button
                                   onClick={() => { setQueryForm({ ...queryForm, category: "workshop", subject: workshop.title, message: `I'm interested in the ${workshop.title} workshop.` }); setShowQueryForm(true); }}
                                   whileHover={{ scale: 1.02 }} whileTap={{ scale: .98 }}
