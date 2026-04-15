@@ -333,7 +333,7 @@ function SummerCampDetailsSection() {
               <span className="text-sm font-semibold text-[#F04A06]">Boot camp 2026</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-[#F04A06] to-[#D4AF37] bg-clip-text text-transparent mb-4">
-              AI + Robotics Summer Camp
+              AI + Robotics Boot Camp
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               An exclusive 6-day transformative program designed for students who want to build the future
