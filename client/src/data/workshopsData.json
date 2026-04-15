@@ -35,8 +35,8 @@
     {
       "id": "robotics",
       "title": "Robotics",
-      "duration": "2-4 Days",
-      "suitedFor": ["ECE", "EEE", "Mechanical", "Robotics clubs","Inter","10th"],
+      "duration": "6 Days",
+      "suitedFor": ["ECE", "EEE", "CSE","Mechanical", "Robotics clubs","Inter","10th","Degree"],
       "description": "Hands-on robot building with sensors and controllers",
       "topics": [
         "Introduction to robotics systems",
@@ -55,9 +55,9 @@
     "title": "Robotics Workshop",
     "subtitle": "Hands-on Robot Building & Control Systems",
     "college": "Sri Venkateshwara College of Engineering",
-    "dateISO": "2026-04-20",
-    "dateDisplay": "April 20–21, 2026",
-    "duration": "2 Days",
+    "dateISO": "2026-04-16",
+    "dateDisplay": "April 16–21, 2026",
+    "duration": "6 Days",
     "location": "Sri Venkateshwara College of Engineering, Tirupati, AP",
     "seats": 100,
     "batches": [
@@ -66,8 +66,8 @@
     ],
     "whatsappGroupLink": "https://wa.me/919000000000",
     "fee": "Free of Cost",
-    "calendarTitle": "Robotics Workshop – Stackenzo @ SVCE",
-    "calendarLocation": "Sri Venkateshwara College of Engineering, Tirupati, AP"
+    "calendarTitle": "Robotics Workshop – Stackenzo @ SV",
+    "calendarLocation": "Sri Venkateshwara Institutions, Mulapeta,Nellore, AP"
   },
   "trendingTechnologies": [
     "Industry 4.0",

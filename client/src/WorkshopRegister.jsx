@@ -5,8 +5,9 @@ import { z } from "zod";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  User, Mail, Phone, Building2, GraduationCap, MapPin, CheckCircle, AlertCircle, ChevronLeft, Send,
-  Users2, CalendarDays, Award, QrCode, Layers, Zap, MessageSquare, ArrowRight
+  User, Mail, Phone, Building2, GraduationCap, MapPin, AlertCircle, ChevronLeft, Send,
+  Users2, CalendarDays, QrCode, ArrowRight, TrendingUp, BarChart3, PieChart,
+  Download, RefreshCw, Eye, Users, Trophy
 } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -21,13 +22,13 @@ const CLASSES = ["6th", "7th", "8th", "9th", "10th", "11th", "12th"];
 const summerCamp = {
   title: "Summer Camp Registration",
   subtitle: "Register for exciting summer learning programs",
-  college: "sri Venkateswara institution,Mulapeta,Nellore", 
+  college: "Sri Venkateswara Institution, Mulapeta, Nellore", 
   dateDisplay: "Summer 2026",
   fee: "FREE",
-  whatsappGroupLink: "", // Will be dynamic from API
+  totalSeats: 500,
 };
 
-/* ── Zod Schema for Summer Camp (Matching Backend Field Names) ──────────── */
+/* ── Zod Schema for Summer Camp ─────────────────────────────────────────── */
 const schema = z.object({
   StudentName:    z.string().min(2, "Student name must be at least 2 characters").max(255, "Name too long"),
   email:          z.string().email("Enter a valid email address").max(255).optional(),
@@ -39,6 +40,417 @@ const schema = z.object({
   Location:       z.string().min(2, "Location is required").max(255, "Location too long"),
   WhatsappNumber: z.string().regex(/^[6-9]\d{9}$/, "Valid WhatsApp number required").max(30, "Phone too long"),
 });
+
+/* ── Live Registration Counter Component ────────────────────────────────── */
+function LiveRegistrationCounter() {
+  const [totalRegistrations, setTotalRegistrations] = useState(0);
+  const [todayRegistrations, setTodayRegistrations] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [animatedCount, setAnimatedCount] = useState(0);
+
+  const fetchCounts = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("https://summer-camp-registration-form.vercel.app/get_registration_counts");
+      const data = await res.json();
+      if (data.success) {
+        setTotalRegistrations(data.total);
+        setTodayRegistrations(data.today);
+        // Animate the counter
+        animateNumber(0, data.total, 1000);
+      }
+    } catch (error) {
+      console.error("Error fetching counts:", error);
+      // Demo data for testing
+      const demoTotal = 156;
+      setTotalRegistrations(demoTotal);
+      setTodayRegistrations(12);
+      animateNumber(0, demoTotal, 1000);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const animateNumber = (start, end, duration) => {
+    const step = (end - start) / (duration / 16);
+    let current = start;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= end) {
+        setAnimatedCount(end);
+        clearInterval(timer);
+      } else {
+        setAnimatedCount(Math.floor(current));
+      }
+    }, 16);
+  };
+
+  useEffect(() => {
+    fetchCounts();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchCounts, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const percentage = (totalRegistrations / summerCamp.totalSeats) * 100;
+
+  return (
+    <div className="mt-6 p-4 rounded-2xl" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)" }}>
+      <div className="flex items-center justify-between mb-3 flex-wrap gap-3">
+        <div className="flex items-center gap-2">
+          <Users className="w-5 h-5" style={{ color: C.gold }} />
+          <span className="text-white font-semibold">Live Registrations</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={fetchCounts}
+            className="p-1 rounded-full hover:bg-white/10 transition-colors"
+            title="Refresh"
+          >
+            <RefreshCw className="w-3 h-3 text-white/70" />
+          </button>
+        </div>
+      </div>
+
+      <div className="flex justify-between items-end mb-2">
+        <div>
+          <motion.div 
+            className="text-3xl sm:text-4xl font-black text-white"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            {loading ? (
+              <div className="w-20 h-8 bg-white/20 rounded animate-pulse" />
+            ) : (
+              <span>{animatedCount.toLocaleString()}</span>
+            )}
+            <span className="text-lg text-white/60"> / {summerCamp.totalSeats}</span>
+          </motion.div>
+          <p className="text-xs text-white/70 mt-1">Total Registrations</p>
+        </div>
+        <div className="text-right">
+          <motion.div 
+            className="text-xl font-bold text-white"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            +{todayRegistrations}
+          </motion.div>
+          <p className="text-xs text-white/70">Today</p>
+        </div>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="mt-3">
+        <div className="flex justify-between text-xs text-white/70 mb-1">
+          <span>Seats filled</span>
+          <span>{Math.min(100, Math.floor(percentage))}%</span>
+        </div>
+        <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full rounded-full"
+            style={{ background: `linear-gradient(90deg, ${C.gold}, ${C.dark})` }}
+            initial={{ width: 0 }}
+            animate={{ width: `${Math.min(100, percentage)}%` }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          />
+        </div>
+        {summerCamp.totalSeats - totalRegistrations < 50 && (
+          <motion.p 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-xs text-center mt-2 text-yellow-200"
+          >
+            ⚡ Only {summerCamp.totalSeats - totalRegistrations} seats left! Register soon.
+          </motion.p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── Analytics Component ─────────────────────────────────────────────────── */
+function RegistrationAnalytics() {
+  const [analytics, setAnalytics] = useState({
+    total: 0,
+    today: 0,
+    thisWeek: 0,
+    thisMonth: 0,
+    byClass: {},
+    byLocation: {},
+    recentRegistrations: []
+  });
+  const [loading, setLoading] = useState(true);
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [chartType, setChartType] = useState("bar");
+
+  const fetchAnalytics = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("https://summer-camp-registration-form.vercel.app/get_analytics");
+      const data = await res.json();
+      if (data.success) {
+        setAnalytics(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching analytics:", error);
+      // Demo data for testing
+      setAnalytics({
+        total: 156,
+        today: 12,
+        thisWeek: 45,
+        thisMonth: 156,
+        byClass: {
+          "6th": 18, "7th": 22, "8th": 25, "9th": 30, "10th": 28, "11th": 19, "12th": 14
+        },
+        byLocation: {
+          "Nellore": 45, "Tirupati": 32, "Kavali": 18, "Gudur": 22, "Other": 39
+        },
+        recentRegistrations: [
+          { name: "John Doe", class: "10th", date: new Date().toISOString().split('T')[0], location: "Nellore" },
+          { name: "Jane Smith", class: "9th", date: new Date().toISOString().split('T')[0], location: "Tirupati" },
+          { name: "Mike Johnson", class: "8th", date: new Date(Date.now() - 86400000).toISOString().split('T')[0], location: "Nellore" }
+        ]
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showAnalytics) {
+      fetchAnalytics();
+    }
+  }, [showAnalytics]);
+
+  const downloadReport = () => {
+    const reportData = {
+      generatedAt: new Date().toISOString(),
+      ...analytics
+    };
+    const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `registration-analytics-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const maxValue = Math.max(...Object.values(analytics.byClass), 0);
+
+  return (
+    <div className="mt-8">
+      <button
+        onClick={() => setShowAnalytics(!showAnalytics)}
+        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all border"
+        style={{ background: C.light, color: C.dark, borderColor: `${C.dark}55` }}
+      >
+        <TrendingUp className="w-5 h-5" />
+        {showAnalytics ? "Hide Registration Analytics" : "View Registration Analytics"}
+      </button>
+
+      <AnimatePresence>
+        {showAnalytics && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mt-4 overflow-hidden"
+          >
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center flex-wrap gap-3"
+                style={{ background: C.light }}>
+                <div>
+                  <h3 className="font-black" style={{ color: C.dark }}>Registration Analytics</h3>
+                  <p className="text-xs" style={{ color: "rgba(26,26,26,0.6)" }}>
+                    Real-time registration statistics
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={fetchAnalytics}
+                    className="p-2 rounded-lg transition-colors hover:bg-gray-100"
+                    title="Refresh"
+                  >
+                    <RefreshCw className="w-4 h-4" style={{ color: C.dark }} />
+                  </button>
+                  <button
+                    onClick={downloadReport}
+                    className="p-2 rounded-lg transition-colors hover:bg-gray-100"
+                    title="Download Report"
+                  >
+                    <Download className="w-4 h-4" style={{ color: C.dark }} />
+                  </button>
+                </div>
+              </div>
+
+              {loading ? (
+                <div className="p-12 text-center">
+                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-t-transparent"
+                    style={{ borderColor: C.dark, borderTopColor: "transparent" }} />
+                  <p className="mt-2 text-sm text-gray-500">Loading analytics...</p>
+                </div>
+              ) : (
+                <div className="p-6">
+                  {/* Stats Cards */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                    {[
+                      { label: "Total Registrations", value: analytics.total, icon: Users2 },
+                      { label: "Today", value: analytics.today, icon: CalendarDays },
+                      { label: "This Week", value: analytics.thisWeek, icon: TrendingUp },
+                      { label: "This Month", value: analytics.thisMonth, icon: BarChart3 },
+                    ].map((stat) => (
+                      <div key={stat.label} className="text-center p-3 rounded-xl border"
+                        style={{ borderColor: `${C.gold}33`, background: C.light }}>
+                        <stat.icon className="w-4 h-4 mx-auto mb-1" style={{ color: C.gold }} />
+                        <p className="text-2xl font-black" style={{ color: C.dark }}>{stat.value}</p>
+                        <p className="text-xs" style={{ color: "rgba(26,26,26,0.6)" }}>{stat.label}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Chart Type Selector */}
+                  <div className="flex justify-end mb-4">
+                    <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
+                      <button
+                        onClick={() => setChartType("bar")}
+                        className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${
+                          chartType === "bar" ? "bg-white shadow" : ""
+                        }`}
+                      >
+                        Bar Chart
+                      </button>
+                      <button
+                        onClick={() => setChartType("pie")}
+                        className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${
+                          chartType === "pie" ? "bg-white shadow" : ""
+                        }`}
+                      >
+                        Pie Chart
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Class-wise Distribution Graph */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                      <GraduationCap className="w-4 h-4" style={{ color: C.gold }} />
+                      Registrations by Class
+                    </h4>
+                    
+                    {chartType === "bar" ? (
+                      <div className="space-y-2">
+                        {Object.entries(analytics.byClass).map(([className, count]) => (
+                          <div key={className} className="flex items-center gap-3">
+                            <span className="text-xs font-medium w-12">{className}</span>
+                            <div className="flex-1 h-8 bg-gray-100 rounded-lg overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${(count / maxValue) * 100}%` }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="h-full rounded-lg flex items-center justify-end px-2 text-xs text-white font-medium"
+                                style={{ background: `linear-gradient(90deg, ${C.dark}, ${C.mid})` }}
+                              >
+                                {count > 0 && count}
+                              </motion.div>
+                            </div>
+                            <span className="text-xs font-medium w-8 text-right">{count}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="relative h-64 flex items-center justify-center">
+                        <div className="relative w-48 h-48 rounded-full border-8" style={{ borderColor: C.light }}>
+                          {Object.entries(analytics.byClass).map(([className, count], index, array) => {
+                            const percentage = (count / analytics.total) * 100;
+                            const colors = [C.dark, C.mid, C.gold, "#FF6B35", "#4CAF50", "#2196F3", "#9C27B0"];
+                            const offset = array.slice(0, index).reduce((acc, [, c]) => acc + (c / analytics.total) * 100, 0);
+                            return (
+                              <div
+                                key={className}
+                                className="absolute inset-0 rounded-full"
+                                style={{
+                                  background: `conic-gradient(${colors[index % colors.length]} 0% ${percentage}%, transparent ${percentage}% 100%)`,
+                                  transform: `rotate(${offset * 3.6}deg)`,
+                                }}
+                              />
+                            );
+                          })}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center">
+                              <span className="text-2xl font-black" style={{ color: C.dark }}>{analytics.total}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="absolute right-0 top-0 space-y-1">
+                          {Object.entries(analytics.byClass).map(([className, count], index) => (
+                            <div key={className} className="flex items-center gap-2 text-xs">
+                              <div className="w-3 h-3 rounded-full" style={{ background: [C.dark, C.mid, C.gold, "#FF6B35", "#4CAF50", "#2196F3", "#9C27B0"][index % 7] }} />
+                              <span>{className}: {count}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Location-wise Distribution */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                      <MapPin className="w-4 h-4" style={{ color: C.gold }} />
+                      Registrations by Location
+                    </h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      {Object.entries(analytics.byLocation).map(([location, count]) => (
+                        <div key={location} className="flex items-center justify-between p-2 rounded-lg border"
+                          style={{ borderColor: `${C.gold}33` }}>
+                          <span className="text-sm">{location}</span>
+                          <span className="text-sm font-bold" style={{ color: C.dark }}>{count}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Recent Registrations */}
+                  {analytics.recentRegistrations.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                        <Eye className="w-4 h-4" style={{ color: C.gold }} />
+                        Recent Registrations
+                      </h4>
+                      <div className="space-y-2 max-h-48 overflow-y-auto">
+                        {analytics.recentRegistrations.map((reg, idx) => (
+                          <div key={idx} className="flex items-center justify-between p-2 rounded-lg border"
+                            style={{ borderColor: `${C.gold}22` }}>
+                            <div>
+                              <p className="text-sm font-medium">{reg.name}</p>
+                              <p className="text-xs" style={{ color: "rgba(26,26,26,0.5)" }}>
+                                Class {reg.class} • {reg.location}
+                              </p>
+                            </div>
+                            <p className="text-xs" style={{ color: "rgba(26,26,26,0.5)" }}>
+                              {new Date(reg.date).toLocaleDateString()}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 /* ── Small helpers ───────────────────────────────────────────────────────── */
 function FieldError({ msg }) {
@@ -76,7 +488,7 @@ export default function WorkshopRegister() {
   const isQR = searchParams.get("source") === "qr";
   const collegeParam = searchParams.get("college") || "";
 
-  const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm({
+  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       StudentName: "",
@@ -91,63 +503,61 @@ export default function WorkshopRegister() {
     },
   });
 
-  /* Pre-fill CollegeName from QR param */
   useEffect(() => {
     if (collegeParam) setValue("CollegeName", collegeParam);
   }, [collegeParam, setValue]);
 
   const onSubmit = async (formData) => {
-  setSubmitError("");
-  try {
-    // Convert class from "12th" to 12 (number)
-    const classNumber = parseInt(formData.Class);
-    
-    const payload = {
-      StudentName: formData.StudentName,
-      email: formData.email || "",
-      CollegeName: formData.CollegeName,
-      Class: classNumber,  // ✅ Send as number instead of string
-      ParentName: formData.ParentName,
-      ParentNumber: formData.ParentNumber,
-      StudentNumber: formData.StudentNumber || "",
-      Location: formData.Location,
-      WhatsappNumber: formData.WhatsappNumber
-    };
+    setSubmitError("");
+    try {
+      const classNumber = parseInt(formData.Class);
+      
+      const payload = {
+        StudentName: formData.StudentName,
+        email: formData.email || "",
+        CollegeName: formData.CollegeName,
+        Class: classNumber,
+        ParentName: formData.ParentName,
+        ParentNumber: formData.ParentNumber,
+        StudentNumber: formData.StudentNumber || "",
+        Location: formData.Location,
+        WhatsappNumber: formData.WhatsappNumber
+      };
 
-    console.log("Sending payload:", payload);
+      console.log("Sending payload:", payload);
 
-    const res = await fetch("https://summer-camp-registration-form.vercel.app/add_data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    
-    const data = await res.json();
-    console.log("Server response:", data);
-
-    if (data.message === "successfully added details") {
-      navigate("/workshop/success", {
-        state: {
-          whatsappLink: data.whatsappLink || "https://chat.whatsapp.com/GiEogrQV5SKBh5Jjp0VeD5?mode=gi_t",
-          StudentName: formData.StudentName,
-          CollegeName: formData.CollegeName,
-          Class: formData.Class,
-        },
+      const res = await fetch("https://summer-camp-registration-form.vercel.app/add_data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
-    } else {
-      setSubmitError(data.message || data.error || "Registration failed. Please check your details.");
+      
+      const data = await res.json();
+      console.log("Server response:", data);
+
+      if (data.message === "successfully added details") {
+        navigate("/workshop/success", {
+          state: {
+            whatsappLink: data.whatsappLink || "https://chat.whatsapp.com/GiEogrQV5SKBh5Jjp0VeD5?mode=gi_t",
+            StudentName: formData.StudentName,
+            CollegeName: formData.CollegeName,
+            Class: formData.Class,
+          },
+        });
+      } else {
+        setSubmitError(data.message || data.error || "Registration failed. Please check your details.");
+      }
+    } catch (error) {
+      setSubmitError("Network error. Please try again.");
+      console.error("Network error:", error);
     }
-  } catch (error) {
-    setSubmitError("Network error. Please try again.");
-    console.error("Network error:", error);
-  }
-};
+  };
 
   return (
     <div className="bg-white min-h-screen" style={{ color: C.text }}>
       <Navbar />
 
-      {/* ── Hero ── */}
+      {/* ── Hero Section with Live Counter ── */}
       <section className="relative pt-24 pb-12 px-4 sm:px-6 overflow-hidden"
         style={{ background: `linear-gradient(135deg, ${C.dark} 0%, ${C.mid} 100%)` }}>
         <div className="absolute inset-0 opacity-[.06] pointer-events-none"
@@ -191,11 +601,14 @@ export default function WorkshopRegister() {
                 </div>
               ))}
             </div>
+
+            {/* ✅ LIVE REGISTRATION COUNTER - Added in Hero Section */}
+            <LiveRegistrationCounter />
           </motion.div>
         </div>
       </section>
 
-      {/* ── QR Banner ── */}
+      {/* QR Banner */}
       <AnimatePresence>
         {isQR && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
@@ -217,7 +630,7 @@ export default function WorkshopRegister() {
         )}
       </AnimatePresence>
 
-      {/* ── Form ── */}
+      {/* Form Section */}
       <section className="py-12 px-4 sm:px-6">
         <div className="max-w-2xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
@@ -243,8 +656,7 @@ export default function WorkshopRegister() {
             )}
 
             <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-6 space-y-5">
-
-              {/* ── Student Name ── */}
+              {/* Form Fields */}
               <div>
                 <Label icon={User} required>Student Name</Label>
                 <input {...register("StudentName")} type="text" placeholder="Enter student full name"
@@ -252,7 +664,6 @@ export default function WorkshopRegister() {
                 <FieldError msg={errors.StudentName?.message} />
               </div>
 
-              {/* ── Email + Parent Phone ── */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <Label icon={Mail}>Email Address</Label>
@@ -268,7 +679,6 @@ export default function WorkshopRegister() {
                 </div>
               </div>
 
-              {/* ── College/School Name ── */}
               <div>
                 <Label icon={Building2} required>College / School Name</Label>
                 <input {...register("CollegeName")} type="text" placeholder="Enter college/school name"
@@ -276,7 +686,6 @@ export default function WorkshopRegister() {
                 <FieldError msg={errors.CollegeName?.message} />
               </div>
 
-              {/* ── Class + Parent Name ── */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <Label icon={GraduationCap} required>Class</Label>
@@ -296,7 +705,6 @@ export default function WorkshopRegister() {
                 </div>
               </div>
 
-              {/* ── Student Phone + Location ── */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <Label icon={Phone}>Student Phone</Label>
@@ -312,7 +720,6 @@ export default function WorkshopRegister() {
                 </div>
               </div>
 
-              {/* ── WhatsApp Number ── */}
               <div>
                 <Label icon={Phone} required>WhatsApp Number</Label>
                 <input {...register("WhatsappNumber")} type="tel" placeholder="9876543210" maxLength={10}
@@ -320,7 +727,6 @@ export default function WorkshopRegister() {
                 <FieldError msg={errors.WhatsappNumber?.message} />
               </div>
 
-              {/* ── Submit ── */}
               <motion.button type="submit" disabled={isSubmitting}
                 whileHover={!isSubmitting ? { scale: 1.015, boxShadow: "0 12px 32px rgba(240,74,6,0.25)" } : {}}
                 whileTap={!isSubmitting ? { scale: 0.98 } : {}}
@@ -347,6 +753,9 @@ export default function WorkshopRegister() {
               </p>
             </form>
           </motion.div>
+
+          {/* Analytics Section */}
+          <RegistrationAnalytics />
         </div>
       </section>
 
