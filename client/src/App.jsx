@@ -59,7 +59,7 @@ function App() {
      <Route path="/workshop/register" element={<WorkshopRegister/>}/>
      <Route path="/workshop/success" element={<WorkshopSuccess/>}/>
      <Route path="/workshop/already-registered" element={<WorkshopAlreadyRegistered/>}/>
-     <Route path="/results/intermediate" element={<IntermediateResults/>}/>
+     <Route path="/Bootcamp2026" element={<IntermediateResults/>}/>
    </Routes>
    </>
   );

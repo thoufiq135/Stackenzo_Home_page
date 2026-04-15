@@ -26,7 +26,7 @@ const MARQUEE_ITEMS = [
 const RESULTS_DATA = [
   { 
     id: 1, 
-    title: "Robotics Summer Camp 2026", 
+    title: "AI & Robotics Boot camp 2026", 
     status: "Processing", 
     progress: 50, 
     students: 120, 
@@ -39,10 +39,10 @@ const RESULTS_DATA = [
 ];
 
 const STATS = [
-  { label: "Total Enrollments", value: "1,247", icon: Users, accent: "#F04A06", change: "+15%" },
+  { label: "Total Enrollments", value: "224", icon: Users, accent: "#F04A06", change: "+15%" },
   { label: "Success Rate", value: "98%", icon: CheckCircle, accent: "#D4AF37", change: "+5%" },
-  { label: "Active Sessions", value: "23", icon: Clock, accent: "#4CAF50", change: "+3" },
-  { label: "Certificates Issued", value: "892", icon: Award, accent: "#F04A06", change: "+12%" }
+  { label: "Active Sessions", value: "13", icon: Clock, accent: "#4CAF50", change: "+3" },
+  { label: "Certificates Issued", value: "100", icon: Award, accent: "#F04A06", change: "+12%" }
 ];
 
 /* Reveal Component */
@@ -206,7 +206,7 @@ function ResultsCard({ data, onViewDetails }) {
   );
 }
 
-/* Summer Camp Exclusive Details Section */
+/* Boot campExclusive Details Section */
 function SummerCampDetailsSection() {
   const navigate = useNavigate();
 
@@ -330,7 +330,7 @@ function SummerCampDetailsSection() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F04A06]/10 to-[#D4AF37]/10 px-4 py-2 rounded-full mb-4">
               <Rocket className="w-4 h-4 text-[#F04A06]" />
-              <span className="text-sm font-semibold text-[#F04A06]">Summer Camp 2026</span>
+              <span className="text-sm font-semibold text-[#F04A06]">Boot camp 2026</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-[#F04A06] to-[#D4AF37] bg-clip-text text-transparent mb-4">
               AI + Robotics Summer Camp
@@ -588,7 +588,7 @@ function SummerCampDetailsSection() {
               className="bg-gradient-to-r from-[#F04A06] to-[#D4AF37] text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all inline-flex items-center gap-3"
             >
               <Rocket className="w-5 h-5" />
-              Register for Summer Camp 2026
+              Register for Boot camp 2026
               <ArrowRight className="w-5 h-5" />
             </motion.button>
             <p className="text-sm text-gray-500 mt-4">
@@ -620,7 +620,7 @@ export default function IntermediateResults() {
       {/* Scrolling Marquee */}
       <ScrollingMarquee />
 
-      {/* Summer Camp Details Section */}
+      {/* Boot campDetails Section */}
       <SummerCampDetailsSection />
 
       {/* Stats Section */}
@@ -646,7 +646,7 @@ export default function IntermediateResults() {
           <div className="flex justify-center gap-3 mb-12 flex-wrap">
             {[
               { id: "all", label: "All Programs" },
-              { id: "summer", label: "Summer Camp 2026" },
+              // { id: "summer", label: "Boot camp2026" },
               { id: "completed", label: "Completed" },
               { id: "processing", label: "Active Programs" }
             ].map((tab) => (
