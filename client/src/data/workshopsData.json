@@ -33,10 +33,17 @@
       "registrationOpen": false
     },
     {
+<<<<<<< HEAD
       "id": "robotics",
       "title": "Robotics",
       "duration": "6 Days",
       "suitedFor": ["ECE", "EEE", "CSE","Mechanical", "Robotics clubs","Inter","10th","Degree"],
+=======
+      "id": "robotics ",
+      "title": "AI + ROBOTICS SUMMER CAMP",
+      "duration": "6 Days",
+      "suitedFor": ["ECE", "EEE","CSE","Diploma", "Mechanical", "Robotics clubs","Intermediate","10th"],
+>>>>>>> 5438c084c62d1ef425c4beb12403ad11a8662769
       "description": "Hands-on robot building with sensors and controllers",
       "topics": [
         "Introduction to robotics systems",

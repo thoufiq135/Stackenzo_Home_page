@@ -517,7 +517,7 @@ function RNDProjectDetail() {
                         <p className="text-sm text-gray-600 leading-relaxed">{project.impact}</p>
                       </div>
                     </div>
-                    <motion.div className="mt-6 grid grid-cols-2 gap-3">
+                    <motion.div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <StatBadge icon={Clock} label="Timeline" value={project.timeline} color="from-blue-600 to-cyan-600" />
                       <StatBadge icon={Users} label="Team Size" value={project.teamSize} color="from-emerald-600 to-teal-600" />
                     </motion.div>

@@ -137,7 +137,7 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
     stream: z.string().min(1, "Stream is required")
   });
 
-  // Validate form
+  // Validate form — returns true/false, sets errors state
   const validateForm = useCallback(() => {
     try {
       schema.parse(formData);
@@ -145,9 +145,14 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
       return true;
     } catch (err) {
       const fieldErrors = {};
-      err.errors.forEach(e => {
-        fieldErrors[e.path[0]] = e.message;
-      });
+      // FIX: guard against err.errors being undefined
+      if (err?.errors) {
+        err.errors.forEach(e => {
+          if (e.path && e.path[0]) {
+            fieldErrors[e.path[0]] = e.message;
+          }
+        });
+      }
       setErrors(fieldErrors);
       return false;
     }
@@ -171,23 +176,17 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
   const handleSubmit = async e => {
     e.preventDefault();
     
-    // Debug: Log form data before submit
-    console.log('📋 Form Data before submit:', formData);
+   
     
-    if (!validateForm()) {
-      toast.error("Please fill all required fields correctly");
-      console.log('❌ Client validation failed. Errors:', errors);
-      return;
-    }
-    
-    setLoading(true); setSubmitStatus(null);
+    setLoading(true);
+    setSubmitStatus(null);
+
     try {
       const submitData = { 
         ...formData, 
-        workshopId: workshop.id || "robotics-workshop",
+        workshopId: workshop?.id || "workshop",
         source: "website-modal"
       };
-      console.log('📤 Submitting payload:', submitData);
       
       const res = await fetch("/api/enrollments/workshop/register", {
         method: "POST",
@@ -206,8 +205,13 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
     } catch {
       setSubmitStatus("error");
       toast.error("Failed to submit registration");
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Guard: if workshop is not yet defined, render nothing
+  if (!workshop) return null;
 
   return (
     <AnimatePresence>
@@ -288,8 +292,8 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
                 </Field>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                  <Field label="Email" icon={Mail} required>
-                    <FocusInput type="email" required value={formData.email}
+                  <Field label="Email" icon={Mail}>
+                    <FocusInput type="email"  value={formData.email}
                       onChange={handleChange("email")} onFocus={handleFocus("email")} onBlur={handleBlur}
                       focused={focused === "email"} placeholder="john@example.com" />
                   </Field>
@@ -306,19 +310,19 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
                       onChange={handleChange("college")} onFocus={handleFocus("college")} onBlur={handleBlur}
                       focused={focused === "college"} placeholder="Your college/university name" />
                   </Field>
-                  <Field label="Department / Stream" icon={Layers} required>
-                    <FocusInput type="text" required value={formData.stream}
+                  <Field label="Department / Stream" icon={Layers}>
+                    <FocusInput type="text"  value={formData.stream}
                       onChange={handleChange("stream")} onFocus={handleFocus("stream")} onBlur={handleBlur}
                       focused={focused === "stream"} placeholder="e.g., CSE, ECE, Mechanical" />
                   </Field>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                  <Field label="Year of Study" required>
+                  <Field label="Year of Study">
                     <div className="relative">
                       <select 
                         key="year-select"
-                        required 
+                         
                         value={formData.year || ""}
                         onChange={handleChange("year")} 
                         onFocus={handleFocus("year")} 
@@ -331,6 +335,9 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
                         <option value="3rd Year">3rd Year</option>
                         <option value="4th Year">4th Year</option>
                         <option value="Final Year">Final Year</option>
+                        <option value="Inter Mediate">Inter Mediate</option>
+                        <option value="10th">10th Class</option>
+                        <option value="Below 10th">Below 10th Class</option>
                       </select>
                       <AnimatePresence>
                         {focused === "year" && (
@@ -341,11 +348,11 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
                       </AnimatePresence>
                     </div>
                   </Field>
-                  <Field label="Batch Timing" required>
+                  <Field label="Batch Timing">
                     <div className="relative">
                       <select 
                         key="batch-select"
-                        required 
+                         
                         value={formData.batch || ""}
                         onChange={handleChange("batch")} 
                         onFocus={handleFocus("batch")} 
@@ -368,11 +375,11 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                  <Field label="Prior Experience" required>
+                  <Field label="Prior Experience" >
                     <div className="relative">
                       <select 
                         key="experience-select"
-                        required 
+                         
                         value={formData.experience || ""}
                         onChange={handleChange("experience")} 
                         onFocus={handleFocus("experience")} 
@@ -457,26 +464,30 @@ function WorkshopRegistrationModal({ workshop, onClose }) {
                       className="flex-1 py-3 rounded-xl font-black text-sm border border-gray-200 text-[#1A1A1A] hover:border-[#F04A06] hover:text-[#F04A06] transition-all bg-white">
                       Cancel
                     </MagBtn>
-                <MagBtn type="submit" disabled={loading || !validateForm()}
-                  className="flex-1 relative overflow-hidden py-3 rounded-xl font-black text-sm text-black shadow-md hover:shadow-lg disabled:opacity-55 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  style={{ background: "linear-gradient(135deg,#F04A06,#C5531A)" }}>
-                  <span className="relative z-10 flex items-center gap-2">
-                    {loading ? (
-                      <>
-                        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: .9, ease: "linear" }}
-                          className="w-4 h-4 border-2 border-black border-t-transparent rounded-full" />
-                        Submitting…
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        Register
-                      </>
-                    )}
-                  </span>
-                  <motion.div className="absolute inset-0 bg-[#C5531A] origin-left"
-                    initial={{ scaleX: 0 }} whileHover={{ scaleX: 1 }} transition={{ duration: .35 }} />
-                </MagBtn>
+
+                    {/* FIX: removed !validateForm() from disabled — calling it on every render
+                        caused err.errors.forEach crash before form data was populated.
+                        Validation still runs inside handleSubmit on form submission. */}
+                    <MagBtn type="submit" disabled={loading}
+                      className="flex-1 relative overflow-hidden py-3 rounded-xl font-black text-sm text-black shadow-md hover:shadow-lg disabled:opacity-55 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      style={{ background: "linear-gradient(135deg,#F04A06,#C5531A)" }}>
+                      <span className="relative z-10 flex items-center gap-2">
+                        {loading ? (
+                          <>
+                            <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: .9, ease: "linear" }}
+                              className="w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                            Submitting…
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4" />
+                            Register
+                          </>
+                        )}
+                      </span>
+                      <motion.div className="absolute inset-0 bg-[#C5531A] origin-left"
+                        initial={{ scaleX: 0 }} whileHover={{ scaleX: 1 }} transition={{ duration: .35 }} />
+                    </MagBtn>
                   </div>
                 </SI>
 

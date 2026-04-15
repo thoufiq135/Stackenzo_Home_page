@@ -557,37 +557,57 @@ export default function WorkshopRegister() {
     <div className="bg-white min-h-screen" style={{ color: C.text }}>
       <Navbar />
 
+<<<<<<< HEAD
       {/* ── Hero Section with Live Counter ── */}
       <section className="relative pt-24 pb-12 px-4 sm:px-6 overflow-hidden"
         style={{ background: `linear-gradient(135deg, ${C.dark} 0%, ${C.mid} 100%)` }}>
         <div className="absolute inset-0 opacity-[.06] pointer-events-none"
           style={{ backgroundImage: "radial-gradient(circle,#fff 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
+=======
+     {/* ── Hero ── */}
+<section className="relative pt-24 pb-12 px-4 sm:px-6 overflow-hidden"
+  style={{ background: `linear-gradient(135deg, ${C.dark} 0%, ${C.mid} 100%)` }}>
+  <div className="absolute inset-0 opacity-[.06] pointer-events-none"
+    style={{ backgroundImage: "radial-gradient(circle,#fff 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
+>>>>>>> 5438c084c62d1ef425c4beb12403ad11a8662769
 
-        <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE_EXPO }}>
+  <div className="max-w-5xl mx-auto relative z-10">
+    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: EASE_EXPO }}>
 
-            <Link to="/WorkShops"
-              className="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm mb-6 transition-colors">
-              <ChevronLeft className="w-4 h-4" /> Back to Workshops
-            </Link>
+      {/* ── Two Column Row ── */}
+      <div className="flex flex-col lg:flex-row items-center gap-10">
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="px-3 py-1 rounded-full text-xs font-bold"
-                style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.25)" }}>
-                Summer Camp 2026
+        {/* ── LEFT: Text Content ── */}
+        <div className="flex-1 w-full">
+          <Link to="/WorkShops"
+            className="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm mb-6 transition-colors">
+            <ChevronLeft className="w-4 h-4" /> Back to Workshops
+          </Link>
+
+          <div className="flex flex-wrap gap-2 mb-4">
+            <span className="px-3 py-1 rounded-full text-xs font-bold"
+              style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.25)" }}>
+              Summer Camp 2026
+            </span>
+            <span className="px-3 py-1 rounded-full text-xs font-bold"
+              style={{ background: "rgba(212,175,55,0.25)", color: C.gold, border: `1px solid ${C.gold}55` }}>
+              {summerCamp.fee}
+            </span>
+          </div>
+
+          {/* Poster-style big headline */}
+          <div className="mb-4">
+            <h1 className="font-black text-white leading-none tracking-tight">
+              <span className="block text-5xl sm:text-6xl" style={{ letterSpacing: "-0.02em" }}>AI +</span>
+              <span className="block text-5xl sm:text-6xl" style={{ letterSpacing: "-0.02em" }}>ROBOTICS</span>
+              <span className="block text-2xl sm:text-3xl font-extrabold mt-1 tracking-wide text-white/90">
+                SUMMER CAMP
               </span>
-              <span className="px-3 py-1 rounded-full text-xs font-bold"
-                style={{ background: "rgba(212,175,55,0.25)", color: C.gold, border: `1px solid ${C.gold}55` }}>
-                {summerCamp.fee}
-              </span>
-            </div>
-
-            <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 leading-tight">
-              {summerCamp.title}
             </h1>
-            <p className="text-white/80 text-base sm:text-lg mb-6">{summerCamp.subtitle}</p>
+          </div>
 
+<<<<<<< HEAD
             <div className="flex flex-wrap gap-3 mb-8">
               {[
                 { icon: Building2, label: summerCamp.college },
@@ -605,8 +625,78 @@ export default function WorkshopRegister() {
             {/* ✅ LIVE REGISTRATION COUNTER - Added in Hero Section */}
             <LiveRegistrationCounter />
           </motion.div>
+=======
+          <p className="text-white/80 text-sm sm:text-base mb-6 max-w-md">
+            Build the future with robotics, guided by a seasoned industry professional.
+          </p>
+
+          <div className="flex flex-wrap gap-3">
+            {[
+              { icon: CalendarDays, label: "16 April, 2026" },
+              { icon: Building2, label: "Sri Venkateswara Institutions, Mulapeta, Nellore" },
+              
+            ].map(({ icon: Icon, label }) => (
+              <div key={label} className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium"
+                style={{ background: "rgba(255,255,255,0.12)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }}>
+                <Icon className="w-4 h-4 shrink-0" style={{ color: C.gold }} />
+                {label}
+              </div>
+            ))}
+          </div>
+>>>>>>> 5438c084c62d1ef425c4beb12403ad11a8662769
         </div>
-      </section>
+
+        {/* ── RIGHT: Poster Image ── */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: EASE_EXPO, delay: 0.2 }}
+          className="w-full lg:w-[420px] xl:w-[480px] shrink-0">
+          <div className="relative rounded-2xl overflow-hidden"
+            style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15)" }}>
+            <img
+              src="/images/AI + ROBOTICS SUMMER CAMP.png"
+              alt="AI + Robotics Summer Camp 2026 Poster"
+              className="w-full h-auto object-cover rounded-2xl"
+              style={{ display: "block" }}
+            />
+            <div className="absolute bottom-0 left-0 right-0 h-16 rounded-b-2xl pointer-events-none"
+              style={{ background: `linear-gradient(to top, rgba(240,74,6,0.25), transparent)` }} />
+          </div>
+        </motion.div>
+
+      </div>
+      {/* ── END Two Column Row ── */}
+
+      {/* ── What You'll Learn — Full Width Below ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: EASE_EXPO, delay: 0.35 }}
+        className="mt-8 rounded-xl px-5 py-5"
+        style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}>
+        <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: C.gold }}>
+          What You'll Learn
+        </p>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {[
+            "Fundamental Concepts in Robotics",
+            "Project Development Essentials",
+            "Exposure to Real-Time Projects",
+            "Hands-On Practical Experience",
+            "Certificate upon Successful Completion",
+          ].map((item) => (
+            <li key={item} className="flex items-center gap-2 text-sm text-white/85">
+              <CheckCircle className="w-4 h-4 shrink-0" style={{ color: C.gold }} />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+
+    </motion.div>
+  </div>
+</section>
 
       {/* QR Banner */}
       <AnimatePresence>
