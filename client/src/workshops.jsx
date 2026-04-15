@@ -1438,7 +1438,7 @@ function Workshops() {
                     </div>
                   </div>
                   <MagBtn type="submit"
-                    className="w-full px-6 py-3.5 text-white rounded-xl font-semibold shadow-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                    className="w-full px-6 py-3.5 text-black rounded-xl font-semibold shadow-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
                     style={{ background: `linear-gradient(135deg,${C.dark},${C.mid})` }}>
                     <Send className="w-4 h-4" />
                     Submit Query

@@ -120,7 +120,7 @@ function useScrollDir() {
    BIDIRECTIONAL REVEAL WRAPPER
    – slides up when scrolling down, slides down when scrolling up
 ════════════════════════════════════════════════════════════ */
-function Reveal({
+export function Reveal({
   children,
   className = "",
   delay     = 0,
@@ -159,7 +159,7 @@ function Reveal({
 /* ════════════════════════════════════════════════════════════
    STAGGER CONTAINER  (children stagger in/out together)
 ════════════════════════════════════════════════════════════ */
-function StaggerContainer({ children, className = "", stagger = 0.1, from = "bottom" }) {
+export function StaggerContainer({ children, className = "", stagger = 0.1, from = "bottom" }) {
   const ref = useRef(null);
   const inV = useInView(ref, { once: false, margin: "-60px" });
   const dir = useScrollDir();
@@ -198,7 +198,7 @@ function StaggerContainer({ children, className = "", stagger = 0.1, from = "bot
 /* ════════════════════════════════════════════════════════════
    FLOATING ELEMENT  (drifts upward continuously)
 ════════════════════════════════════════════════════════════ */
-function Float({ children, className = "", duration = 3, yRange = 12, delay = 0 }) {
+export function Float({ children, className = "", duration = 3, yRange = 12, delay = 0 }) {
   return (
     <motion.div
       className={className}
@@ -218,7 +218,7 @@ function Float({ children, className = "", duration = 3, yRange = 12, delay = 0 
 /* ════════════════════════════════════════════════════════════
    GLOWING BORDER CARD
 ════════════════════════════════════════════════════════════ */
-function GlowCard({ children, className = "", accent = "#D4AF37", dark = false }) {
+export function GlowCard({ children, className = "", accent = "#D4AF37", dark = false }) {
   const ref   = useRef(null);
   const inV   = useInView(ref, { once: false, margin: "-40px" });
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -577,7 +577,7 @@ function MagBtn({ children, className = "", onClick }) {
 /* ════════════════════════════════════════════════════════════
    3-D TILT CARD
 ════════════════════════════════════════════════════════════ */
-function TiltCard({ children, className = "", intensity = 12 }) {
+export function TiltCard({ children, className = "", intensity = 12 }) {
   const ref = useRef(null);
   const rx = useMotionValue(0), ry = useMotionValue(0);
   const srx = useSpring(rx, { stiffness: 200, damping: 22 });
@@ -611,7 +611,7 @@ function Counter({ value }) {
 /* ════════════════════════════════════════════════════════════
    SECTION LABEL
 ════════════════════════════════════════════════════════════ */
-function SLabel({ text }) {
+export function SLabel({ text }) {
   return (
     <Reveal from="top" className="flex items-center gap-3 justify-center mb-3">
       <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: false }} transition={{ duration: .55 }} className="h-px w-8 bg-[#D4AF37] origin-left" />
@@ -624,7 +624,7 @@ function SLabel({ text }) {
 /* ════════════════════════════════════════════════════════════
    WORD-BY-WORD HEADING  (bidirectional)
 ════════════════════════════════════════════════════════════ */
-function AHeading({ children, className = "", delay = 0 }) {
+export function AHeading({ children, className = "", delay = 0 }) {
   const ref  = useRef(null);
   const inV  = useInView(ref, { once: false, margin: "-50px" });
   const dir  = useScrollDir();
@@ -658,7 +658,7 @@ function HeroSection({ apiPrograms, loading }) {
   const secRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: secRef, offset: ["start start", "end start"] });
   const { scrollY } = useScroll();
-const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
   const hY   = useTransform(scrollYProgress, [0,1], [0,-110]);
   const hO   = useTransform(scrollYProgress, [0,.6], [1,0.9]);
   const hS   = useTransform(scrollYProgress, [0,1], [1,.83]);
@@ -717,19 +717,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
       {/* Ticker */}
       {!loading && apiPrograms.length > 0 && (
         <div className="absolute top-16 left-0 right-0 z-10 overflow-hidden border-y border-black/[.055] bg-white/70 backdrop-blur-md py-2.5">
-          {/* <motion.div className="flex gap-14 whitespace-nowrap" animate={{ x: ["0%", "-50%"] }} transition={{ repeat: Infinity, duration: 44, ease: "linear" }}>
-            {[...apiPrograms.slice(0,6), ...apiPrograms.slice(0,6)].map((p,i) => (
-              <Link key={i} to={`/Programs/${p.id}`} className="flex items-center gap-3 text-sm text-[#1A1A1A] hover:text-[#F04A06] transition-colors group">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4AF37]" />
-                </span>
-                <span className="font-semibold group-hover:underline underline-offset-2">{p.title}</span>
-                <span className="text-gray-300 text-xs">•</span>
-                <span className="text-xs text-gray-400">{new Date(p.date).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span>
-              </Link>
-            ))}
-          </motion.div> */}
+          {/* Ticker content */}
         </div>
       )}
 
@@ -745,15 +733,15 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
         <div className="flex items-center justify-center mb-6" style={{ minHeight: "clamp(110px,18vw,240px)" }}>
           <motion.h1
-  key={hIdx}
-  initial={{ opacity: 0, y: 30 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -30 }}
-  transition={{ duration: 0.6 }}
-  className="text-[clamp(2.2rem,5.4vw,4.8rem)] font-black leading-[1.08] tracking-tight text-[#1A1A1A]"
->
-  {headlines[hIdx]}
-</motion.h1>
+            key={hIdx}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.6 }}
+            className="text-[clamp(2.2rem,5.4vw,4.8rem)] font-black leading-[1.08] tracking-tight text-[#1A1A1A]"
+          >
+            {headlines[hIdx]}
+          </motion.h1>
         </div>
 
         <motion.p initial={{ opacity:0, y:24 }} animate={{ opacity:1, y:0 }} transition={{ duration:.8, delay:.45, ease: EASE_EXPO }}
@@ -761,8 +749,10 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           A technology-driven organization specializing in IT services, pioneering R&D, and transformative EdTech solutions—shaping the future of innovation.
         </motion.p>
 
+        {/* BUTTON GROUP WITH SUMMER CAMP BUTTON */}
         <motion.div initial={{ opacity:0, y:18 }} animate={{ opacity:1, y:0 }} transition={{ duration:.72, delay:.62 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center">
+          className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
+          
           <MagBtn onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior:"smooth" })}
             className="group relative px-9 py-4 bg-[#F04A06] text-white rounded-full font-bold text-sm overflow-hidden shadow-xl shadow-[#F04A06]/30">
             <span className="relative z-10 flex items-center justify-center gap-2">
@@ -771,38 +761,49 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
             </span>
             <motion.div className="absolute inset-0 bg-[#F04A06] rounded-full origin-center" initial={{ scale:0 }} whileHover={{ scale:3 }} transition={{ duration:.5 }} />
           </MagBtn>
+          
           <button
-  onClick={() => document.getElementById("about")?.scrollIntoView({ behavior:"smooth" })}
-  className="px-9 py-4 border-2 border-[#F04A06] text-[#F04A06] rounded-full font-bold text-sm bg-white hover:bg-[#FFF4ED] transition-colors"
->
-  Learn More
-</button>
+            onClick={() => document.getElementById("about")?.scrollIntoView({ behavior:"smooth" })}
+            className="px-9 py-4 border-2 border-[#F04A06] text-[#F04A06] rounded-full font-bold text-sm bg-white hover:bg-[#FFF4ED] transition-colors"
+          >
+            Learn More
+          </button>
+          
+          {/* SUMMER CAMP BUTTON - MOVED FROM CTA TO HERO */}
+          <Link to="/results/intermediate">
+            <MagBtn className="group relative px-9 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F04A06] text-white rounded-full font-bold text-sm overflow-hidden shadow-xl shadow-[#D4AF37]/30">
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                🎓 Summer Camp for Students
+                <motion.span animate={{ x:[0,4,0] }} transition={{ duration:1.6, repeat:Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
+              </span>
+              <motion.div className="absolute inset-0 bg-gradient-to-r from-[#F04A06] to-[#D4AF37] rounded-full origin-center" initial={{ scale:0 }} whileHover={{ scale:3 }} transition={{ duration:.5 }} />
+            </MagBtn>
+          </Link>
         </motion.div>
-
-       
       </motion.div>
 
       {/* Scroll cue */}
       <motion.div
-  style={{ opacity: scrollOpacity }}
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 2.2 }}
+        style={{ opacity: scrollOpacity }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 cursor-pointer"
         onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior:"smooth" })}>
         <Float duration={2} yRange={10}>
           <div className="w-7 h-12 border-2 border-[#F04A06]/28 rounded-full flex justify-center">
-  <motion.div
-    className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
-    animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
-    transition={{ duration: 1.8, repeat: Infinity }}
-  />
-</div>
+            <motion.div
+              className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
+              animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
+              transition={{ duration: 1.8, repeat: Infinity }}
+            />
+          </div>
         </Float>
       </motion.div>
     </section>
   );
 }
+
 
 /* ════════════════════════════════════════════════════════════
    OrbitalCard — place ABOVE ServicesSection
@@ -1531,24 +1532,25 @@ function CTASection() {
             </p>
           </Reveal>
 
-          <Reveal from="bottom" delay={.35}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <MagBtn onClick={()=>document.getElementById("programs")?.scrollIntoView({ behavior:"smooth" })}
-                className="group relative px-10 py-4 bg-white text-[#F04A06] rounded-full font-black overflow-hidden shadow-2xl shadow-white/18">
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  Start Your Journey
-                  <motion.span animate={{ x:[0,5,0] }} transition={{ duration:1.5, repeat:Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
-                </span>
-                <motion.div className="absolute inset-0 bg-[#FFF4ED] rounded-full origin-center" initial={{ scale:0 }} whileHover={{ scale:3 }} transition={{ duration:.5 }} />
-              </MagBtn>
-              <Link to="/Contact">
-                <motion.button whileHover={{ scale:1.04, backgroundColor:"rgba(255,255,255,.1)" }} whileTap={{ scale:.97 }}
-                  className="px-10 py-4 border-2 border-white/58 text-white rounded-full font-black hover:border-white transition-colors">
-                  Schedule a Call
-                </motion.button>
-              </Link>
-            </div>
-          </Reveal>
+          {/* CTA Section - Updated without the Summer Camp button */}
+<Reveal from="bottom" delay={.35}>
+  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+    <MagBtn onClick={()=>document.getElementById("programs")?.scrollIntoView({ behavior:"smooth" })}
+      className="group relative px-10 py-4 bg-white text-[#F04A06] rounded-full font-black overflow-hidden shadow-2xl shadow-white/18">
+      <span className="relative z-10 flex items-center justify-center gap-2">
+        Start Your Journey
+        <motion.span animate={{ x:[0,5,0] }} transition={{ duration:1.5, repeat:Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
+      </span>
+      <motion.div className="absolute inset-0 bg-[#FFF4ED] rounded-full origin-center" initial={{ scale:0 }} whileHover={{ scale:3 }} transition={{ duration:.5 }} />
+    </MagBtn>
+    <Link to="/Contact">
+      <motion.button whileHover={{ scale:1.04, backgroundColor:"rgba(255,255,255,.1)" }} whileTap={{ scale:.97 }}
+        className="px-10 py-4 border-2 border-white/58 text-white rounded-full font-black hover:border-white transition-colors">
+        Schedule a Call
+      </motion.button>
+    </Link>
+  </div>
+</Reveal>
         </motion.div>
       </section>
     </>

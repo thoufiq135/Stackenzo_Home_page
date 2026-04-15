@@ -27,6 +27,7 @@ import ScrollToTop from "./ScrollToTop";
 import WorkshopRegister from "./WorkshopRegister";
 import WorkshopSuccess from "./WorkshopSuccess";
 import WorkshopAlreadyRegistered from "./WorkshopAlreadyRegistered";
+import IntermediateResults from "./IntermediateResults";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
      <Route path="/workshop/register" element={<WorkshopRegister/>}/>
      <Route path="/workshop/success" element={<WorkshopSuccess/>}/>
      <Route path="/workshop/already-registered" element={<WorkshopAlreadyRegistered/>}/>
+     <Route path="/results/intermediate" element={<IntermediateResults/>}/>
    </Routes>
    </>
   );
