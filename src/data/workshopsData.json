@@ -1,0 +1,95 @@
+{
+  "workshops": [
+    {
+      "id": "embedded-systems",
+      "title": "Embedded Systems",
+      "duration": "2-4 Days",
+      "suitedFor": ["ECE", "EEE", "Mechanical", "Robotics", "MCA"],
+      "description": "Introduction to embedded systems with hands-on projects",
+      "topics": [
+        "Introduction to embedded systems",
+        "Microcontrollers & microprocessors",
+        "Sensors, actuators, and interfacing",
+        "Real-time applications",
+        "Hands-on embedded projects"
+      ],
+      "outcomes": ["Understand embedded architecture", "Interface sensors and actuators", "Build real-time applications"],
+      "registrationOpen": false
+    },
+    {
+      "id": "iot",
+      "title": "Internet of Things (IoT)",
+      "duration": "2-4 Days",
+      "suitedFor": ["ECE", "EEE", "CSE", "IT", "AI & ML"],
+      "description": "IoT fundamentals with live project implementation",
+      "topics": [
+        "IoT fundamentals and architecture",
+        "Sensors, controllers, and communication",
+        "Cloud basics and data monitoring",
+        "Smart applications (home, industry, healthcare)",
+        "Live IoT project implementation"
+      ],
+      "outcomes": ["Build IoT systems", "Implement cloud connectivity", "Create smart applications"],
+      "registrationOpen": false
+    },
+    {
+      "id": "robotics",
+      "title": "Robotics",
+      "duration": "6 Days",
+      "suitedFor": ["ECE", "EEE", "CSE","Mechanical", "Robotics clubs","Inter","10th","Degree"],
+      "description": "Hands-on robot building with sensors and controllers",
+      "topics": [
+        "Introduction to robotics systems",
+        "Motors, sensors, and controllers",
+        "Robot movement and control logic",
+        "Line follower / obstacle avoidance concepts",
+        "Hands-on robot building sessions"
+      ],
+      "outcomes": ["Build functional robots", "Implement control systems", "Design autonomous robots"],
+      "registrationOpen": true,
+      "seats": 100
+    }
+  ],
+  "featuredWorkshop": {
+    "workshopId": "robotics",
+    "title": "Robotics Workshop",
+    "subtitle": "Hands-on Robot Building & Control Systems",
+    "college": "Sri Venkateshwara College of Engineering",
+    "dateISO": "2026-04-16",
+    "dateDisplay": "April 16–21, 2026",
+    "duration": "6 Days",
+    "location": "Sri Venkateshwara College of Engineering, Tirupati, AP",
+    "seats": 100,
+    "batches": [
+      { "id": "batch-a", "label": "Batch A – Morning (9:00 AM – 1:00 PM)" },
+      { "id": "batch-b", "label": "Batch B – Afternoon (2:00 PM – 6:00 PM)" }
+    ],
+    "whatsappGroupLink": "https://wa.me/919000000000",
+    "fee": "Free of Cost",
+    "calendarTitle": "Robotics Workshop – Stackenzo @ SV",
+    "calendarLocation": "Sri Venkateshwara Institutions, Mulapeta,Nellore, AP"
+  },
+  "trendingTechnologies": [
+    "Industry 4.0",
+    "Automation & Smart Manufacturing",
+    "AI in real-world systems",
+    "Cyber-Physical Systems",
+    "Career opportunities in emerging technologies"
+  ],
+  "studentGains": [
+    "Real-World Technical Skills",
+    "Confidence in real-world applications",
+    "Exposure to industry-relevant tools",
+    "Better understanding of career paths",
+    "Experience beyond textbooks",
+    "Certificate of Completion"
+  ],
+  "whyChoose": [
+    "Designed for college students",
+    "Industry-relevant topics",
+    "Hands-on focused",
+    "Flexible duration",
+    "Interactive and engaging sessions",
+    "Suitable for both beginners and intermediate learners"
+  ]
+}

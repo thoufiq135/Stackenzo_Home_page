@@ -1,0 +1,47 @@
+{
+  "rewrites": [
+    {
+      "source": "/Summer_camp_Registration",
+      "destination": "/Summer_camp_Registration"
+    },
+    {
+      "source": "/workshop/register",
+      "destination": "/workshop/register"
+    },
+    {
+      "source": "/workshop/success",
+      "destination": "/workshop/success"
+    },
+    {
+      "source": "/workshop/already-registered",
+      "destination": "/workshop/already-registered"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install"
+}

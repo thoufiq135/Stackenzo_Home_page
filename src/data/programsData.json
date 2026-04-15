@@ -1,0 +1,148 @@
+{
+  "programs": [
+    {
+      "id": 1,
+      "type": "workshop",
+      "title": "AI & Machine Learning Workshop",
+      "date": "2024-02-15",
+      "location": "Hyderabad Tech Hub",
+      "description": "Hands-on workshop covering deep learning, neural networks, and practical AI applications. Learn from industry experts.",
+      "duration": "3 days",
+      "status": "upcoming",
+      "registrationLink": "/workshops",
+      "tags": ["AI", "Machine Learning", "Workshop"]
+    },
+    {
+      "id": 2,
+      "type": "hackathon",
+      "title": "Smart City Hackathon 2024",
+      "date": "2024-03-01",
+      "location": "Online",
+      "description": "48-hour hackathon to build innovative solutions for smart city challenges. Win prizes worth ₹5 lakhs!",
+      "duration": "48 hours",
+      "status": "registration-open",
+      "registrationLink": "https://hackathon.stackenzo.com",
+      "tags": ["Hackathon", "IoT", "Smart City"]
+    },
+    {
+      "id": 3,
+      "type": "school-program",
+      "title": "Robotics for Schools Initiative",
+      "date": "2024-02-20",
+      "location": "Multiple Schools",
+      "description": "Introducing robotics education in schools. Free robotics kits and training for selected schools.",
+      "duration": "6 months",
+      "status": "ongoing",
+      "registrationLink": "/robotics",
+      "tags": ["Robotics", "Education", "Schools"]
+    },
+    {
+      "id": 4,
+      "type": "expo",
+      "title": "Tech Innovation Expo 2024",
+      "date": "2024-03-15",
+      "location": "HICC, Hyderabad",
+      "description": "Showcase your innovative projects and connect with industry leaders. Open for students and startups.",
+      "duration": "2 days",
+      "status": "upcoming",
+      "registrationLink": "/contact",
+      "tags": ["Expo", "Innovation", "Networking"]
+    },
+    {
+      "id": 5,
+      "type": "challenge",
+      "title": "Code Sprint Challenge",
+      "date": "2024-02-25",
+      "location": "Online",
+      "description": "Weekly coding challenges with real-world problems. Top performers get internship opportunities.",
+      "duration": "Weekly",
+      "status": "ongoing",
+      "registrationLink": "/contact",
+      "tags": ["Coding", "Challenge", "Internship"]
+    },
+    {
+      "id": 6,
+      "type": "workshop",
+      "title": "Full Stack Web Development Bootcamp",
+      "date": "2024-03-10",
+      "location": "Bangalore",
+      "description": "Intensive bootcamp covering MERN stack, deployment, and best practices. Build 5 real-world projects.",
+      "duration": "4 weeks",
+      "status": "registration-open",
+      "registrationLink": "/workshops",
+      "tags": ["Web Development", "MERN", "Bootcamp"]
+    },
+    {
+      "id": 7,
+      "type": "school-program",
+      "title": "STEM Education Program",
+      "date": "2024-02-18",
+      "location": "Hyderabad Schools",
+      "description": "Comprehensive STEM curriculum for grades 6-12. Includes lab equipment and teacher training.",
+      "duration": "1 year",
+      "status": "registration-open",
+      "registrationLink": "/contact",
+      "tags": ["STEM", "Education", "Schools"]
+    },
+    {
+      "id": 8,
+      "type": "hackathon",
+      "title": "HealthTech Innovation Challenge",
+      "date": "2024-03-20",
+      "location": "Hybrid",
+      "description": "Build healthcare solutions using AI, IoT, and mobile technologies. Mentorship from healthcare experts.",
+      "duration": "36 hours",
+      "status": "upcoming",
+      "registrationLink": "/contact",
+      "tags": ["Healthcare", "Innovation", "AI"]
+    },
+    {
+      "id": 9,
+      "type": "expo",
+      "title": "Robotics & Automation Expo",
+      "date": "2024-04-05",
+      "location": "Chennai",
+      "description": "Largest robotics expo in South India. Live demos, competitions, and industry networking.",
+      "duration": "3 days",
+      "status": "upcoming",
+      "registrationLink": "/robotics",
+      "tags": ["Robotics", "Automation", "Expo"]
+    },
+    {
+      "id": 10,
+      "type": "challenge",
+      "title": "Data Science Competition",
+      "date": "2024-02-28",
+      "location": "Online",
+      "description": "Analyze real datasets and build predictive models. Win cash prizes and job opportunities.",
+      "duration": "2 weeks",
+      "status": "registration-open",
+      "registrationLink": "/contact",
+      "tags": ["Data Science", "ML", "Competition"]
+    },
+    {
+      "id": 11,
+      "type": "workshop",
+      "title": "Cloud Computing & DevOps Workshop",
+      "date": "2024-03-25",
+      "location": "Pune",
+      "description": "Master AWS, Docker, Kubernetes, and CI/CD pipelines. Get AWS certification guidance.",
+      "duration": "5 days",
+      "status": "upcoming",
+      "registrationLink": "/workshops",
+      "tags": ["Cloud", "DevOps", "AWS"]
+    },
+    {
+      "id": 12,
+      "type": "school-program",
+      "title": "Coding Club for Kids",
+      "date": "2024-02-22",
+      "location": "Multiple Cities",
+      "description": "After-school coding clubs teaching Scratch, Python, and game development to kids aged 8-14.",
+      "duration": "6 months",
+      "status": "ongoing",
+      "registrationLink": "/contact",
+      "tags": ["Coding", "Kids", "Education"]
+    }
+  ]
+}

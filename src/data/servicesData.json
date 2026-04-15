@@ -1,0 +1,619 @@
+{
+  "web": [
+    {
+      "title": "Web Development",
+      "detailedDesc": "We create stunning, high-performance websites and e-commerce platforms that deliver exceptional user experiences and drive conversions. Our web development services combine cutting-edge technologies with best practices to build scalable, secure, and SEO-optimized solutions. From responsive design to complex web applications, we ensure your digital presence stands out in today's competitive landscape.",
+      "benefits": [
+        "Mobile-first responsive design",
+        "Fast loading speeds (< 3 seconds)",
+        "SEO-optimized architecture",
+        "Secure payment integration",
+        "Scalable infrastructure",
+        "Cross-browser compatibility"
+      ],
+      "technologies": ["React", "Next.js", "Node.js", "MongoDB", "AWS", "Stripe"],
+      "deliverables": [
+        "Fully functional website",
+        "Admin dashboard",
+        "Mobile app (optional)",
+        "Documentation",
+        "Training sessions",
+        "3 months support"
+      ],
+      "timeline": "4-12 weeks depending on complexity"
+    },
+    {
+      "title": "UI/UX Design",
+      "detailedDesc": "Our UI/UX design services focus on creating intuitive, accessible, and visually stunning digital experiences that delight users and drive engagement. We follow a user-centered design approach, conducting thorough research and testing to ensure every interaction is meaningful and every interface is beautiful. From wireframes to high-fidelity prototypes, we craft designs that not only look great but also solve real user problems.",
+      "benefits": [
+        "Increased user engagement",
+        "Higher conversion rates",
+        "Reduced bounce rates",
+        "Improved brand perception",
+        "Better accessibility",
+        "Data-driven design decisions"
+      ],
+      "technologies": ["Figma", "Adobe XD", "Sketch", "InVision", "Principle", "Framer"],
+      "deliverables": [
+        "User research report",
+        "Wireframes",
+        "Interactive prototypes",
+        "Design system",
+        "UI kit",
+        "Handoff documentation"
+      ],
+      "timeline": "3-8 weeks depending on scope"
+    },
+    {
+  "title": "Mobile App Development",
+  "detailedDesc": "Our mobile app development services focus on building high-performance, scalable, and user-friendly applications for both Android and iOS platforms. We design and develop apps that deliver seamless user experiences, robust functionality, and secure performance. From concept and UI design to development, testing, and deployment, we ensure your mobile application meets modern industry standards and business goals.",
+  "benefits": [
+    "Enhanced customer engagement",
+    "Increased brand visibility",
+    "Faster business operations",
+    "Improved user experience",
+    "Cross-platform compatibility",
+    "Scalable and secure architecture"
+  ],
+  "technologies": [
+    "React Native",
+    "Flutter",
+    "Swift",
+    "Kotlin",
+    "Firebase",
+    "Node.js"
+  ],
+  "deliverables": [
+    "Mobile app UI/UX design",
+    "Android and iOS application",
+    "API integration",
+    "Performance optimization",
+    "App store deployment",
+    "Maintenance and updates"
+  ],
+  "timeline": "6-12 weeks depending on complexity"
+},
+    {
+      "title": "CMS Solutions",
+      "detailedDesc": "Empower your team with powerful Content Management Systems that make updating and managing your digital content effortless. We implement and customize leading CMS platforms or build custom solutions tailored to your specific needs. Our CMS solutions enable non-technical users to manage content efficiently while maintaining security, performance, and scalability.",
+      "benefits": [
+        "Easy content updates",
+        "No coding required",
+        "Multi-user management",
+        "Version control",
+        "SEO-friendly",
+        "Workflow automation"
+      ],
+      "technologies": ["WordPress", "Strapi", "Contentful", "Sanity", "Ghost", "Custom CMS"],
+      "deliverables": [
+        "Configured CMS",
+        "Custom templates",
+        "User training",
+        "Documentation",
+        "Plugin/module setup",
+        "Ongoing support"
+      ],
+      "timeline": "2-6 weeks depending on customization"
+    }
+  ],
+  "core": [
+    {
+      "title": "Software Development",
+      "detailedDesc": "Custom enterprise software solutions built with cutting-edge technologies. We develop scalable, secure applications tailored to your business needs. From legacy modernization to olive greenfield projects, our software development services deliver high-quality solutions that drive business value.",
+      "benefits": [
+        "Custom solutions",
+        "Scalable architecture",
+        "Modern tech stack",
+        "Agile development",
+        "Quality assurance",
+        "Ongoing support"
+      ],
+      "technologies": ["React", "Node.js", "Python", "Java", ".NET", "Microservices"],
+      "deliverables": [
+        "Custom application",
+        "API development",
+        "Legacy modernization",
+        "Integration services",
+        "Documentation",
+        "12 months support"
+      ],
+      "timeline": "12-32 weeks depending on complexity"
+    },
+    {
+      "title": "Application Support",
+      "detailedDesc": "24/7 application support ensuring optimal performance and security. We provide monitoring, maintenance, bug fixes, and enhancements to keep your applications running smoothly. Our proactive approach prevents issues and ensures high availability.",
+      "benefits": [
+        "24/7 monitoring",
+        "Quick issue resolution",
+        "Performance optimization",
+        "Security updates",
+        "Bug fixes",
+        "Feature enhancements"
+      ],
+      "technologies": ["Monitoring Tools", "APM", "Log Management", "CI/CD", "Testing Frameworks"],
+      "deliverables": [
+        "24/7 monitoring",
+        "Performance optimization",
+        "Bug fixes",
+        "Security patches",
+        "Enhancement releases",
+        "Monthly reports"
+      ],
+      "timeline": "Ongoing service with 1-2 weeks onboarding"
+    },
+    {
+      "title": "System Integration",
+      "detailedDesc": "Connect disparate systems for unified operations. We integrate enterprise applications, third-party services, and legacy systems to create seamless data flow and process automation. Our integration solutions improve efficiency and eliminate data silos.",
+      "benefits": [
+        "Unified operations",
+        "Data synchronization",
+        "Process automation",
+        "Reduced manual work",
+        "Better visibility",
+        "Improved efficiency"
+      ],
+      "technologies": ["REST APIs", "GraphQL", "Message Queues", "ESB", "iPaaS", "Webhooks"],
+      "deliverables": [
+        "Enterprise integration",
+        "API management",
+        "Data sync",
+        "Third-party integration",
+        "Documentation",
+        "Ongoing support"
+      ],
+      "timeline": "6-18 weeks depending on systems"
+    }
+  ],
+  "cloud": [
+    {
+      "title": "Cloud Computing",
+      "detailedDesc": "Build scalable cloud infrastructure on AWS, Azure, and Google Cloud. We design and implement cloud-native architectures that are secure, cost-effective, and optimized for performance. From serverless applications to containerized microservices, we leverage the best cloud technologies to meet your specific needs.",
+      "benefits": [
+        "Pay-as-you-go pricing model",
+        "Automatic scaling capabilities",
+        "High availability (99.9% uptime)",
+        "Global CDN distribution",
+        "Load balancing",
+        "Backup & disaster recovery"
+      ],
+      "technologies": ["AWS", "Azure", "Google Cloud", "CloudFormation", "Terraform", "Serverless"],
+      "deliverables": [
+        "Cloud architecture design",
+        "Multi-cloud infrastructure",
+        "Security configuration",
+        "Monitoring setup",
+        "Cost optimization",
+        "Ongoing support"
+      ],
+      "timeline": "3-12 weeks depending on requirements"
+    },
+    {
+      "title": "Cloud Migration",
+      "detailedDesc": "Seamlessly transition your infrastructure to the cloud with our expert migration services. We assess your current setup, plan the migration strategy, and execute the move with minimal downtime. Our cloud migration services help you reduce costs, improve scalability, and enhance security while maintaining business continuity.",
+      "benefits": [
+        "70% cost reduction",
+        "99.9% uptime guarantee",
+        "Auto-scaling capabilities",
+        "Enhanced security",
+        "Disaster recovery",
+        "Global availability"
+      ],
+      "technologies": ["AWS", "Azure", "Google Cloud", "Kubernetes", "Docker", "Terraform"],
+      "deliverables": [
+        "Migration strategy document",
+        "Migrated infrastructure",
+        "Performance optimization",
+        "Security hardening",
+        "Documentation",
+        "12 months support"
+      ],
+      "timeline": "6-20 weeks depending on scale"
+    },
+    {
+      "title": "DevOps & CI/CD",
+      "detailedDesc": "Accelerate your software delivery with modern DevOps practices and automated CI/CD pipelines. We implement infrastructure as code, automated testing, and continuous deployment to help your team ship features faster and more reliably. Reduce deployment time from days to minutes while improving code quality.",
+      "benefits": [
+        "Automated deployments",
+        "Faster release cycles",
+        "Reduced human errors",
+        "Better collaboration",
+        "Continuous monitoring",
+        "Rollback capabilities"
+      ],
+      "technologies": ["Jenkins", "GitLab CI", "GitHub Actions", "Docker", "Kubernetes", "Ansible"],
+      "deliverables": [
+        "CI/CD pipeline setup",
+        "Infrastructure as code",
+        "Monitoring dashboards",
+        "Automated testing",
+        "Documentation",
+        "Team training"
+      ],
+      "timeline": "4-10 weeks depending on complexity"
+    },
+    {
+      "title": "Server Management",
+      "detailedDesc": "Comprehensive server management services ensuring high availability and optimal performance. We handle server provisioning, configuration, monitoring, and maintenance so you can focus on your core business. Our proactive approach prevents issues before they impact your operations.",
+      "benefits": [
+        "24/7 server monitoring",
+        "Proactive maintenance",
+        "Performance optimization",
+        "Security hardening",
+        "Automated backups",
+        "Disaster recovery planning"
+      ],
+      "technologies": ["Linux", "Windows Server", "Nginx", "Apache", "Monitoring Tools", "Backup Solutions"],
+      "deliverables": [
+        "Server provisioning",
+        "Performance tuning",
+        "Backup systems",
+        "Disaster recovery plan",
+        "Documentation",
+        "24/7 support"
+      ],
+      "timeline": "2-8 weeks depending on infrastructure"
+    }
+  ],
+  "data": [
+    {
+      "title": "AI & Machine Learning",
+      "detailedDesc": "Transform your business with artificial intelligence and machine learning solutions. We develop custom AI models that automate processes, provide predictive insights, and enhance decision-making. From natural language processing to computer vision, our AI solutions are tailored to solve your specific business challenges.",
+      "benefits": [
+        "Process automation",
+        "Predictive analytics",
+        "Improved accuracy",
+        "Cost reduction",
+        "Competitive advantage",
+        "Scalable solutions"
+      ],
+      "technologies": ["TensorFlow", "PyTorch", "Python", "Scikit-learn", "OpenCV", "Keras"],
+      "deliverables": [
+        "Trained AI models",
+        "API integration",
+        "Model documentation",
+        "Performance metrics",
+        "Deployment setup",
+        "Model retraining support"
+      ],
+      "timeline": "8-20 weeks depending on complexity"
+    },
+    {
+      "title": "Data Analytics & BI",
+      "detailedDesc": "Transform data into actionable insights with advanced analytics and business intelligence solutions. We help you collect, process, and analyze large datasets to extract meaningful patterns. Our analytics services include dashboard creation, predictive modeling, and real-time reporting that drive informed decision-making.",
+      "benefits": [
+        "Data-driven decisions",
+        "Real-time insights",
+        "Trend identification",
+        "Performance tracking",
+        "ROI measurement",
+        "Custom reporting"
+      ],
+      "technologies": ["Python", "R", "Tableau", "Power BI", "Apache Spark", "SQL"],
+      "deliverables": [
+        "Analytics dashboard",
+        "Data pipeline setup",
+        "Custom reports",
+        "Predictive models",
+        "Documentation",
+        "Training sessions"
+      ],
+      "timeline": "6-14 weeks depending on scope"
+    },
+    {
+      "title": "Big Data Solutions",
+      "detailedDesc": "Handle massive datasets with scalable big data platforms. We build data lakes, ETL pipelines, and data warehousing solutions that process and analyze large volumes of data efficiently. Our big data solutions enable real-time analytics and data-driven decision making at scale.",
+      "benefits": [
+        "Process petabytes of data",
+        "Real-time stream processing",
+        "Scalable architecture",
+        "Cost-effective storage",
+        "Advanced analytics",
+        "Data governance"
+      ],
+      "technologies": ["Hadoop", "Apache Spark", "Kafka", "Snowflake", "Databricks", "AWS EMR"],
+      "deliverables": [
+        "Data lake setup",
+        "ETL pipelines",
+        "Data warehousing",
+        "Stream processing",
+        "Analytics platform",
+        "Documentation"
+      ],
+      "timeline": "8-18 weeks depending on data volume"
+    }
+  ],
+  "security": [
+    {
+      "title": "Network Security",
+      "detailedDesc": "Comprehensive network security solutions protecting your infrastructure from cyber threats. We implement firewalls, intrusion detection systems, VPNs, and network monitoring to ensure your network is secure. Our multi-layered approach provides defense in depth against evolving threats.",
+      "benefits": [
+        "Threat prevention",
+        "24/7 network monitoring",
+        "Intrusion detection",
+        "Secure remote access",
+        "DDoS protection",
+        "Compliance adherence"
+      ],
+      "technologies": ["Firewall", "IDS/IPS", "VPN", "SIEM", "Network Monitoring", "Security Tools"],
+      "deliverables": [
+        "Firewall management",
+        "Intrusion detection setup",
+        "VPN configuration",
+        "Network monitoring",
+        "Security policies",
+        "Ongoing maintenance"
+      ],
+      "timeline": "4-10 weeks depending on network size"
+    },
+    {
+      "title": "Penetration Testing",
+      "detailedDesc": "Identify vulnerabilities before attackers do with comprehensive penetration testing. We conduct ethical hacking, vulnerability assessments, and security audits to uncover weaknesses in your systems. Our detailed reports include actionable recommendations to strengthen your security posture.",
+      "benefits": [
+        "Vulnerability identification",
+        "Security assessment",
+        "Compliance verification",
+        "Risk mitigation",
+        "Detailed reporting",
+        "Remediation guidance"
+      ],
+      "technologies": ["Nmap", "Metasploit", "Burp Suite", "OWASP", "Wireshark", "Kali Linux"],
+      "deliverables": [
+        "Vulnerability assessment",
+        "Penetration test report",
+        "Security audit",
+        "Compliance checklist",
+        "Remediation plan",
+        "Follow-up testing"
+      ],
+      "timeline": "2-6 weeks depending on scope"
+    },
+    {
+      "title": "Data Protection",
+      "detailedDesc": "Ensure data security and regulatory compliance with comprehensive data protection solutions. We implement encryption, data loss prevention, and privacy controls to protect sensitive information. Our solutions help you meet GDPR, HIPAA, and other regulatory requirements.",
+      "benefits": [
+        "Data encryption",
+        "GDPR compliance",
+        "Data loss prevention",
+        "Privacy protection",
+        "Audit trails",
+        "Regulatory compliance"
+      ],
+      "technologies": ["Encryption", "DLP Tools", "GDPR Tools", "Backup Solutions", "Access Controls"],
+      "deliverables": [
+        "Data encryption setup",
+        "DLP implementation",
+        "Privacy controls",
+        "Compliance documentation",
+        "Backup systems",
+        "Ongoing monitoring"
+      ],
+      "timeline": "4-12 weeks depending on requirements"
+    }
+  ],
+  "consulting": [
+    {
+      "title": "IT Strategy",
+      "detailedDesc": "Align technology with business goals through strategic IT planning. We help you develop technology roadmaps, digital transformation strategies, and IT governance frameworks. Our consulting services ensure your technology investments drive business value and competitive advantage.",
+      "benefits": [
+        "Strategic alignment",
+        "Technology roadmap",
+        "Digital transformation",
+        "IT governance",
+        "Cost optimization",
+        "Risk management"
+      ],
+      "technologies": ["TOGAF", "ITIL", "COBIT", "Agile", "DevOps", "Cloud Platforms"],
+      "deliverables": [
+        "IT strategy document",
+        "Technology roadmap",
+        "Architecture design",
+        "Governance framework",
+        "Implementation plan",
+        "Ongoing consultation"
+      ],
+      "timeline": "6-16 weeks depending on scope"
+    },
+    {
+      "title": "Managed IT",
+      "detailedDesc": "Proactive IT infrastructure monitoring and management services. We handle day-to-day IT operations, vendor management, and infrastructure optimization so you can focus on your core business. Our managed services ensure your IT runs smoothly with minimal downtime.",
+      "benefits": [
+        "Proactive monitoring",
+        "Reduced downtime",
+        "Cost predictability",
+        "Expert support",
+        "Vendor management",
+        "Performance optimization"
+      ],
+      "technologies": ["Monitoring Tools", "ITSM", "Cloud Platforms", "Automation", "Ticketing Systems"],
+      "deliverables": [
+        "Infrastructure management",
+        "24/7 monitoring",
+        "Vendor coordination",
+        "Performance reports",
+        "Optimization recommendations",
+        "Ongoing support"
+      ],
+      "timeline": "Ongoing service with 2-4 weeks onboarding"
+    },
+    {
+      "title": "24/7 Helpdesk",
+      "detailedDesc": "Round-the-clock technical support for your team and customers. Our helpdesk provides multi-channel support including phone, email, chat, and ticketing systems. We ensure quick resolution of technical issues with comprehensive knowledge base and remote assistance capabilities.",
+      "benefits": [
+        "24/7 availability",
+        "Multi-channel support",
+        "Fast response times",
+        "Remote assistance",
+        "Knowledge base",
+        "Ticket management"
+      ],
+      "technologies": ["ServiceNow", "Zendesk", "Freshdesk", "Remote Desktop", "Chat Systems"],
+      "deliverables": [
+        "Helpdesk setup",
+        "Ticket management system",
+        "Knowledge base",
+        "Remote assistance tools",
+        "SLA agreements",
+        "24/7 support team"
+      ],
+      "timeline": "Ongoing service with 3-6 weeks setup"
+    }
+  ],
+  "emerging": [
+    {
+      "title": "IoT Solutions",
+      "detailedDesc": "Connect devices and create intelligent IoT systems. We develop end-to-end IoT solutions including sensor integration, edge computing, IoT platforms, and analytics. Our IoT solutions enable real-time monitoring, automation, and data-driven insights from connected devices.",
+      "benefits": [
+        "Real-time monitoring",
+        "Automation capabilities",
+        "Predictive maintenance",
+        "Data analytics",
+        "Scalable platform",
+        "Edge computing"
+      ],
+      "technologies": ["Arduino", "Raspberry Pi", "AWS IoT", "Azure IoT", "MQTT", "LoRaWAN"],
+      "deliverables": [
+        "IoT platform",
+        "Sensor integration",
+        "Edge computing setup",
+        "Analytics dashboard",
+        "Mobile app",
+        "Documentation"
+      ],
+      "timeline": "8-20 weeks depending on complexity"
+    },
+    {
+      "title": "Blockchain",
+      "detailedDesc": "Build secure, transparent decentralized applications using blockchain technology. We develop smart contracts, DApps, and blockchain solutions for supply chain, finance, and identity management. Our blockchain expertise ensures secure, immutable, and transparent transactions.",
+      "benefits": [
+        "Decentralization",
+        "Transparency",
+        "Immutability",
+        "Security",
+        "Smart contracts",
+        "Reduced intermediaries"
+      ],
+      "technologies": ["Ethereum", "Solidity", "Hyperledger", "Web3.js", "IPFS", "Truffle"],
+      "deliverables": [
+        "Smart contracts",
+        "DApp development",
+        "Blockchain integration",
+        "Wallet setup",
+        "Documentation",
+        "Security audit"
+      ],
+      "timeline": "10-24 weeks depending on use case"
+    },
+    {
+      "title": "AR/VR Development",
+      "detailedDesc": "Create immersive augmented and virtual reality experiences. We develop AR/VR applications for training, marketing, education, and entertainment. Our solutions leverage the latest AR/VR technologies to create engaging, interactive experiences that captivate users.",
+      "benefits": [
+        "Immersive experiences",
+        "Enhanced engagement",
+        "Training simulations",
+        "Virtual showrooms",
+        "Interactive marketing",
+        "Cross-platform support"
+      ],
+      "technologies": ["Unity", "Unreal Engine", "ARKit", "ARCore", "Oculus SDK", "Vuforia"],
+      "deliverables": [
+        "AR/VR application",
+        "3D modeling",
+        "Interactive experiences",
+        "Platform deployment",
+        "User testing",
+        "Documentation"
+      ],
+      "timeline": "12-28 weeks depending on complexity"
+    },
+    {
+      "title": "RPA",
+      "detailedDesc": "Automate repetitive tasks and workflows with Robotic Process Automation. We implement RPA bots that handle data entry, report generation, and routine processes, freeing your team to focus on high-value work. Our RPA solutions integrate seamlessly with existing systems.",
+      "benefits": [
+        "Process automation",
+        "Increased efficiency",
+        "Error reduction",
+        "Cost savings",
+        "24/7 operation",
+        "Easy integration"
+      ],
+      "technologies": ["UiPath", "Automation Anywhere", "Blue Prism", "Python", "Power Automate"],
+      "deliverables": [
+        "Bot development",
+        "Process automation",
+        "Workflow optimization",
+        "Integration setup",
+        "Documentation",
+        "Training"
+      ],
+      "timeline": "6-16 weeks depending on processes"
+    }
+  ],
+  "marketing": [
+    {
+      "title": "SEO & SEM",
+      "detailedDesc": "Increase online visibility and drive qualified traffic with search engine optimization and marketing. We implement technical SEO, conduct keyword research, and manage Google Ads campaigns to improve your search rankings and conversion rates.",
+      "benefits": [
+        "Improved search rankings",
+        "Increased organic traffic",
+        "Higher conversion rates",
+        "Better ROI",
+        "Brand visibility",
+        "Competitive advantage"
+      ],
+      "technologies": ["Google Analytics", "Google Ads", "SEMrush", "Ahrefs", "Google Search Console"],
+      "deliverables": [
+        "Technical SEO audit",
+        "Keyword research",
+        "Google Ads campaigns",
+        "Content optimization",
+        "Performance reports",
+        "Ongoing optimization"
+      ],
+      "timeline": "Ongoing service with 4-8 weeks initial setup"
+    },
+    {
+      "title": "Social Media",
+      "detailedDesc": "Build brand awareness and engage audiences across social media platforms. We create social media strategies, manage content creation, and handle community management to grow your social presence and drive engagement.",
+      "benefits": [
+        "Brand awareness",
+        "Audience engagement",
+        "Lead generation",
+        "Community building",
+        "Content strategy",
+        "Analytics insights"
+      ],
+      "technologies": ["Hootsuite", "Buffer", "Canva", "Facebook Ads", "Instagram", "LinkedIn"],
+      "deliverables": [
+        "Social strategy",
+        "Content calendar",
+        "Content creation",
+        "Community management",
+        "Ad campaigns",
+        "Performance reports"
+      ],
+      "timeline": "Ongoing service with 2-4 weeks strategy development"
+    },
+    {
+      "title": "Analytics & Insights",
+      "detailedDesc": "Measure and optimize marketing performance with advanced analytics. We implement tracking, create dashboards, and provide actionable insights to improve your marketing ROI. Our data-driven approach ensures every marketing dollar is well spent.",
+      "benefits": [
+        "Data-driven decisions",
+        "ROI measurement",
+        "Performance tracking",
+        "A/B testing",
+        "Attribution modeling",
+        "Optimization insights"
+      ],
+      "technologies": ["Google Analytics", "Google Tag Manager", "Mixpanel", "Tableau", "Data Studio"],
+      "deliverables": [
+        "Analytics setup",
+        "Custom dashboards",
+        "A/B testing framework",
+        "Attribution models",
+        "Performance reports",
+        "Optimization recommendations"
+      ],
+      "timeline": "4-10 weeks setup + ongoing analysis"
+    }
+  ]
+}

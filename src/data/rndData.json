@@ -1,0 +1,501 @@
+{
+  "projects": [
+    {
+      "id": "ai-attendance-monitoring",
+      "title": "AI CCTV Attendance & Monitoring System",
+      "domain": "AI & Computer Vision",
+      "desc": "Hardware-agnostic AI attendance system that connects to existing CCTV/IP cameras and turnstiles for contactless, high-accuracy facial recognition attendance with real-time monitoring.",
+      "impact": "99.9% accuracy with anti-spoofing technology, zero-touch payroll sync, and real-time shift integrity alerts across all gates and locations.",
+      "fullDescription": "A hardware-agnostic AI attendance solution that connects to your existing CCTV/IP cameras and turnstiles for a setup that takes days, not months. Military-grade facial recognition distinguishes between a real face and a photo/video, reducing payroll fraud. Attendance logs push directly to SAP, Oracle, or your HRMS, eliminating manual Excel uploads and data entry errors.",
+      "objectives": [
+        "Deliver 99.9% accurate facial recognition with anti-spoofing technology",
+        "Enable zero-touch payroll synchronization with existing HRMS systems",
+        "Provide real-time shift monitoring and integrity alerts",
+        "Ensure privacy-first architecture with 100% on-premise edge processing",
+        "Detect ghost shifts, tailgating, and unauthorized access attempts",
+        "Integrate seamlessly with existing CCTV infrastructure without replacement"
+      ],
+      "methodology": [
+        "Connect AI to existing CCTV/IP cameras and turnstiles",
+        "Implement military-grade anti-spoofing facial recognition",
+        "Develop direct integration with SAP, Oracle, and HRMS systems",
+        "Deploy privacy-first edge processing architecture",
+        "Create real-time alert system for shift shortfalls and late arrivals",
+        "Build guard app for instant visual verification of clock-ins",
+        "Integrate digital visitor management with ID scanning"
+      ],
+      "technologies": [
+        "Facial Recognition",
+        "Anti-Spoofing Technology",
+        "Edge Computing",
+        "HRMS Integration (SAP, Oracle)",
+        "Real-Time Alert Systems",
+        "Guard Mobile Application",
+        "Digital Visitor Management",
+        "CCTV/IP Camera Integration"
+      ],
+      "timeline": "Rapid deployment with minimal setup time and efficiency",
+      "teamSize": "AI engineering team with security and HRMS specialists",
+      "outcomes": [
+        "99.9% accuracy in detection and classification",
+        "Zero payroll fraud through anti-spoofing",
+        "Real-time shift integrity monitoring",
+        "Ghost shift detection and prevention",
+        "Instant visual verification via guard app",
+        "Digital visitor management with searchable cloud logs"
+      ],
+      "features": [
+        "Hardware-Agnostic Deployment",
+        "Military-Grade Anti-Spoofing",
+        "Privacy-First Edge Processing",
+        "Zero-Touch Payroll Sync",
+        "Real-Time Shift Alerts",
+        "Ghost Shift Detection",
+        "Unauthorized Access Alerts",
+        "Live Gate Intelligence with Guard App",
+        "Digital Visitor Management"
+      ],
+      "targetAudience": [
+        "Corporate Enterprises requiring automated attendance",
+        "Industrial & Manufacturing Units with shift-based workforce",
+        "Educational Institutions seeking student/staff attendance",
+        "Healthcare Facilities with controlled access needs",
+        "Government & Public Sector with security compliance",
+        "Gated Communities & High-Security Zones"
+      ]
+    },
+    {
+      "id": "ai-class-lab-assistance",
+      "title": "AI CCTV Class & Lab Assistance System",
+      "domain": "AI & Computer Vision",
+      "desc": "AI-powered classroom and laboratory attendance system using facial recognition with CCTV cameras, eliminating roll calls and enabling automated lab hour tracking.",
+      "impact": "Zero-touch attendance with seamless timetable integration, real-time notifications, and comprehensive academic management dashboards.",
+      "fullDescription": "Powered by advanced facial recognition technology, the system identifies students in real time using CCTV or IP cameras. Attendance is marked instantly and securely, eliminating the need for roll calls or biometric touchpoints. The Lab Monitoring System detects entry/exit times to ensure students meet mandatory practical hours without manual logging. Integrates seamlessly with academic timetables and ERP systems.",
+      "objectives": [
+        "Eliminate proxy attendance through real-time facial recognition",
+        "Automate lab hour tracking for mandatory practical sessions",
+        "Integrate with existing academic timetables and ERPs",
+        "Provide real-time attendance reports and notifications",
+        "Offer AI insights on participation and discipline trends",
+        "Centralize record-keeping across all departments"
+      ],
+      "methodology": [
+        "Deploy real-time face detection and matching across CCTV feeds",
+        "Implement automated entry/exit logging for labs",
+        "Integrate with academic timetables and ERP systems",
+        "Build customizable dashboards for stakeholders",
+        "Create alert system for attendance updates and discrepancies",
+        "Develop analytics engine for participation and discipline insights"
+      ],
+      "technologies": [
+        "Facial Recognition",
+        "Real-Time Video Analytics",
+        "ERP Integration (Oracle, Camu, PeopleSoft)",
+        "LMS Integration",
+        "Automated Alert Systems",
+        "Academic Dashboard",
+        "Mobile Application",
+        "Edge Processing"
+      ],
+      "timeline": "Ready for seamless institutional platform deployment",
+      "teamSize": "AI and education technology integration team",
+      "outcomes": [
+        "Zero-touch, error-free attendance tracking",
+        "Automated lab hour compliance monitoring",
+        "Seamless timetable and roster synchronization",
+        "Real-time stakeholder notifications",
+        "AI-powered participation analytics",
+        "Centralized departmental record-keeping"
+      ],
+      "features": [
+        "Real-Time Face Detection",
+        "Proxy Attendance Elimination",
+        "Automated Lab Hour Tracking",
+        "Timetable Integration",
+        "Real-Time Attendance Reports",
+        "Stakeholder Notifications",
+        "Academic Analytics Dashboard",
+        "Multi-Department Centralization"
+      ],
+      "targetAudience": [
+        "Schools and Educational Institutions",
+        "Universities and Colleges",
+        "Training Centers",
+        "Laboratory-Intensive Programs",
+        "Research Institutions"
+      ]
+    },
+    {
+      "id": "virtual-office",
+      "title": "Virtual Office - Gamified 2D Digital Workplace",
+      "domain": "Virtual Collaboration & Gamification",
+      "desc": "A 2D interactive digital workplace that recreates a real office environment in a gamified virtual world with avatar-based presence, auto-triggered meetings, integrated task management, and secure cloud storage.",
+      "impact": "Unified platform combining meetings, tasks, storage, and collaboration with gamified employee engagement and real-time presence awareness.",
+      "fullDescription": "Virtual Office is a 2D interactive digital workplace that recreates a real office environment in a gamified virtual world. Employees enter the office using avatars, move through cabins, meeting rooms, and common areas, and collaborate in real time - all from a single web platform. The design mirrors a real-world office with individual cabins, team meeting rooms, conference halls, common areas, and admin control zones.",
+      "objectives": [
+        "Create an engaging 2D virtual office with avatar-based presence",
+        "Enable room-based automatic meetings without external links",
+        "Integrate task assignment and workflow monitoring",
+        "Provide secure organizational cloud storage with permissions",
+        "Implement leave management with presence integration",
+        "Deliver real-time collaboration and transparency"
+      ],
+      "methodology": [
+        "Design top-down 2D office map with intuitive navigation",
+        "Develop customizable 2D avatars with arrow-key movement",
+        "Implement room-based auto-triggered audio/video meetings",
+        "Build task management system with deadlines and progress tracking",
+        "Create secure office drive with folder-level permissions",
+        "Integrate leave management with virtual presence status"
+      ],
+      "technologies": [
+        "2D Interactive Map Engine",
+        "Real-Time Communication (WebRTC)",
+        "Avatar Presence System",
+        "Task Management System",
+        "Cloud Storage (Private Drive)",
+        "Leave Management Integration",
+        "Real-Time Presence Dashboard"
+      ],
+      "timeline": "Ready for organizational deployment",
+      "teamSize": "Virtual workplace UX team",
+      "outcomes": [
+        "Enhanced employee engagement through gamification",
+        "Reduced context switching between multiple tools",
+        "Transparent presence and availability tracking",
+        "Streamlined task and workflow management",
+        "Secure centralized document storage",
+        "Integrated leave and attendance visibility"
+      ],
+      "features": [
+        "2D Interactive Office Map",
+        "Customizable Avatars",
+        "Room-Based Auto Meetings",
+        "Integrated Task Management",
+        "Private Office Drive",
+        "Leave Management System",
+        "Real-Time Presence",
+        "Admin Control Dashboard"
+      ],
+      "targetAudience": [
+        "Corporate Enterprises",
+        "Remote-First Companies",
+        "Hybrid Workplaces",
+        "Startups",
+        "Service-Based Organizations"
+      ]
+    },
+    {
+      "id": "virtual-industry",
+      "title": "Virtual Industry - Smart Safety & Workforce Monitoring",
+      "domain": "Industrial IoT & Safety Systems",
+      "desc": "A 2D digital twin of industrial environments with real-time employee tracking using UWB bands, automatic in/out time recording, live camera feeds, and fail-safe emergency communication.",
+      "impact": "Enhanced worker safety through real-time location tracking, automated attendance, and reliable emergency alerts even during network/power failures.",
+      "fullDescription": "Virtual Industry creates a 2D digital twin of high-risk industrial environments such as mining sites, oil & gas plants, construction zones, and heavy manufacturing units. The system combines camera-based tracking, UWB wearable bands, emergency communication systems, and a virtual map interface to ensure worker safety, productivity, and fast emergency response.",
+      "objectives": [
+        "Create pixel-perfect 2D digital twin of industrial areas",
+        "Enable real-time employee location tracking with UWB bands",
+        "Automate in-time and out-time recording",
+        "Provide live camera feeds from any zone",
+        "Deploy smart emergency notice boards with battery backup",
+        "Implement restricted area detection with instant alerts"
+      ],
+      "methodology": [
+        "Design 2D virtual maps matching exact industrial layouts",
+        "Integrate UWB wearable bands for accurate location tracking",
+        "Deploy smart notice boards with LoRa communication modules",
+        "Implement battery backup for emergency reliability",
+        "Create restricted zone monitoring with camera integration",
+        "Build centralized admin dashboard for complete visibility"
+      ],
+      "technologies": [
+        "2D Digital Twin Technology",
+        "UWB Wearable Bands",
+        "LoRa Communication",
+        "Real-Time Location Tracking",
+        "Smart LED Notice Boards",
+        "Camera Integration",
+        "Emergency Alert System",
+        "Battery Backup Systems"
+      ],
+      "timeline": "Ready for industrial deployment",
+      "teamSize": "Industrial IoT Safety Engineering",
+      "outcomes": [
+        "Real-time worker location visibility during emergencies",
+        "Automated attendance with accurate time logging",
+        "Instant emergency alerts with battery backup",
+        "Restricted area monitoring with immediate notifications",
+        "Centralized safety and workforce dashboard",
+        "Predictive safety analytics for risk prevention"
+      ],
+      "features": [
+        "2D Industrial Digital Twin",
+        "UWB Wearable Tracking",
+        "Automated In/Out Timing",
+        "Live Camera Zone Feeds",
+        "Smart Emergency Notice Boards",
+        "Restricted Area Alerts",
+        "Battery Backup & LoRa Communication",
+        "Centralized Admin Dashboard"
+      ],
+      "targetAudience": [
+        "Mining Sites",
+        "Oil & Gas Plants",
+        "Construction Zones",
+        "Heavy Manufacturing Units",
+        "Industrial Facilities",
+        "High-Risk Work Environments"
+      ]
+    },
+    {
+      "id": "virtual-campus",
+      "title": "Virtual Campus - Smart AI-Powered Digital Twin for Education",
+      "domain": "EdTech & AI",
+      "desc": "A 2D digital twin of educational campuses with real-time student/staff tracking, automated period-wise attendance, interactive digital notice boards, and restricted area monitoring.",
+      "impact": "Complete campus visibility with live student tracking, AI attendance, and fail-safe communication during emergencies.",
+      "fullDescription": "Virtual Campus creates a 2D digital twin of real school campuses, accessible via web and mobile platforms. It gives administrators a live, interactive view of the entire institution, combining AI, IoT, cameras, and low-network communication technologies into a single intelligent system. Cameras and sensors track real-time movement of students and staff with live location displayed directly on the virtual campus map.",
+      "objectives": [
+        "Create pixel-perfect 2D digital twin of educational campuses",
+        "Enable real-time student and staff location tracking",
+        "Automate period-wise attendance with AI cameras",
+        "Deploy interactive digital notice boards in every classroom",
+        "Ensure fail-safe emergency communication with battery backup",
+        "Monitor restricted areas with instant alerts"
+      ],
+      "methodology": [
+        "Design 2D virtual campus maps with classrooms, labs, and zones",
+        "Integrate AI cameras for automated period-wise attendance",
+        "Deploy IoT-based notice boards with P10 LED displays",
+        "Implement LoRa communication for low-network reliability",
+        "Add battery backup for power failure situations",
+        "Create restricted zone monitoring with instant alerts"
+      ],
+      "technologies": [
+        "2D Digital Twin Technology",
+        "AI Camera Systems",
+        "Facial Recognition",
+        "IoT Notice Boards (P10 LED)",
+        "LoRa Communication",
+        "Real-Time Location Tracking",
+        "Mobile/Web Dashboards",
+        "Battery Backup Systems"
+      ],
+      "timeline": "Ready for institutional deployment",
+      "teamSize": "EdTech and IoT engineering team",
+      "outcomes": [
+        "Complete campus situational awareness",
+        "Automated attendance saving teaching time",
+        "Real-time student location visibility",
+        "Instant emergency alerts and announcements",
+        "Fail-safe communication during network/power outages",
+        "Centralized campus management dashboard"
+      ],
+      "features": [
+        "2D Digital Campus Twin",
+        "Live Student/Staff Tracking",
+        "Automated Period Attendance",
+        "Live Classroom Camera Feeds",
+        "Interactive Digital Notice Boards",
+        "Restricted Area Monitoring",
+        "Fail-Safe Emergency Communication",
+        "Cross-Platform Access (Web/Mobile)"
+      ],
+      "targetAudience": [
+        "Schools",
+        "Colleges and Universities",
+        "Educational Institutions",
+        "Campus Administrators",
+        "Security Teams"
+      ]
+    },
+    {
+      "id": "gsin-global-student-industry-network",
+      "title": "GSIN - Global Student Industry Network",
+      "domain": "EdTech, Virtual Collaboration & Industry Integration",
+      "desc": "A large-scale 2D interactive virtual learning ecosystem with domain-based blocks, avatar-based presence, auto-triggered meetings, built-in industry tools, and AI+human mentorship.",
+      "impact": "Transforms static online learning into an interactive, industry-aligned digital campus with real-time collaboration, mentorship, and gamified skill development.",
+      "fullDescription": "Global Student Industry Network (GSIN) is a large-scale 2D interactive virtual learning ecosystem inspired by the concept of a virtual campus and expanded to a global, industry-aligned level. The platform provides a top-down 2D interactive map-based environment divided into domain-based blocks (Software Development, AI & Data Science, Embedded Systems, Robotics, 3D Design, Industry Research). Students enter using custom avatars, move through blocks, floors, and rooms, and collaborate in real time using built-in tools, meetings, AI support, and mentorship — all within a single integrated system.",
+      "objectives": [
+        "Create domain-based virtual blocks for specialized learning",
+        "Enable avatar-based real-time presence and collaboration",
+        "Implement auto-triggered room-based audio/video meetings",
+        "Integrate built-in industry tools (compilers, simulators, 3D design)",
+        "Provide AI assistant and human mentor support per room",
+        "Connect LMS features with interactive virtual campus",
+        "Host global events, webinars, and hackathons",
+        "Ensure secure access control and data privacy across the platform"
+      ],
+      "methodology": [
+        "Design domain-based blocks with structured floor and room layouts",
+        "Develop avatar-based real-time presence system with arrow-key navigation",
+        "Implement auto-triggered room-based audio/video meeting functionality",
+        "Integrate built-in compilers, simulators, and 3D design tools",
+        "Embed AI assistant functionality inside every interactive room",
+        "Connect LMS features with virtual campus interactions",
+        "Host webinars, hackathons, and industry events inside dedicated virtual spaces"
+      ],
+      "technologies": [
+        "2D Interactive Map Engine",
+        "Real-Time Communication (WebRTC)",
+        "Avatar Presence System",
+        "AI Assistant Integration",
+        "Collaborative Coding Tools",
+        "3D Simulation Tools",
+        "Embedded Systems Simulators",
+        "LMS Integration",
+        "Gamification Engine"
+      ],
+      "timeline": "Scalable development approach with structured phased implementation",
+      "teamSize": "Cross-functional team of developers, AI engineers, designers, and mentors",
+      "outcomes": [
+        "Interactive 2D campus-style digital learning environment",
+        "Room-based automatic meetings with contextual collaboration",
+        "Integrated coding, simulation, and design tools within platform",
+        "AI and human mentorship support system",
+        "Unified LMS and live interaction ecosystem",
+        "Global event hosting with competitive and collaborative engagement"
+      ],
+      "features": [
+        "Domain-Based Virtual Blocks",
+        "Floor & Room-Based Interactive Design",
+        "2D Avatar-Based Presence",
+        "Auto-Triggered Room Meetings",
+        "Built-In Industry Tools",
+        "AI Assistant Per Room",
+        "Live Human Mentorship",
+        "Integrated LMS Portal",
+        "Gamified Learning System",
+        "Global Events & Hackathons"
+      ],
+      "targetAudience": [
+        "Students seeking industry-aligned practical learning",
+        "Educational institutions adopting interactive digital campuses",
+        "Industry professionals and mentors providing guidance",
+        "Training organizations offering domain-specific programs",
+        "Innovation and research communities collaborating globally"
+      ]
+    },
+    {
+      "id": "stackenzo-retro-tracking",
+      "title": "Stackenzo Retroactive Person Tracking",
+      "domain": "AI Surveillance & Investigation",
+      "desc": "AI-powered retroactive person tracking platform that enables investigators to identify individuals and trace their movements across multiple CCTV cameras within a defined historical window.",
+      "impact": "Reduces investigation time from days to minutes with cross-camera movement reconstruction and human-in-the-loop verification.",
+      "fullDescription": "Stackenzo AI-Powered Retroactive Person Tracking is an intelligent investigation and surveillance analytics platform designed for environments with extensive CCTV infrastructure, such as industrial facilities, warehouses, and large campuses. The platform enables authorized investigators to retrospectively identify a person of interest and automatically trace their movements across multiple cameras within a defined historical window (7-14 days). By combining AI-based video analytics and person re-identification, Stackenzo significantly reduces investigation time while maintaining strict governance, privacy, and compliance standards.",
+      "objectives": [
+        "Enable retroactive person search using reference images",
+        "Reconstruct cross-camera movement timelines",
+        "Provide time-bound investigative intelligence (7-14 days)",
+        "Implement human-in-the-loop verification workflows",
+        "Ensure privacy-aware, auditable system usage",
+        "Transform recorded video into searchable operational intelligence"
+      ],
+      "methodology": [
+        "Continuously index people appearing in CCTV footage",
+        "Generate AI feature embeddings for person re-identification",
+        "Store secure metadata for retroactive search",
+        "Build cross-camera movement timelines",
+        "Implement role-based access and audit logging",
+        "Create human verification workflow for all detections"
+      ],
+      "technologies": [
+        "AI-Based Video Analytics",
+        "Person Re-Identification",
+        "Feature Embedding Generation",
+        "Cross-Camera Tracking",
+        "Secure Metadata Indexing",
+        "Human-in-the-Loop Verification",
+        "Audit Logging System"
+      ],
+      "timeline": "Ready for deployment in large-scale environments",
+      "teamSize": "AI surveillance and investigation specialists",
+      "outcomes": [
+        "Faster investigations with automated person tracing",
+        "Reduced manpower costs for manual video review",
+        "Improved compliance enforcement",
+        "Enhanced safety outcomes",
+        "Better utilization of CCTV investments",
+        "Real-time incident detection and alerts"
+      ],
+      "features": [
+        "Retroactive Person Search",
+        "Cross-Camera Movement Timeline",
+        "AI-Based Person Re-Identification",
+        "Secure Metadata Indexing",
+        "Human-in-the-Loop Verification",
+        "Role-Based Access Control",
+        "Audit Logging",
+        "Time-Bound Investigation Window (7-14 days)"
+      ],
+      "targetAudience": [
+        "Industrial Factories",
+        "Manufacturing Plants",
+        "Warehouses",
+        "Logistics Hubs",
+        "Large Institutional Campuses",
+        "Restricted-Access Facilities"
+      ]
+    },
+    {
+      "id": "stackenzo-person-tracking-alert",
+      "title": "Stackenzo Camera-Based Person Tracking & Alert Platform",
+      "domain": "AI Surveillance & Public Safety",
+      "desc": "Real-time AI-powered person identification and tracking across distributed camera networks with automated alerts and response coordination.",
+      "impact": "Enables proactive security with real-time identification, multi-camera tracking, and instant alerting to nearest response units.",
+      "fullDescription": "Stackenzo AI-Powered Camera-Based Person Tracking and Alert Platform transforms traditional surveillance systems into proactive, AI-driven intelligence tools capable of identifying, tracking, and responding to person-centric events across distributed camera networks. Authorized personnel can upload an image of a person of interest, after which the system continuously scans live camera feeds to identify matches and trigger alerts when detections occur. The platform supports law enforcement agencies, public safety authorities, and institutional operators by enabling real-time awareness, automated alerts, and data-backed decision-making.",
+      "objectives": [
+        "Enable real-time person identification across camera networks",
+        "Track individuals across multiple camera locations",
+        "Generate location-aware alerts with image evidence",
+        "Identify nearest response units automatically",
+        "Provide secure image upload and authorization controls",
+        "Maintain comprehensive audit logs for accountability"
+      ],
+      "methodology": [
+        "Deploy AI-based facial recognition on live camera feeds",
+        "Implement multi-camera tracking with location mapping",
+        "Create automated alert system with nearest unit identification",
+        "Optimize frame selection for scalable processing",
+        "Integrate role-based access and encrypted data handling",
+        "Build centralized operational dashboards"
+      ],
+      "technologies": [
+        "Real-Time Facial Recognition",
+        "Multi-Camera Tracking",
+        "Location Mapping",
+        "Automated Alert System",
+        "Scalable AI Processing",
+        "Encrypted Data Handling",
+        "Role-Based Access Control",
+        "Operational Dashboard"
+      ],
+      "timeline": "Ready for secure public safety deployment systems",
+      "teamSize": "AI surveillance and public safety specialists with security",
+      "outcomes": [
+        "Real-time identification of persons of interest",
+        "Automated multi-camera tracking",
+        "Instant alerts to nearest response units",
+        "Reduced manual monitoring burden",
+        "Enhanced public safety response times",
+        "Centralized monitoring and control system"
+      ],
+      "features": [
+        "Intelligent Person Identification",
+        "Multi-Camera Tracking",
+        "Real-Time Alerts",
+        "Location Mapping",
+        "Nearest Unit Identification",
+        "Secure Image Upload",
+        "Audit Logging",
+        "Centralized Dashboard"
+      ],
+      "targetAudience": [
+        "Law Enforcement Agencies",
+        "Public Safety Authorities",
+        "Institutional Security Teams",
+        "Critical Infrastructure Operators",
+        "Smart City Surveillance"
+      ]
+    }
+  ]
+}

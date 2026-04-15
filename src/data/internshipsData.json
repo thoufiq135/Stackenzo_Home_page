@@ -1,0 +1,117 @@
+{
+  "internships": [
+    {
+      "id": "web-dev-intern",
+      "title": "Web Development Internship",
+      "duration": "2-6 months",
+      "type": "Full-time/Part-time",
+      "description": "Learn modern web development with hands-on experience in frontend and backend technologies. Work on real client projects and build a professional portfolio.",
+      "technologies": ["React", "Node.js", "MongoDB", "Express", "JavaScript", "HTML/CSS"],
+      "suitedFor": ["CSE", "IT", "ECE"],
+      "requirements": [
+        "Basic knowledge of HTML, CSS, JavaScript",
+        "Familiarity with any programming language",
+        "Eagerness to learn and work on real projects",
+        "Good communication skills"
+      ],
+      "learningOutcomes": [
+        "Build responsive web applications",
+        "Work with databases and APIs",
+        "Version control with Git",
+        "Deploy applications to cloud platforms",
+        "Collaborate in development teams"
+      ],
+      "projects": [
+        "E-commerce website with payment integration",
+        "Social media dashboard",
+        "Real-time chat application",
+        "Portfolio website with CMS"
+      ]
+    },
+    {
+      "id": "mobile-dev-intern",
+      "title": "Mobile App Development Internship",
+      "duration": "3-6 months",
+      "type": "Full-time",
+      "description": "Develop native and cross-platform mobile applications for Android and iOS. Learn app store deployment and mobile-specific design patterns.",
+      "technologies": ["React Native", "Flutter", "Android Studio", "Xcode", "Firebase"],
+      "suitedFor": ["CSE", "IT", "ECE"],
+      "requirements": [
+        "Basic programming knowledge",
+        "Understanding of mobile app concepts",
+        "Interest in mobile technology",
+        "Problem-solving skills"
+      ],
+      "learningOutcomes": [
+        "Build cross-platform mobile apps",
+        "Implement push notifications",
+        "Work with device APIs",
+        "App store deployment process",
+        "Mobile UI/UX best practices"
+      ],
+      "projects": [
+        "Task management mobile app",
+        "Food delivery app with GPS tracking",
+        "Social networking app",
+        "Educational quiz app"
+      ]
+    },
+    {
+      "id": "iot-embedded-intern",
+      "title": "IoT & Embedded Systems Internship",
+      "duration": "2-4 months",
+      "type": "Full-time",
+      "description": "Design and develop IoT solutions and embedded systems. Work with sensors, microcontrollers, and cloud platforms to create smart devices.",
+      "technologies": ["Arduino", "Raspberry Pi", "ESP32", "C/C++", "Python", "MQTT", "AWS IoT"],
+      "suitedFor": ["ECE", "EEE", "CSE", "IT"],
+      "requirements": [
+        "Basic electronics knowledge",
+        "Programming experience in C/C++ or Python",
+        "Interest in hardware-software integration",
+        "Problem-solving mindset"
+      ],
+      "learningOutcomes": [
+        "Design IoT architectures",
+        "Program microcontrollers",
+        "Integrate sensors and actuators",
+        "Cloud connectivity and data management",
+        "Prototype development"
+      ],
+      "projects": [
+        "Smart home automation system",
+        "Environmental monitoring station",
+        "Industrial IoT dashboard",
+        "Wearable health monitoring device"
+      ]
+    },
+    {
+      "id": "digital-marketing-intern",
+      "title": "Digital Marketing & Content Creation Internship",
+      "duration": "2-4 months",
+      "type": "Full-time/Part-time",
+      "description": "Learn digital marketing strategies, content creation, and social media management. Work on real campaigns and build marketing skills for degree students.",
+      "technologies": ["Google Analytics", "Facebook Ads", "Instagram", "Canva", "SEO Tools", "Content Management"],
+      "suitedFor": ["MCA", "BCA", "BBA", "MBA"],
+      "requirements": [
+        "Basic computer skills",
+        "Interest in marketing and content creation",
+        "Good communication and writing skills",
+        "Creativity and analytical thinking"
+      ],
+      "learningOutcomes": [
+        "Develop digital marketing campaigns",
+        "Create engaging content for social media",
+        "Analyze marketing metrics and performance",
+        "Manage social media accounts",
+        "Learn SEO and content strategy"
+      ],
+      "projects": [
+        "Social media campaign for a local business",
+        "Content calendar and blog writing",
+        "Email marketing automation",
+        "Brand awareness campaign",
+        "Market research and competitor analysis"
+      ]
+    }
+  ]
+}
