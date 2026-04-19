@@ -501,7 +501,7 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                             </motion.div>
                             <div>
                               <p className="text-sm font-semibold" style={{ color: "#1A1A1A" }}>
-                                {dragOver ? "Drop your file here" : "Click to upload or Drag & Drop"}
+                                {dragOver ? "Drop your file here" : "Click to upload or drag & drop"}
                               </p>
                               <p className="text-xs text-gray-400 mt-0.5">PDF only · Max 5 MB</p>
                             </div>
