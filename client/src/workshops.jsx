@@ -435,15 +435,15 @@ function Workshops() {
     try {
       const response = await fetch("/api/queries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: queryForm.name, email: queryForm.email, phone: queryForm.phone, subject: queryForm.subject, category: queryForm.category, message: queryForm.message }) });
       if (response.ok) {
-        toast.success("Query submitted! We'll get back to you within 24 hours.", { duration: 5000, icon: "✅" });
+        toast.success("Query submitted! We'll get back to you within 24 hours.", { duration: 3000, icon: "✅" });
         setQueryForm({ name: "", email: "", phone: "", subject: "", category: "general", message: "", preferredContact: "email", preferredTime: "anytime" });
         setShowQueryForm(false);
       } else {
         const err = await response.json();
-        toast.error(err.message || "Failed to submit. Please try again.", { duration: 5000, icon: "❌" });
+        toast.error(err.message || "Failed to submit. Please try again.", { duration: 3000, icon: "❌" });
       }
     } catch {
-      toast.error("Network error. Please check your connection.", { duration: 5000, icon: "❌" });
+      toast.error("Network error. Please check your connection.", { duration: 3000, icon: "❌" });
     }
   };
 

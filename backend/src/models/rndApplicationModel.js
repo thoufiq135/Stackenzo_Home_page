@@ -1,55 +1,79 @@
-const { pool } = require('../config/database');
+const mongoose = require('mongoose');
+
+const rndApplicationSchema = new mongoose.Schema({
+  name: { type: String, required: true, maxlength: 255 },
+  email: { type: String, required: true, maxlength: 255 },
+  phone: { type: String, required: true, maxlength: 20 },
+  project_id: { type: String, required: true, maxlength: 255 },
+  project_title: { type: String, required: true, maxlength: 500 },
+  qualification: { type: String, required: true, maxlength: 255 },
+  institution: { type: String, required: true, maxlength: 255 },
+  cgpa: { type: Number, required: true, min: 0, max: 10 },
+  experience: { type: String },
+  research_interests: { type: String, required: true },
+  why_join: { type: String, required: true },
+  resume_url: { type: String, required: true },
+  status: { 
+    type: String, 
+    default: 'pending',
+    enum: ['pending', 'reviewed', 'shortlisted', 'accepted', 'rejected'],
+    maxlength: 20 
+  }
+}, {
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+  },
+  collection: 'rnd_applications'
+});
+
+const RNDApplicationModel = mongoose.model('RNDApplication', rndApplicationSchema);
 
 const rndApplicationModel = {
   create: async (applicationData) => {
-    const query = `
-      INSERT INTO rnd_applications 
-      (name, email, phone, project_id, project_title, qualification, institution, 
-       cgpa, experience, research_interests, why_join, resume_url, status, created_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, 'pending', NOW())
-      RETURNING id
-    `;
+    const application = new RNDApplicationModel({
+      name: applicationData.name,
+      email: applicationData.email,
+      phone: applicationData.phone,
+      project_id: applicationData.projectId,
+      project_title: applicationData.projectTitle,
+      qualification: applicationData.qualification,
+      institution: applicationData.institution,
+      cgpa: applicationData.cgpa,
+      experience: applicationData.experience,
+      research_interests: applicationData.researchInterests,
+      why_join: applicationData.whyJoin,
+      resume_url: applicationData.resumeUrl
+    });
     
-    const [rows] = await pool.query(query, [
-      applicationData.name,
-      applicationData.email,
-      applicationData.phone,
-      applicationData.projectId,
-      applicationData.projectTitle,
-      applicationData.qualification,
-      applicationData.institution,
-      applicationData.cgpa,
-      applicationData.experience,
-      applicationData.researchInterests,
-      applicationData.whyJoin,
-      applicationData.resumeUrl
-    ]);
-    
-    return rows[0].id;
+    const saved = await application.save();
+    return saved._id;
   },
 
-  getAll: async () => {
-    const query = 'SELECT * FROM rnd_applications ORDER BY created_at DESC';
-    const [rows] = await pool.query(query);
-    return rows;
+  getAll: async (filters = {}) => {
+    const query = {};
+    if (filters.status) query.status = filters.status;
+    if (filters.project_id) query.project_id = filters.project_id;
+    
+    return RNDApplicationModel.find(query).sort({ created_at: -1 });
   },
 
   getById: async (id) => {
-    const query = 'SELECT * FROM rnd_applications WHERE id = $1';
-    const [rows] = await pool.query(query, [id]);
-    return rows[0];
+    return RNDApplicationModel.findById(id);
   },
 
   updateStatus: async (id, status) => {
-    const query = 'UPDATE rnd_applications SET status = $1 WHERE id = $2';
-    const [result] = await pool.query(query, [status, id]);
-    return result.rowCount > 0;
+    const result = await RNDApplicationModel.findByIdAndUpdate(
+      id, 
+      { status }, 
+      { new: true }
+    );
+    return result !== null;
   },
 
   delete: async (id) => {
-    const query = 'DELETE FROM rnd_applications WHERE id = $1';
-    const [result] = await pool.query(query, [id]);
-    return result.rowCount > 0;
+    const result = await RNDApplicationModel.findByIdAndDelete(id);
+    return result !== null;
   }
 };
 

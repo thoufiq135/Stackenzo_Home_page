@@ -561,7 +561,7 @@ function SummerCampDetailsSection() {
               <ul className="space-y-3">
                 {[
                   // "4+ years of excellence in tech education",
-                  // "Trained over 5000+ students across India",
+                  // "Trained over 3000+ students across India",
                   "Partnerships with leading tech companies",
                   "Project-based learning approach",
                   "Career guidance & placement assistance",

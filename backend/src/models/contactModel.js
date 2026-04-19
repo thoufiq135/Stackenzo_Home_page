@@ -1,50 +1,57 @@
-const { pool } = require('../config/database');
+const mongoose = require('mongoose');
 
-class ContactModel {
+const contactSchema = new mongoose.Schema({
+  name: { type: String, required: true, maxlength: 255 },
+  email: { type: String, required: true, maxlength: 255 },
+  phone: { type: String, maxlength: 20 },
+  subject: { type: String, required: true, maxlength: 500 },
+  message: { type: String, required: true },
+  status: { 
+    type: String, 
+    default: 'new',
+    enum: ['new', 'in_progress', 'resolved'],
+    maxlength: 20 
+  }
+}, {
+  timestamps: true,
+  collection: 'contact_submissions'
+});
+
+const ContactModel = mongoose.model('Contact', contactSchema);
+
+class Contact {
   // Create new contact submission
   static async create(contactData) {
-    const { name, email, phone, subject, message } = contactData;
-    const result = await pool.query(
-      'INSERT INTO contact_submissions (name, email, phone, subject, message) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [name, email, phone, subject, message]
-    );
-    return result.rows[0].id;
+    const contact = new ContactModel(contactData);
+    const saved = await contact.save();
+    return saved._id;
   }
 
   // Get all contact submissions
   static async getAll(filters = {}) {
-    const query = 'SELECT * FROM contact_submissions ORDER BY created_at DESC';
-    const result = await pool.query(query);
-    return result.rows;
+    return ContactModel.find().sort({ createdAt: -1 });
   }
-
 
   // Get by ID
   static async getById(id) {
-    const result = await pool.query(
-      'SELECT * FROM contact_submissions WHERE id = $1',
-      [id]
-    );
-    return result.rows[0] || null;
+    return ContactModel.findById(id);
   }
 
   // Update status
   static async updateStatus(id, status) {
-    const result = await pool.query(
-      'UPDATE contact_submissions SET status = $1, updated_at = NOW() WHERE id = $2',
-      [status, id]
+    const result = await ContactModel.findByIdAndUpdate(
+      id, 
+      { status, updatedAt: new Date() }, 
+      { new: true }
     );
-    return result.rowCount > 0;
+    return !!result;
   }
 
   // Delete
   static async delete(id) {
-    const result = await pool.query(
-      'DELETE FROM contact_submissions WHERE id = $1',
-      [id]
-    );
-    return result.rowCount > 0;
+    const result = await ContactModel.findByIdAndDelete(id);
+    return !!result;
   }
 }
 
-module.exports = ContactModel;
+module.exports = Contact;

@@ -1,49 +1,69 @@
-const { pool } = require('../config/database');
+const mongoose = require('mongoose');
 
-class QuoteModel {
+const quoteSchema = new mongoose.Schema({
+  name: { type: String, required: true, maxlength: 255 },
+  email: { type: String, required: true, maxlength: 255 },
+  phone: { type: String, required: true, maxlength: 20 },
+  company: { type: String, maxlength: 255 },
+  service: { type: String, required: true, maxlength: 500 },
+  message: { type: String, required: true },
+  status: { 
+    type: String, 
+    default: 'pending',
+    enum: ['pending', 'reviewed', 'contacted', 'completed', 'rejected'],
+    maxlength: 20 
+  }
+}, {
+  timestamps: true,
+  collection: 'quote_requests'
+});
+
+const QuoteModel = mongoose.models.Quote || mongoose.model('Quote', quoteSchema);
+
+class Quote {
+  // Create new quote request
   static async create(quoteData) {
-    const { name, email, phone, company, service, message } = quoteData;
-    const result = await pool.query(
-      'INSERT INTO quote_requests (name, email, phone, company, service, message) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
-      [name, email, phone, company, service, message]
-    );
-    return result.rows[0].id;
+    const quote = new QuoteModel(quoteData);
+    const saved = await quote.save();
+    return saved._id;
   }
 
+  // Get all quote requests with optional status filter
   static async getAll(filters = {}) {
-    let query = 'SELECT * FROM quote_requests WHERE 1=1';
-    const params = [];
-    let paramIndex = 1;
-
+    const query = {};
     if (filters.status) {
-      query += ` AND status = $${paramIndex}`;
-      params.push(filters.status);
-      paramIndex++;
+      query.status = filters.status;
     }
-
-    query += ' ORDER BY created_at DESC';
-
+    
+    let dbQuery = QuoteModel.find(query).sort({ createdAt: -1 });
+    
     if (filters.limit) {
-      query += ` LIMIT $${paramIndex}`;
-      params.push(parseInt(filters.limit));
+      dbQuery = dbQuery.limit(parseInt(filters.limit));
     }
-
-    const result = await pool.query(query, params);
-    return result.rows;
+    
+    return dbQuery;
   }
 
+  // Get by ID
   static async getById(id) {
-    const result = await pool.query('SELECT * FROM quote_requests WHERE id = $1', [id]);
-    return result.rows[0];
+    return QuoteModel.findById(id);
   }
 
+  // Update status
   static async updateStatus(id, status) {
-    const result = await pool.query(
-      'UPDATE quote_requests SET status = $1 WHERE id = $2',
-      [status, id]
+    const result = await QuoteModel.findByIdAndUpdate(
+      id, 
+      { status }, 
+      { new: true }
     );
-    return result.rowCount > 0;
+    return !!result;
+  }
+
+  // Delete quote request
+  static async delete(id) {
+    const result = await QuoteModel.findByIdAndDelete(id);
+    return !!result;
   }
 }
 
-module.exports = QuoteModel;
+module.exports = Quote;

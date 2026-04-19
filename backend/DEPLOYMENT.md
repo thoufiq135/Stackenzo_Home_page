@@ -82,7 +82,7 @@ server {
     server_name api.stackenzo.com;
 
     location / {
-        proxy_pass http://localhost:5000;
+        proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -189,7 +189,7 @@ services:
 ### Production .env
 ```env
 NODE_ENV=production
-PORT=5000
+PORT=3000
 
 # Database (Use managed database)
 DB_HOST=your-db-host.com
@@ -483,7 +483,7 @@ ufw allow 3306
 2. **Port Already in Use**
 ```bash
 # Find process
-lsof -i :5000
+lsof -i :3000
 
 # Kill process
 kill -9 PID

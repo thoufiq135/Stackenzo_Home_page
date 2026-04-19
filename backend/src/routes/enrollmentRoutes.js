@@ -7,6 +7,9 @@ const { validateEnrollment, validateWorkshopRegistration } = require('../middlew
 router.post('/workshop/register', validateWorkshopRegistration, EnrollmentController.workshopRegister);
 router.get('/workshop/stats', EnrollmentController.getWorkshopStats);
 
+// ── Summer Camp routes ────────────────────────────────────────────────────
+router.post('/summer-camp/add_data', require('../middleware/validation').validateSummerCampRegistration, EnrollmentController.summerCampRegister);
+
 // Public routes
 router.post('/', validateEnrollment, EnrollmentController.submitEnrollment);
 

@@ -128,6 +128,19 @@ const validateQuery = [
   handleValidationErrors
 ];
 
+const validateSummerCampRegistration = [
+  body('StudentName').trim().notEmpty().withMessage('Student name is required'),
+  body('email').isEmail().withMessage('Valid email is required'),
+  body('CollegeName').trim().notEmpty().withMessage('College name is required'),
+  body('Class').trim().notEmpty().withMessage('Class is required'),
+  body('ParentName').trim().notEmpty().withMessage('Parent name is required'),
+  body('ParentNumber').trim().notEmpty().matches(/^[6-9]\d{9}$/).withMessage('Valid 10-digit parent phone required'),
+  body('StudentNumber').optional().trim().matches(/^[6-9]\d{9}$/).withMessage('Valid 10-digit student phone required'),
+  body('Location').trim().notEmpty().withMessage('Location is required'),
+  body('WhatsappNumber').trim().notEmpty().matches(/^[6-9]\d{9}$/).withMessage('Valid 10-digit WhatsApp number required'),
+  handleValidationErrors
+];
+
 // Workshop registration validation
 const validateWorkshopRegistration = [
   body('name').trim().notEmpty().withMessage('Name is required'),
@@ -158,5 +171,6 @@ module.exports = {
   validateRoboticsEnrollment,
   validateSchoolPartnership,
   validateQuery,
-  validateWorkshopRegistration
+  validateWorkshopRegistration,
+  validateSummerCampRegistration
 };

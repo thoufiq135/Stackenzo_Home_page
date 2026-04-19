@@ -26,7 +26,7 @@ function RNDApplicationModal({ isOpen, onClose, projectId = null, projectTitle =
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/rnd-applications", {
+      const response = await fetch("http://localhost:3000/api/rnd-applications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

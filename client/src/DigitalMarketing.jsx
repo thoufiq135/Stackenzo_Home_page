@@ -451,7 +451,7 @@ function DigitalMarketing() {
   const handleAuditSubmit = async (e) => {
     e.preventDefault(); setIsSubmitting(true);
     try {
-      const res = await fetch("http://localhost:5000/api/marketing-audit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(auditForm) });
+      const res = await fetch("http://localhost:3000/api/marketing-audit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(auditForm) });
       const data = await res.json();
       if (data.success) { alert("Thank you! We'll contact you within 24 hours with your free marketing audit."); setAuditForm({ name: "", email: "", phone: "", company: "", website: "", industry: "", currentMarketing: "", goals: "", budget: "" }); setShowAuditModal(false); }
       else { const msg = data.errors ? data.errors.map(e => e.msg || e.message).join(", ") : data.message; alert("Error: " + msg); }

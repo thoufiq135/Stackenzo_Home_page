@@ -13,8 +13,8 @@ function ResumeAdmin() {
   const fetchResumes = async () => {
     try {
       const url = statusFilter 
-        ? `http://localhost:5000/api/resumes?status=${statusFilter}`
-        : "http://localhost:5000/api/resumes";
+        ? `http://localhost:3000/api/resumes?status=${statusFilter}`
+        : "http://localhost:3000/api/resumes";
       
       const response = await fetch(url);
       const data = await response.json();
@@ -30,12 +30,12 @@ function ResumeAdmin() {
   };
 
   const viewResume = (id) => {
-    window.open(`http://localhost:5000/api/resumes/${id}/view`, '_blank');
+    window.open(`http://localhost:3000/api/resumes/${id}/view`, '_blank');
   };
 
   const downloadResume = async (id, filename) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/resumes/${id}/download`);
+      const response = await fetch(`http://localhost:3000/api/resumes/${id}/download`);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -53,7 +53,7 @@ function ResumeAdmin() {
 
   const updateStatus = async (id, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/resumes/${id}/status`, {
+      const response = await fetch(`http://localhost:3000/api/resumes/${id}/status`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json"

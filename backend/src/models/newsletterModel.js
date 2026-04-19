@@ -1,55 +1,64 @@
-const { pool } = require('../config/database');
+const mongoose = require('mongoose');
 
-class NewsletterModel {
-  // Subscribe
-  static async subscribe(email) {
+const newsletterSchema = new mongoose.Schema({
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true, 
+    maxlength: 255 
+  },
+  is_active: { type: Boolean, default: true },
+  subscribed_at: { type: Date, default: Date.now },
+  unsubscribed_at: Date
+}, {
+  timestamps: true,
+  collection: 'newsletter_subscribers'
+});
+
+const NewsletterModel = mongoose.model('Newsletter', newsletterSchema);
+
+class Newsletter {
+  // Create new subscriber (unique email)
+  static async create(subscriberData) {
     try {
-      const [rows] = await pool.query(
-        'INSERT INTO newsletter_subscribers (email) VALUES ($1) RETURNING id',
-        [email]
-      );
-      return rows[0].id;
+      const subscriber = new NewsletterModel(subscriberData);
+      const saved = await subscriber.save();
+      return saved._id;
     } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        // Reactivate if already exists
-        await pool.query(
-          'UPDATE newsletter_subscribers SET is_active = true, unsubscribed_at = NULL WHERE email = $1',
-          [email]
-        );
-        return true;
+      if (error.code === 11000) {
+        throw new Error('Email already subscribed');
       }
       throw error;
     }
   }
 
-  // Unsubscribe
-  static async unsubscribe(email) {
-    const [result] = await pool.query(
-      'UPDATE newsletter_subscribers SET is_active = false, unsubscribed_at = NOW() WHERE email = $1',
-      [email]
-    );
-    return result.rowCount > 0;
-  }
-
   // Get all subscribers
-  static async getAll(activeOnly = true) {
-    let query = 'SELECT * FROM newsletter_subscribers';
-    if (activeOnly) {
-      query += ' WHERE is_active = true';
+  static async getAll(filters = {}) {
+    const query = NewsletterModel.find();
+    if (filters.active !== undefined) {
+      query.where('is_active', filters.active);
     }
-    query += ' ORDER BY subscribed_at DESC';
-    
-    const [rows] = await pool.query(query);
-    return rows;
+    return query.sort({ createdAt: -1 });
   }
 
-  // Get count
-  static async getCount() {
-    const [rows] = await pool.query(
-      'SELECT COUNT(*) as count FROM newsletter_subscribers WHERE is_active = true'
-    );
-    return rows[0].count;
+  // Get by ID
+  static async getById(id) {
+    return NewsletterModel.findById(id);
+  }
+
+  // Update status (unsubscribe)
+  static async updateStatus(id, is_active, unsubscribed_at) {
+    const updateData = { is_active };
+    if (unsubscribed_at) updateData.unsubscribed_at = unsubscribed_at;
+    const result = await NewsletterModel.findByIdAndUpdate(id, updateData, { new: true });
+    return !!result;
+  }
+
+  // Delete
+  static async delete(id) {
+    const result = await NewsletterModel.findByIdAndDelete(id);
+    return !!result;
   }
 }
 
-module.exports = NewsletterModel;
+module.exports = Newsletter;

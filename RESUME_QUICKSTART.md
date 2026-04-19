@@ -7,7 +7,7 @@ The resume submission feature is fully implemented and ready to use.
 ## 🚀 Quick Start
 
 ### 1. Backend is Already Running
-Your backend server is already running on port 5000 with the resume API endpoints active.
+Your backend server is already running on port 3000 with the resume API endpoints active.
 
 ### 2. Test the Feature
 
@@ -36,7 +36,7 @@ Your backend server is already running on port 5000 with the resume API endpoint
 #### Option C: Test with cURL
 ```bash
 # Create a test PDF first or use an existing one
-curl -X POST http://localhost:5000/api/resumes/submit \
+curl -X POST http://localhost:3000/api/resumes/submit \
   -F "name=Test User" \
   -F "email=test@example.com" \
   -F "phone=9876543210" \

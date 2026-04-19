@@ -115,7 +115,7 @@ Create a `.env` file in the backend directory:
 
 ```env
 # Server
-PORT=5000
+PORT=3000
 NODE_ENV=development
 
 # Database
@@ -185,14 +185,14 @@ npm start
 
 ### Health Check
 ```bash
-curl http://localhost:5000/health
+curl http://localhost:3000/health
 ```
 
 ## 📚 API Documentation
 
 ### Base URL
 ```
-http://localhost:5000/api
+http://localhost:3000/api
 ```
 
 ---
@@ -400,17 +400,17 @@ All errors follow this format:
 ### Using cURL
 ```bash
 # Contact form
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST http://localhost:3000/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@test.com","subject":"Test","message":"Testing"}'
 
 # Get jobs
-curl http://localhost:5000/api/jobs/postings
+curl http://localhost:3000/api/jobs/postings
 ```
 
 ### Using Postman
 1. Import the API endpoints
-2. Set base URL: `http://localhost:5000/api`
+2. Set base URL: `http://localhost:3000/api`
 3. Test each endpoint
 
 ## 📝 Notes

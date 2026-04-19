@@ -30,15 +30,15 @@ npm run init-db
 npm run dev
 ```
 
-Server will start at: `http://localhost:5000`
+Server will start at: `http://localhost:3000`
 
 ### 5. Test the API
 ```bash
 # Health check
-curl http://localhost:5000/health
+curl http://localhost:3000/health
 
 # Test contact form
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST http://localhost:3000/api/contact \
   -H "Content-Type: application/json" \
   -d "{\"name\":\"Test User\",\"email\":\"test@test.com\",\"subject\":\"Test\",\"message\":\"Hello\"}"
 ```
@@ -67,7 +67,7 @@ curl -X POST http://localhost:5000/api/contact \
 
 ### Port Already in Use
 - Change PORT in .env
-- Or kill process: `npx kill-port 5000`
+- Or kill process: `npx kill-port 3000`
 
 ## 📡 API Endpoints Summary
 

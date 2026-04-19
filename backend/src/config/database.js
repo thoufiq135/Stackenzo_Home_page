@@ -1,36 +1,30 @@
-const { Pool } = require('pg');
+const mongoose = require('mongoose');
 require('dotenv').config({ path: './backend/.env' });
 
-// Validate required env vars
-if (!process.env.DB_PASSWORD) {
-  throw new Error('DB_PASSWORD is required in backend/.env');
-}
-if (!process.env.DB_USER) {
-  throw new Error('DB_USER is required in backend/.env');
+// Validate required env var
+if (!process.env.MONGODB_URI) {
+  throw new Error('MONGODB_URI is required in backend/.env');
 }
 
-// PostgreSQL connection pool
-const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: Number(process.env.DB_PORT || 5432),
-  database: process.env.DB_NAME || 'stackenzo_db',
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-});
+// MongoDB connection
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ MongoDB connected successfully');
+  } catch (error) {
+    console.error('❌ MongoDB connection failed:', error.message);
+    process.exit(1);
+  }
+};
 
 // Test connection
 const testConnection = async () => {
   try {
-    const res = await pool.query('SELECT 1 as ping');
-    console.log('✅ PostgreSQL connected successfully');
-    return true;
+    return mongoose.connection.readyState === 1; // 1 = connected
   } catch (error) {
-    console.error('❌ PostgreSQL connection failed:', error.message);
+    console.error('❌ MongoDB test connection failed:', error.message);
     return false;
   }
 };
 
-module.exports = { pool, testConnection };
+module.exports = { connectDB, testConnection };

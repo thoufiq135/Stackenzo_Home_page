@@ -102,19 +102,19 @@ FRONTEND_URL=http://localhost:5173
 
 ### Fetching Programs
 ```javascript
-const response = await fetch('http://localhost:5000/api/programs');
+const response = await fetch('http://localhost:3000/api/programs');
 const data = await response.json();
 setPrograms(data.programs);
 ```
 
 ### Filtering Programs
 ```javascript
-const response = await fetch('http://localhost:5000/api/programs?type=workshop&status=upcoming');
+const response = await fetch('http://localhost:3000/api/programs?type=workshop&status=upcoming');
 ```
 
 ### Registering for Program
 ```javascript
-const response = await fetch('http://localhost:5000/api/programs/register', {
+const response = await fetch('http://localhost:3000/api/programs/register', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -154,7 +154,7 @@ Automatic emails sent on:
 
 ### Test Program Creation
 ```bash
-curl -X POST http://localhost:5000/api/programs \
+curl -X POST http://localhost:3000/api/programs \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Test Workshop",
@@ -171,7 +171,7 @@ curl -X POST http://localhost:5000/api/programs \
 
 ### Test Registration
 ```bash
-curl -X POST http://localhost:5000/api/programs/register \
+curl -X POST http://localhost:3000/api/programs/register \
   -H "Content-Type: application/json" \
   -d '{
     "programId": 1,

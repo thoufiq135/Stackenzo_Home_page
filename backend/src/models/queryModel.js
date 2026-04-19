@@ -1,69 +1,51 @@
-const { pool } = require('../config/database');
+const mongoose = require('mongoose');
+
+const querySchema = new mongoose.Schema({
+  name: { type: String, required: true, maxlength: 255 },
+  email: { type: String, required: true, maxlength: 255 },
+  phone: { type: String, maxlength: 20 },
+  subject: { type: String, required: true, maxlength: 500 },
+  message: { type: String, required: true },
+  status: { 
+    type: String, 
+    default: 'new',
+    enum: ['new', 'in_progress', 'resolved'],
+    maxlength: 20 
+  }
+}, {
+  timestamps: true,
+  collection: 'queries'
+});
+
+const Query = mongoose.models.Query || mongoose.model('Query', querySchema);
 
 class QueryModel {
-  // Create new query submission
   static async create(queryData) {
-    const { name, email, phone, subject, category, message } = queryData;
-    console.log('📝 Inserting query into database:', { name, email, subject, category });
-    const [rows] = await pool.query(
-      'INSERT INTO queries (name, email, phone, subject, category, message) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
-      [name, email, phone, subject, category, message]
-    );
-    console.log('✅ Query inserted successfully, ID:', rows[0].id);
-    return rows[0].id;
+    const query = new Query(queryData);
+    const saved = await query.save();
+    return saved._id;
   }
 
-  // Get all queries
   static async getAll(filters = {}) {
-    let query = 'SELECT * FROM queries WHERE 1=1';
-    const params = [];
-
+    const query = {};
     if (filters.status) {
-      query += ' AND status = ?';
-      params.push(filters.status);
+      query.status = filters.status;
     }
-
-    if (filters.category) {
-      query += ' AND category = ?';
-      params.push(filters.category);
-    }
-
-    query += ' ORDER BY created_at DESC';
-
-    if (filters.limit) {
-      query += ' LIMIT ?';
-      params.push(parseInt(filters.limit));
-    }
-
-    const [rows] = await pool.query(query, params);
-    return rows;
+    return Query.find(query).sort({ createdAt: -1 });
   }
 
-  // Get by ID
   static async getById(id) {
-    const [rows] = await pool.query(
-      'SELECT * FROM queries WHERE id = $1',
-      [id]
-    );
-    return rows[0];
+    return Query.findById(id);
   }
 
-  // Update status
   static async updateStatus(id, status) {
-    const [result] = await pool.query(
-      'UPDATE queries SET status = $1 WHERE id = $2',
-      [status, id]
-    );
-    return result.rowCount > 0;
+    const result = await Query.findByIdAndUpdate(id, { status }, { new: true });
+    return !!result;
   }
 
-  // Delete
   static async delete(id) {
-    const [result] = await pool.query(
-      'DELETE FROM queries WHERE id = $1',
-      [id]
-    );
-    return result.rowCount > 0;
+    const result = await Query.findByIdAndDelete(id);
+    return !!result;
   }
 }
 

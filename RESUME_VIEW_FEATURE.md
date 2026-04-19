@@ -22,12 +22,12 @@ Added view functionality:
 
 ### View Resume (Opens in Browser)
 ```
-GET http://localhost:5000/api/resumes/:id/view
+GET http://localhost:3000/api/resumes/:id/view
 ```
 
 ### Download Resume (Downloads File)
 ```
-GET http://localhost:5000/api/resumes/:id/download
+GET http://localhost:3000/api/resumes/:id/download
 ```
 
 ## Usage
@@ -39,7 +39,7 @@ GET http://localhost:5000/api/resumes/:id/download
 
 ### Direct URL
 ```
-http://localhost:5000/api/resumes/1/view
+http://localhost:3000/api/resumes/1/view
 ```
 
 ## How It Works

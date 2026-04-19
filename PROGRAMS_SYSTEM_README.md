@@ -100,7 +100,7 @@ const programData = {
   tags: ["AI", "Web Dev", "Mobile"]
 };
 
-fetch('http://localhost:5000/api/programs', {
+fetch('http://localhost:3000/api/programs', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(programData)

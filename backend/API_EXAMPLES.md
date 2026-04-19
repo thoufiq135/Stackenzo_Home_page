@@ -4,7 +4,7 @@
 
 ### 1. Contact Form Submission
 ```bash
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST http://localhost:3000/api/contact \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
@@ -17,7 +17,7 @@ curl -X POST http://localhost:5000/api/contact \
 
 ### 2. Workshop Enrollment
 ```bash
-curl -X POST http://localhost:5000/api/enrollments \
+curl -X POST http://localhost:3000/api/enrollments \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Jane Smith",
@@ -32,7 +32,7 @@ curl -X POST http://localhost:5000/api/enrollments \
 
 ### 3. Internship Application
 ```bash
-curl -X POST http://localhost:5000/api/enrollments \
+curl -X POST http://localhost:3000/api/enrollments \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Alex Johnson",
@@ -47,17 +47,17 @@ curl -X POST http://localhost:5000/api/enrollments \
 
 ### 4. Get All Job Postings
 ```bash
-curl http://localhost:5000/api/jobs/postings
+curl http://localhost:3000/api/jobs/postings
 ```
 
 ### 5. Get Jobs by Department
 ```bash
-curl "http://localhost:5000/api/jobs/postings?department=Engineering"
+curl "http://localhost:3000/api/jobs/postings?department=Engineering"
 ```
 
 ### 6. Submit Job Application
 ```bash
-curl -X POST http://localhost:5000/api/jobs/applications \
+curl -X POST http://localhost:3000/api/jobs/applications \
   -H "Content-Type: application/json" \
   -d '{
     "job_id": 1,
@@ -71,7 +71,7 @@ curl -X POST http://localhost:5000/api/jobs/applications \
 
 ### 7. Newsletter Subscription
 ```bash
-curl -X POST http://localhost:5000/api/newsletter/subscribe \
+curl -X POST http://localhost:3000/api/newsletter/subscribe \
   -H "Content-Type: application/json" \
   -d '{
     "email": "subscriber@example.com"
@@ -80,7 +80,7 @@ curl -X POST http://localhost:5000/api/newsletter/subscribe \
 
 ### 8. Newsletter Unsubscribe
 ```bash
-curl -X POST http://localhost:5000/api/newsletter/unsubscribe \
+curl -X POST http://localhost:3000/api/newsletter/unsubscribe \
   -H "Content-Type: application/json" \
   -d '{
     "email": "subscriber@example.com"
@@ -94,7 +94,7 @@ curl -X POST http://localhost:5000/api/newsletter/unsubscribe \
 ### Contact Form
 ```javascript
 const submitContact = async () => {
-  const response = await fetch('http://localhost:5000/api/contact', {
+  const response = await fetch('http://localhost:3000/api/contact', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ const submitContact = async () => {
 ### Enrollment
 ```javascript
 const submitEnrollment = async () => {
-  const response = await fetch('http://localhost:5000/api/enrollments', {
+  const response = await fetch('http://localhost:3000/api/enrollments', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ const submitEnrollment = async () => {
 ### Get Jobs
 ```javascript
 const getJobs = async () => {
-  const response = await fetch('http://localhost:5000/api/jobs/postings');
+  const response = await fetch('http://localhost:3000/api/jobs/postings');
   const data = await response.json();
   console.log(data);
 };
@@ -149,7 +149,7 @@ const getJobs = async () => {
 ### Newsletter Subscribe
 ```javascript
 const subscribe = async (email) => {
-  const response = await fetch('http://localhost:5000/api/newsletter/subscribe', {
+  const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -221,34 +221,34 @@ const subscribe = async (email) => {
 
 ### Get All Contacts
 ```bash
-curl http://localhost:5000/api/contact
+curl http://localhost:3000/api/contact
 ```
 
 ### Get All Enrollments
 ```bash
-curl "http://localhost:5000/api/enrollments?type=workshop&status=pending"
+curl "http://localhost:3000/api/enrollments?type=workshop&status=pending"
 ```
 
 ### Get Enrollment Statistics
 ```bash
-curl http://localhost:5000/api/enrollments/stats
+curl http://localhost:3000/api/enrollments/stats
 ```
 
 ### Update Contact Status
 ```bash
-curl -X PATCH http://localhost:5000/api/contact/1/status \
+curl -X PATCH http://localhost:3000/api/contact/1/status \
   -H "Content-Type: application/json" \
   -d '{"status": "resolved"}'
 ```
 
 ### Get All Job Applications
 ```bash
-curl http://localhost:5000/api/jobs/applications
+curl http://localhost:3000/api/jobs/applications
 ```
 
 ### Get Newsletter Subscribers
 ```bash
-curl http://localhost:5000/api/newsletter/subscribers
+curl http://localhost:3000/api/newsletter/subscribers
 ```
 
 ---
@@ -287,10 +287,10 @@ Import this JSON into Postman:
           }
         },
         "url": {
-          "raw": "http://localhost:5000/api/contact",
+          "raw": "http://localhost:3000/api/contact",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "5000",
+          "port": "3000",
           "path": ["api", "contact"]
         }
       }

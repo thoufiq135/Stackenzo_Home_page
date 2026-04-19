@@ -160,7 +160,7 @@ CREATE TABLE resume_submissions (
 
 ### Test Resume Submission
 ```bash
-curl -X POST http://localhost:5000/api/resumes/submit \
+curl -X POST http://localhost:3000/api/resumes/submit \
   -F "name=John Doe" \
   -F "email=john@example.com" \
   -F "phone=9876543210" \
@@ -172,17 +172,17 @@ curl -X POST http://localhost:5000/api/resumes/submit \
 
 ### View All Resumes
 ```bash
-curl http://localhost:5000/api/resumes
+curl http://localhost:3000/api/resumes
 ```
 
 ### Download Resume
 ```bash
-curl http://localhost:5000/api/resumes/1/download -o resume.pdf
+curl http://localhost:3000/api/resumes/1/download -o resume.pdf
 ```
 
 ### Update Status
 ```bash
-curl -X PATCH http://localhost:5000/api/resumes/1/status \
+curl -X PATCH http://localhost:3000/api/resumes/1/status \
   -H "Content-Type: application/json" \
   -d '{"status": "reviewed"}'
 ```
