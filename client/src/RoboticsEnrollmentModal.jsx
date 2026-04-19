@@ -313,7 +313,7 @@ function RoboticsEnrollmentModal({ isOpen, onClose }) {
                     {enrollmentType === id && (
                       <motion.div layoutId="tab-bg" className="absolute inset-0 rounded-lg"
                         style={{ background: "#fff" }}
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }} />
+                        transition={{ type: "spring", stiffness: 370, damping: 30 }} />
                     )}
                     <Icon className="w-4 h-4 relative z-10" />
                     <span className="relative z-10">{label}</span>
