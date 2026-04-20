@@ -1,10 +1,44 @@
 const mongoose = require('mongoose');
-require('dotenv').config({ path: './backend/.env' });
+const path = require('path');
+const dotenv = require('dotenv');
+
+// Try multiple possible paths for .env
+const possiblePaths = [
+  path.resolve(__dirname, '../../.env'),    // backend/src/config/../../.env -> backend/.env
+  path.resolve(__dirname, '../.env'),       // backend/src/config/../.env -> backend/.env
+  path.resolve(process.cwd(), '.env'),      // current working directory/.env
+  path.resolve(process.cwd(), 'backend/.env'), // cwd/backend/.env
+];
+
+let envLoaded = false;
+let loadedPath = null;
+
+for (const envPath of possiblePaths) {
+  const result = dotenv.config({ path: envPath });
+  if (!result.error) {
+    envLoaded = true;
+    loadedPath = envPath;
+    console.log(`✅ Loaded .env from: ${envPath}`);
+    break;
+  }
+}
+
+if (!envLoaded) {
+  console.error('❌ Could not find .env file. Searched paths:');
+  possiblePaths.forEach(p => console.error(`   - ${p}`));
+  throw new Error('MONGODB_URI is required in backend/.env');
+}
 
 // Validate required env var
 if (!process.env.MONGODB_URI) {
+  console.error('❌ MONGODB_URI not found in .env file at:', loadedPath);
+  console.error('Please ensure MONGODB_URI is defined in your .env file');
   throw new Error('MONGODB_URI is required in backend/.env');
 }
+
+// Hide credentials in logs
+const sanitizedUri = process.env.MONGODB_URI.replace(/\/\/.*@/, '//<credentials>@');
+console.log('📡 MongoDB URI configured:', sanitizedUri);
 
 // MongoDB connection
 const connectDB = async () => {

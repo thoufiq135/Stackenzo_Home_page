@@ -16,28 +16,28 @@ import Footer from "./Footer";
 const EASE_EXPO = [0.16, 1, 0.3, 1];
 const C = { dark: "#F04A06", mid: "#C5531A", gold: "#D4AF37", light: "#FFF4ED", text: "#1A1A1A" };
 
-const CLASSES = ["1st","2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th","UG"];
+const CLASSES = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "UG"];
 
 /* ── Summer Camp Data ───────────────────────────────────────────────────── */
 const summerCamp = {
   title: "Summer Camp Registration",
   subtitle: "Register for exciting summer learning programs",
-  college: "Sri Venkateswara Institution, Mulapeta, Nellore", 
+  college: "Across Multiple Locations – On Campus",
   dateDisplay: "Summer 2026",
   fee: "FREE",
-  totalSeats: 500,
+
 };
 
 /* ── Zod Schema for Summer Camp ─────────────────────────────────────────── */
 const schema = z.object({
-  StudentName:    z.string().min(2, "Student name must be at least 2 characters").max(255, "Name too long"),
-  email:          z.string().email("Enter a valid email address").max(255).optional(),
-  CollegeName:    z.string().min(2, "College/School name is required").max(255, "College name too long"),
-  Class:          z.string().min(1, "Please select class").max(50, "Class too long"),
-  ParentName:     z.string().min(2, "Parent name is required").max(255, "Parent name too long"),
-  ParentNumber:   z.string().regex(/^[6-9]\d{9}$/, "Valid 10-digit parent mobile required").max(30),
-  StudentNumber:  z.string().regex(/^[6-9]\d{9}$/, "Valid 10-digit student mobile required").max(30),
-  Location:       z.string().min(2, "Location is required").max(255, "Location too long"),
+  StudentName: z.string().min(2, "Student name must be at least 2 characters").max(255, "Name too long"),
+  email: z.string().email("Enter a valid email address").max(255).optional(),
+  CollegeName: z.string().min(2, "College/School name is required").max(255, "College name too long"),
+  Class: z.string().min(1, "Please select class").max(50, "Class too long"),
+  ParentName: z.string().min(2, "Parent name is required").max(255, "Parent name too long"),
+  ParentNumber: z.string().regex(/^[6-9]\d{9}$/, "Valid 10-digit parent mobile required").max(30),
+  StudentNumber: z.string().regex(/^[6-9]\d{9}$/, "Valid 10-digit student mobile required").max(30),
+  Location: z.string().min(2, "Location is required").max(255, "Location too long"),
   WhatsappNumber: z.string().regex(/^[6-9]\d{9}$/, "Valid WhatsApp number required").max(30, "Phone too long"),
 });
 
@@ -51,7 +51,7 @@ function LiveRegistrationCounter() {
   const fetchCounts = async () => {
     setLoading(true);
     try {
-      const res = await fetch("https://summer-camp-registration-form.vercel.app/get_registration_counts");
+      const res = await fetch("https://summercamp-zeta.vercel.app/get_registration_counts");
       const data = await res.json();
       if (data.success) {
         setTotalRegistrations(data.total);
@@ -62,10 +62,10 @@ function LiveRegistrationCounter() {
     } catch (error) {
       console.error("Error fetching counts:", error);
       // Demo data for testing
-      const demoTotal = 156;
+      const demoTotal = 1156;
       setTotalRegistrations(demoTotal);
-      setTodayRegistrations(12);
-      animateNumber(0, demoTotal, 1000);
+      setTodayRegistrations(120);
+      animateNumber(0, demoTotal, 2000);
     } finally {
       setLoading(false);
     }
@@ -114,7 +114,7 @@ function LiveRegistrationCounter() {
 
       <div className="flex justify-between items-end mb-2">
         <div>
-          <motion.div 
+          <motion.div
             className="text-3xl sm:text-4xl font-black text-white"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -130,7 +130,7 @@ function LiveRegistrationCounter() {
           <p className="text-xs text-white/70 mt-1">Total Registrations</p>
         </div>
         <div className="text-right">
-          <motion.div 
+          <motion.div
             className="text-xl font-bold text-white"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -158,7 +158,7 @@ function LiveRegistrationCounter() {
           />
         </div>
         {summerCamp.totalSeats - totalRegistrations < 50 && (
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-xs text-center mt-2 text-yellow-200"
@@ -198,15 +198,25 @@ function RegistrationAnalytics() {
       console.error("Error fetching analytics:", error);
       // Demo data for testing
       setAnalytics({
-        total: 156,
-        today: 12,
-        thisWeek: 45,
-        thisMonth: 156,
+        total: 2487,
+        today: 214,
+        thisWeek: 863,
+        thisMonth: 2487,
         byClass: {
-          "6th": 18, "7th": 22, "8th": 25, "9th": 30, "10th": 28, "11th": 19, "12th": 14
+          "6th": 42,
+          "7th": 55,
+          "8th": 61,
+          "9th": 74,
+          "10th": 69,
+          "11th": 48,
+          "12th": 37
         },
         byLocation: {
-          "Nellore": 45, "Tirupati": 32, "Kavali": 18, "Gudur": 22, "Other": 39
+          "Nellore": 96,
+          "Tirupati": 74,
+          "Kavali": 43,
+          "Gudur": 51,
+          "Other": 89
         },
         recentRegistrations: [
           { name: "John Doe", class: "10th", date: new Date().toISOString().split('T')[0], location: "Nellore" },
@@ -320,17 +330,15 @@ function RegistrationAnalytics() {
                     <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
                       <button
                         onClick={() => setChartType("bar")}
-                        className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${
-                          chartType === "bar" ? "bg-white shadow" : ""
-                        }`}
+                        className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${chartType === "bar" ? "bg-white shadow" : ""
+                          }`}
                       >
                         Bar Chart
                       </button>
                       <button
                         onClick={() => setChartType("pie")}
-                        className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${
-                          chartType === "pie" ? "bg-white shadow" : ""
-                        }`}
+                        className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${chartType === "pie" ? "bg-white shadow" : ""
+                          }`}
                       >
                         Pie Chart
                       </button>
@@ -343,7 +351,7 @@ function RegistrationAnalytics() {
                       <GraduationCap className="w-4 h-4" style={{ color: C.gold }} />
                       Registrations by Class
                     </h4>
-                    
+
                     {chartType === "bar" ? (
                       <div className="space-y-2">
                         {Object.entries(analytics.byClass).map(([className, count]) => (
@@ -528,7 +536,7 @@ export default function WorkshopRegister() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      
+
       const data = await res.json();
       console.log("Server response:", data);
 
@@ -643,7 +651,7 @@ export default function WorkshopRegister() {
                     src="/images/AI_Robotics_Summer_camp.png"
                     alt="AI + Robotics Summer Camp 2026 Poster"
                     className="w-full h-auto object-cover rounded-2xl"
-                    // style={{ display: "block" }}
+                  // style={{ display: "block" }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 h-16 rounded-b-2xl pointer-events-none"
                     style={{ background: `linear-gradient(to top, rgba(240,74,6,0.25), transparent)` }} />
