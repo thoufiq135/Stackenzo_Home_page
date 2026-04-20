@@ -142,7 +142,7 @@ function EnrollmentModal({ isOpen, onClose, title = "Enrollment Form", type = "e
     e.preventDefault();
     setIsSubmitting(true); setSubmitStatus(null);
     try {
-      const res = await fetch("http://localhost:5000/api/enrollments", {
+      const res = await fetch("http://localhost:3000/api/enrollments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, type, department: formData.department }),

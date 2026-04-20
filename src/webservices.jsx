@@ -529,7 +529,7 @@ function WebServices() {
   const handleQuoteSubmit = async (e) => {
     e.preventDefault(); setIsSubmitting(true);
     try {
-      const res  = await fetch("http://localhost:5000/api/quotes",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(quoteFormData) });
+      const res  = await fetch("http://localhost:3000/api/quotes",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(quoteFormData) });
       const data = await res.json();
       if(data.success){
         setToast({show:true,message:"Quote request submitted! We'll contact you within 24 hours."});

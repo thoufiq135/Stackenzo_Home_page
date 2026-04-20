@@ -80,7 +80,7 @@ const PROCESS_STEPS = [
 ];
 
 const HERO_STATS = [
-  { value:"10+",  label:"Years Experience",   icon: Users,    color:"#F04A06" },
+  { value:"10+",  label:"Years Experienced Staff",   icon: Users,    color:"#F04A06" },
   { value:"500+", label:"Happy Clients",      icon: Briefcase,color:"#C5531A" },
   { value:"98%",  label:"Client Retention",   icon: Star,     color:"#D4AF37" },
   { value:"24/7", label:"Support Available",  icon: Clock,    color:"#F04A06" },
@@ -760,7 +760,7 @@ function ServicesShowcase() {
 ══════════════════════════════════════════════ */
 function WhySection() {
   const BOTTOM_STATS=[
-    { value:"10+",  label:"Years of Excellence", icon:Award  },
+    { value:"5+",  label:"Years of Excellence", icon:Award  },
     { value:"500+", label:"Happy Clients",        icon:Users  },
     { value:"98%",  label:"Client Retention",     icon:Star   },
     { value:"24/7", label:"Support Available",    icon:Clock  },

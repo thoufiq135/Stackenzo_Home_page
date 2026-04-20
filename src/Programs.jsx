@@ -874,7 +874,7 @@ function Programs() {
       if(selectedType!=="all")   params.append("type",selectedType);
       if(selectedStatus!=="all") params.append("status",selectedStatus);
       if(showArchived)           params.append("archived","true");
-      const res=await fetch(`http://localhost:5000/api/programs?${params}`);
+      const res=await fetch(`http://localhost:3000/api/programs?${params}`);
       const data=await res.json();
       if(data.success) setPrograms(data.programs);
     } catch(e){ console.error(e); } finally { setLoading(false); }

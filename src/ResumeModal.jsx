@@ -65,7 +65,7 @@ function StaggerItem({ children }) {
 }
 
 /* ══════════════════════════════════════════════
-   FIELD WRAPPER  (focus ring animation)
+   FIELD WRAPPER
 ══════════════════════════════════════════════ */
 function Field({ label, icon: Icon, required, children }) {
   return (
@@ -113,67 +113,187 @@ function FocusInput({ as: Tag = "input", name, value, onChange, onFocus, onBlur,
    MAIN COMPONENT
 ══════════════════════════════════════════════ */
 function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", position: jobTitle, experience: "", message: "" });
+  const [formData, setFormData] = useState({ 
+    name: "", 
+    email: "", 
+    phone: "", 
+    position: "", 
+    experience: "", 
+    message: "" 
+  });
   const [resumeFile, setResumeFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // null | "success" | "error"
   const [focused, setFocused] = useState(null);
   const [dragOver, setDragOver] = useState(false);
 
+  // Update position when jobTitle prop changes
   useEffect(() => {
-    if (isOpen && jobTitle) setFormData(prev => ({ ...prev, position: jobTitle }));
+    if (isOpen && jobTitle) {
+      setFormData(prev => ({ 
+        ...prev, 
+        position: jobTitle 
+      }));
+    }
   }, [isOpen, jobTitle]);
 
-  /* lock body scroll when open */
+  // Reset form when modal closes
   useEffect(() => {
-    if (isOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-    return () => { document.body.style.overflow = ""; };
+    if (!isOpen) {
+      // Reset form data after modal closes
+      const timer = setTimeout(() => {
+        setFormData({ 
+          name: "", 
+          email: "", 
+          phone: "", 
+          position: "", 
+          experience: "", 
+          message: "" 
+        });
+        setResumeFile(null);
+        setSubmitStatus(null);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
   }, [isOpen]);
 
-  const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  // Lock body scroll when open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { 
+      document.body.style.overflow = ""; 
+    };
+  }, [isOpen]);
 
-  const validateFile = file => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const validateFile = (file) => {
     if (!file) return false;
-    if (file.type !== "application/pdf") { alert("Please upload a PDF file only"); return false; }
-    if (file.size > 5 * 1024 * 1024) { alert("File size must be less than 5MB"); return false; }
+    
+    // Check file type
+    if (file.type !== "application/pdf") {
+      alert("Please upload a PDF file only");
+      return false;
+    }
+    
+    // Check file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("File size must be less than 5MB");
+      return false;
+    }
+    
     return true;
   };
 
-  const handleFileChange = e => { const f = e.target.files[0]; if (validateFile(f)) setResumeFile(f); };
-
-  const handleDrop = e => {
-    e.preventDefault(); setDragOver(false);
-    const f = e.dataTransfer.files[0]; if (validateFile(f)) setResumeFile(f);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (validateFile(file)) {
+      setResumeFile(file);
+    }
   };
 
-  const handleSubmit = async e => {
+  const handleDrop = (e) => {
     e.preventDefault();
-    if (!resumeFile) { alert("Please upload your resume"); return; }
-    setIsSubmitting(true); setSubmitStatus(null);
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (validateFile(file)) {
+      setResumeFile(file);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragOver(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validate file
+    if (!resumeFile) {
+      alert("Please upload your resume");
+      return;
+    }
+    
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.phone) {
+      alert("Please fill in all required fields");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    
+    // Create FormData
     const fd = new FormData();
-    Object.entries(formData).forEach(([k, v]) => fd.append(k, v));
+    fd.append("name", formData.name);
+    fd.append("email", formData.email);
+    fd.append("phone", formData.phone);
+    fd.append("position", formData.position || jobTitle || "General Application");
+    fd.append("experience", formData.experience || "Not specified");
+    fd.append("message", formData.message || "");
     fd.append("resume", resumeFile);
+    
+    // Log for debugging
+    console.log("Submitting form data:");
+    console.log("  Name:", formData.name);
+    console.log("  Email:", formData.email);
+    console.log("  Phone:", formData.phone);
+    console.log("  Position:", formData.position || jobTitle);
+    console.log("  Experience:", formData.experience);
+    console.log("  File:", resumeFile.name, resumeFile.type, resumeFile.size);
+    
     try {
-      const res = await fetch("http://localhost:5000/api/resumes/submit", { method: "POST", body: fd });
+      const res = await fetch("http://localhost:3000/api/resumes/submit", { 
+        method: "POST", 
+        body: fd 
+      });
+      
       const data = await res.json();
+      console.log("Server response:", data);
+      
       if (data.success) {
         setSubmitStatus("success");
-        setTimeout(() => { onClose(); setFormData({ name: "", email: "", phone: "", position: "", experience: "", message: "" }); setResumeFile(null); setSubmitStatus(null); }, 2200);
-      } else { setSubmitStatus("error"); }
-    } catch { setSubmitStatus("error"); }
-    finally { setIsSubmitting(false); }
+        setTimeout(() => { 
+          onClose(); 
+        }, 2200);
+      } else {
+        setSubmitStatus("error");
+        console.error("Server error:", data.message);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: .25 }}
           className="fixed inset-0 flex items-center justify-center z-50 p-3 sm:p-4"
           style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)" }}
-          onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+          onClick={(e) => { 
+            if (e.target === e.currentTarget && !isSubmitting) {
+              onClose();
+            }
+          }}>
 
           <motion.div
             initial={{ opacity: 0, scale: .88, y: 32 }}
@@ -205,7 +325,11 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                   </div>
                 </div>
 
-                <motion.button onClick={onClose} whileHover={{ scale: 1.1, rotate: 90 }} whileTap={{ scale: .9 }}
+                <motion.button 
+                  onClick={onClose} 
+                  whileHover={{ scale: 1.1, rotate: 90 }} 
+                  whileTap={{ scale: .9 }}
+                  disabled={isSubmitting}
                   className="relative z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors border border-white/20">
                   <X className="w-4 h-4 text-white" />
                 </motion.button>
@@ -224,10 +348,17 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                   {/* Name */}
                   <StaggerItem>
                     <Field label="Full Name" icon={User} required>
-                      <FocusInput type="text" name="name" value={formData.name} onChange={handleChange}
-                        required placeholder="John Doe"
+                      <FocusInput 
+                        type="text" 
+                        name="name" 
+                        value={formData.name} 
+                        onChange={handleChange}
+                        required 
+                        placeholder="John Doe"
                         focused={focused === "name"}
-                        onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} />
+                        onFocus={() => setFocused("name")} 
+                        onBlur={() => setFocused(null)} 
+                      />
                     </Field>
                   </StaggerItem>
 
@@ -235,16 +366,30 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                   <StaggerItem>
                     <div className="grid sm:grid-cols-2 gap-4 mt-4">
                       <Field label="Email" icon={Mail} required>
-                        <FocusInput type="email" name="email" value={formData.email} onChange={handleChange}
-                          required placeholder="john@example.com"
+                        <FocusInput 
+                          type="email" 
+                          name="email" 
+                          value={formData.email} 
+                          onChange={handleChange}
+                          required 
+                          placeholder="john@example.com"
                           focused={focused === "email"}
-                          onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} />
+                          onFocus={() => setFocused("email")} 
+                          onBlur={() => setFocused(null)} 
+                        />
                       </Field>
                       <Field label="Phone" icon={Phone} required>
-                        <FocusInput type="tel" name="phone" value={formData.phone} onChange={handleChange}
-                          required placeholder="+91 9876543210"
+                        <FocusInput 
+                          type="tel" 
+                          name="phone" 
+                          value={formData.phone} 
+                          onChange={handleChange}
+                          required 
+                          placeholder="9876543210"
                           focused={focused === "phone"}
-                          onFocus={() => setFocused("phone")} onBlur={() => setFocused(null)} />
+                          onFocus={() => setFocused("phone")} 
+                          onBlur={() => setFocused(null)} 
+                        />
                       </Field>
                     </div>
                   </StaggerItem>
@@ -253,17 +398,30 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                   <StaggerItem>
                     <div className="grid sm:grid-cols-2 gap-4 mt-4">
                       <Field label="Position Interested In" icon={Briefcase}>
-                        <FocusInput type="text" name="position" value={formData.position} onChange={handleChange}
+                        <FocusInput 
+                          type="text" 
+                          name="position" 
+                          value={formData.position} 
+                          onChange={handleChange}
                           placeholder="e.g., Full Stack Developer"
                           focused={focused === "position"}
-                          onFocus={() => setFocused("position")} onBlur={() => setFocused(null)} />
+                          onFocus={() => setFocused("position")} 
+                          onBlur={() => setFocused(null)} 
+                        />
                       </Field>
                       <Field label="Total Experience" icon={Clock}>
                         <div className="relative">
-                          <select name="experience" value={formData.experience} onChange={handleChange}
-                            onFocus={() => setFocused("experience")} onBlur={() => setFocused(null)}
+                          <select 
+                            name="experience" 
+                            value={formData.experience} 
+                            onChange={handleChange}
+                            onFocus={() => setFocused("experience")} 
+                            onBlur={() => setFocused(null)}
                             className={inputCls}
-                            style={{ borderColor: focused === "experience" ? "#F04A06" : "#e5e7eb", boxShadow: focused === "experience" ? "0 0 0 3px rgba(230,107,38,0.12)" : undefined }}>
+                            style={{ 
+                              borderColor: focused === "experience" ? "#F04A06" : "#e5e7eb", 
+                              boxShadow: focused === "experience" ? "0 0 0 3px rgba(230,107,38,0.12)" : undefined 
+                            }}>
                             <option value="">Select Experience</option>
                             <option value="Fresher">Fresher</option>
                             <option value="0-1 years">0–1 years</option>
@@ -293,12 +451,25 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                         Upload Resume (PDF only)
                         <span style={{ color: "#D4AF37" }}>*</span>
                       </label>
-                      <input type="file" accept=".pdf" onChange={handleFileChange} required className="hidden" id="resume-upload" />
-                      <motion.label htmlFor="resume-upload"
-                        animate={{ borderColor: dragOver ? "#F04A06" : resumeFile ? "#D4AF37" : "#e5e7eb", background: dragOver ? "rgba(230,107,38,0.06)" : resumeFile ? "rgba(212,175,55,0.06)" : "#FFF4ED" }}
+                      
+                      <input 
+                        type="file" 
+                        accept=".pdf" 
+                        onChange={handleFileChange} 
+                        required 
+                        className="hidden" 
+                        id="resume-upload" 
+                      />
+                      
+                      <motion.label 
+                        htmlFor="resume-upload"
+                        animate={{ 
+                          borderColor: dragOver ? "#F04A06" : resumeFile ? "#D4AF37" : "#e5e7eb", 
+                          background: dragOver ? "rgba(230,107,38,0.06)" : resumeFile ? "rgba(212,175,55,0.06)" : "#FFF4ED" 
+                        }}
                         transition={{ duration: .2 }}
-                        onDragOver={e => { e.preventDefault(); setDragOver(true); }}
-                        onDragLeave={() => setDragOver(false)}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
                         className="flex flex-col items-center justify-center w-full px-4 py-5 sm:py-6 rounded-xl border-2 border-dashed cursor-pointer transition-all">
                         {resumeFile ? (
@@ -311,8 +482,12 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                               <p className="text-sm font-semibold" style={{ color: "#F04A06" }}>{resumeFile.name}</p>
                               <p className="text-xs text-gray-400">{(resumeFile.size / 1024 / 1024).toFixed(2)} MB • PDF</p>
                             </div>
-                            <motion.div whileHover={{ scale: 1.1 }}
-                              onClick={e => { e.preventDefault(); setResumeFile(null); }}
+                            <motion.div 
+                              whileHover={{ scale: 1.1 }}
+                              onClick={(e) => { 
+                                e.preventDefault(); 
+                                setResumeFile(null); 
+                              }}
                               className="ml-2 w-6 h-6 rounded-full bg-gray-100 hover:bg-red-50 flex items-center justify-center transition-colors">
                               <X className="w-3 h-3 text-gray-400 hover:text-red-400" />
                             </motion.div>
@@ -341,11 +516,19 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                     <div className="mt-4">
                       <Field label="Additional Message" icon={null}>
                         <div className="relative">
-                          <textarea name="message" value={formData.message} onChange={handleChange}
-                            onFocus={() => setFocused("message")} onBlur={() => setFocused(null)}
-                            rows="3" placeholder="Tell us why you'd be a great fit…"
+                          <textarea 
+                            name="message" 
+                            value={formData.message} 
+                            onChange={handleChange}
+                            onFocus={() => setFocused("message")} 
+                            onBlur={() => setFocused(null)}
+                            rows="3" 
+                            placeholder="Tell us why you'd be a great fit…"
                             className={inputCls + " resize-none"}
-                            style={{ borderColor: focused === "message" ? "#F04A06" : "#e5e7eb", boxShadow: focused === "message" ? "0 0 0 3px rgba(230,107,38,0.12)" : undefined }} />
+                            style={{ 
+                              borderColor: focused === "message" ? "#F04A06" : "#e5e7eb", 
+                              boxShadow: focused === "message" ? "0 0 0 3px rgba(230,107,38,0.12)" : undefined 
+                            }} />
                           <AnimatePresence>
                             {focused === "message" && (
                               <motion.div className="absolute inset-0 rounded-xl pointer-events-none"
@@ -361,7 +544,10 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                   {/* Status messages */}
                   <AnimatePresence>
                     {submitStatus === "success" && (
-                      <motion.div initial={{ opacity: 0, y: 10, scale: .95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: .95 }}
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10, scale: .95 }} 
+                        animate={{ opacity: 1, y: 0, scale: 1 }} 
+                        exit={{ opacity: 0, scale: .95 }}
                         className="mt-4 flex items-center gap-3 px-4 py-3 rounded-xl border"
                         style={{ background: "rgba(212,175,55,0.1)", borderColor: "rgba(212,175,55,0.4)" }}>
                         <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: .5 }}>
@@ -372,12 +558,18 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                         </p>
                       </motion.div>
                     )}
+                    
                     {submitStatus === "error" && (
-                      <motion.div initial={{ opacity: 0, y: 10, scale: .95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: .95 }}
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10, scale: .95 }} 
+                        animate={{ opacity: 1, y: 0, scale: 1 }} 
+                        exit={{ opacity: 0, scale: .95 }}
                         className="mt-4 flex items-center gap-3 px-4 py-3 rounded-xl border border-red-200"
                         style={{ background: "rgba(239,68,68,0.07)" }}>
                         <AlertCircle className="w-5 h-5 text-red-500" />
-                        <p className="text-sm font-semibold text-red-600">Failed to submit. Please try again.</p>
+                        <p className="text-sm font-semibold text-red-600">
+                          Failed to submit. Please try again.
+                        </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -385,13 +577,17 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                   {/* Action buttons */}
                   <StaggerItem>
                     <div className="flex gap-3 mt-5 sm:mt-6 pb-1">
-                      <MagBtn type="submit" disabled={isSubmitting}
+                      <MagBtn 
+                        type="submit" 
+                        disabled={isSubmitting}
                         className="flex-1 relative overflow-hidden py-3 sm:py-3.5 rounded-xl font-black text-sm sm:text-base text-black transition-all shadow-md hover:shadow-lg disabled:opacity-55 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
                         style={{ background: "linear-gradient(135deg,#F04A06,#C5531A)" }}>
                         <span className="relative z-10 flex items-center gap-2">
                           {isSubmitting ? (
                             <>
-                              <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: .9, ease: "linear" }}
+                              <motion.div 
+                                animate={{ rotate: 360 }} 
+                                transition={{ repeat: Infinity, duration: .9, ease: "linear" }}
                                 className="w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
                               Submitting…
                             </>
@@ -407,7 +603,10 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
                           initial={{ scaleX: 0 }} whileHover={{ scaleX: 1 }} transition={{ duration: .35 }} />
                       </MagBtn>
 
-                      <MagBtn type="button" onClick={onClose}
+                      <MagBtn 
+                        type="button" 
+                        onClick={onClose}
+                        disabled={isSubmitting}
                         className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-black text-sm border border-gray-200 text-[#1A1A1A] hover:border-[#F04A06] hover:text-[#F04A06] transition-all bg-white">
                         Cancel
                       </MagBtn>

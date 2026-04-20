@@ -180,16 +180,12 @@ function MagBtn({ children, className = "", onClick, type = "button" }) {
   );
 }
 
-
-
 /* ══════════════════════════════════════════════
    SCROLL PROGRESS BAR
 ══════════════════════════════════════════════ */
 function ScrollProgressBar() {
   const { scrollYProgress } = useScroll();
   const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
-  const { scrollY } = useScroll();
-const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
   return (
     <motion.div
@@ -232,25 +228,22 @@ function SectionNavDots() {
     <div className="fixed right-5 top-1/2 -translate-y-1/2 z-[900] flex-col gap-4 hidden md:flex">
       {NAV_SECTIONS.map((id, i) => (
         <motion.button
-  key={i}
-  onClick={() =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="relative flex items-center justify-center"
-  title={NAV_LABELS[i]}
->
-  {/* 🔹 DOT */}
-  <motion.div
-    animate={{
-      scale: active === i ? 1.4 : 1,
-      background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
-    }}
-    transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    className="w-2.5 h-2.5 rounded-full"
-  />
-
-  
-</motion.button>
+          key={i}
+          onClick={() =>
+            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="relative flex items-center justify-center"
+          title={NAV_LABELS[i]}
+        >
+          <motion.div
+            animate={{
+              scale: active === i ? 1.4 : 1,
+              background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 22 }}
+            className="w-2.5 h-2.5 rounded-full"
+          />
+        </motion.button>
       ))}
     </div>
   );
@@ -402,6 +395,10 @@ function Counter({ value }) {
 ══════════════════════════════════════════════ */
 function Workshops() {
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
+  // FIX: Separate state to hold the workshop for the registration modal
+  // so it doesn't become undefined when selectedWorkshop is nulled
+  const [workshopForModal, setWorkshopForModal] = useState(null);
+
   const [viewMode, setViewMode] = useState("workshops");
   const [selectedDepartment, setSelectedDepartment] = useState("All");
   const [showWorkshopRegModal, setShowWorkshopRegModal] = useState(false);
@@ -414,7 +411,16 @@ function Workshops() {
   const departments = ["All", "ECE", "EEE", "CSE", "AI & ML", "IT", "Mechanical", "MCA"];
   const internshipDepartments = ["All", "Engineering", "Degree"];
 
-  const filteredWorkshops = selectedDepartment === "All" ? workshopsData.workshops : workshopsData.workshops.filter(w => w.suitedFor.includes(selectedDepartment));
+  const hiddenIds = ["embedded-systems", "iot"];
+  const filteredWorkshops =
+    selectedDepartment === "All"
+      ? workshopsData.workshops.filter(w => !hiddenIds.includes(w.id))
+      : workshopsData.workshops.filter(
+          w =>
+            w.suitedFor.includes(selectedDepartment) &&
+            !hiddenIds.includes(w.id)
+        );
+
   let filteredInternships;
   if (selectedDepartment === "All") filteredInternships = internshipsData.internships;
   else if (selectedDepartment === "Engineering") filteredInternships = internshipsData.internships.filter(i => i.suitedFor.some(b => ["CSE","IT","ECE","EEE","Mechanical"].includes(b)));
@@ -429,15 +435,15 @@ function Workshops() {
     try {
       const response = await fetch("/api/queries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: queryForm.name, email: queryForm.email, phone: queryForm.phone, subject: queryForm.subject, category: queryForm.category, message: queryForm.message }) });
       if (response.ok) {
-        toast.success("Query submitted! We'll get back to you within 24 hours.", { duration: 5000, icon: "✅" });
+        toast.success("Query submitted! We'll get back to you within 24 hours.", { duration: 3000, icon: "✅" });
         setQueryForm({ name: "", email: "", phone: "", subject: "", category: "general", message: "", preferredContact: "email", preferredTime: "anytime" });
         setShowQueryForm(false);
       } else {
         const err = await response.json();
-        toast.error(err.message || "Failed to submit. Please try again.", { duration: 5000, icon: "❌" });
+        toast.error(err.message || "Failed to submit. Please try again.", { duration: 3000, icon: "❌" });
       }
     } catch {
-      toast.error("Network error. Please check your connection.", { duration: 5000, icon: "❌" });
+      toast.error("Network error. Please check your connection.", { duration: 3000, icon: "❌" });
     }
   };
 
@@ -447,7 +453,7 @@ function Workshops() {
   const heroRef = useRef(null);
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const { scrollY } = useScroll();
-const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
   const heroY  = useTransform(heroScroll, [0, 1], [0, -100]);
   const heroO  = useTransform(heroScroll, [0, .6], [1, 0.9]);
@@ -596,21 +602,21 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           </motion.div>
 
           {/* scroll cue */}
-         <motion.div
-  style={{ opacity: scrollOpacity }}
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 2.2 }}
+          <motion.div
+            style={{ opacity: scrollOpacity }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.2 }}
             className="flex justify-center mt-12 cursor-pointer"
             onClick={() => document.getElementById("ws-intro")?.scrollIntoView({ behavior: "smooth" })}>
             <Float duration={2} yRange={10}>
               <div className="w-7 h-12 border-2 border-[#F04A06]/28 rounded-full flex justify-center">
-  <motion.div
-    className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
-    animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
-    transition={{ duration: 1.8, repeat: Infinity }}
-  />
-</div>
+                <motion.div
+                  className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
+                  animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 1.8, repeat: Infinity }}
+                />
+              </div>
             </Float>
           </motion.div>
         </motion.div>
@@ -817,14 +823,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                                     Register Free →
                                   </Link>
                                 )}
-                                <motion.button onClick={() => setSelectedWorkshop(workshop)} whileHover={{ scale: 1.02 }} whileTap={{ scale: .98 }}
-                                  className="w-full px-4 py-2.5 sm:py-3 text-white rounded-lg text-sm font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 group/btn"
-                                  style={{ background: `linear-gradient(135deg,${C.dark},${C.mid})` }}>
-                                  <span>View Details</span>
-                                  <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                                    <ChevronRight className="w-4 h-4" />
-                                  </motion.div>
-                                </motion.button>
+                                
                                 <motion.button
                                   onClick={() => { setQueryForm({ ...queryForm, category: "workshop", subject: workshop.title, message: `I'm interested in the ${workshop.title} workshop.` }); setShowQueryForm(true); }}
                                   whileHover={{ scale: 1.02 }} whileTap={{ scale: .98 }}
@@ -1169,7 +1168,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
             <WaveDivider color={C.gold} flip toBg="#3D1A0A" />
 
             {/* Internship Philosophy Banner */}
-            <section className="py-20 px-4 sm:px-6 relative overflow-hidden" style={{ background: "linear-gradient(135deg,#F04A06,#C5531A)/10" }}>
+            <section className="py-20 px-4 sm:px-6 relative overflow-hidden" style={{ background: "linear-gradient(135deg,#F04A06,#C5531A)" }}>
               <Spotlight color="rgba(212,175,55,0.06)" />
               <div className="absolute inset-0"><ParticleCanvas count={14} color="rgba(212,175,55,0.07)" /></div>
               {[100, 180, 260].map((s, i) => (
@@ -1287,13 +1286,27 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                     style={{ background: "#f3f4f6", color: C.text }}>
                     Close
                   </motion.button>
-                  <MagBtn onClick={() => setShowWorkshopRegModal(true)}
+
+                  {/* ✅ FIX: Save workshop to workshopForModal BEFORE nulling selectedWorkshop */}
+                  <MagBtn
+                    onClick={() => {
+                      setWorkshopForModal(selectedWorkshop);
+                      setSelectedWorkshop(null);
+                      setShowWorkshopRegModal(true);
+                    }}
                     className="flex-1 px-6 py-3 text-black rounded-xl font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center gap-2"
                     style={{ background: `linear-gradient(135deg,${C.dark},${C.mid})` }}>
                     Register Now <ChevronRight className="w-4 h-4" />
                   </MagBtn>
+
+                  {/* ✅ FIX: Capture title before nulling selectedWorkshop */}
                   <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: .98 }}
-                    onClick={() => { setSelectedWorkshop(null); setQueryForm({ ...queryForm, category: "workshop", subject: selectedWorkshop.title, message: `I'm interested in the ${selectedWorkshop.title} workshop.` }); setShowQueryForm(true); }}
+                    onClick={() => {
+                      const title = selectedWorkshop.title;
+                      setSelectedWorkshop(null);
+                      setQueryForm({ ...queryForm, category: "workshop", subject: title, message: `I'm interested in the ${title} workshop.` });
+                      setShowQueryForm(true);
+                    }}
                     className="flex-1 px-6 py-3 rounded-xl font-semibold border flex items-center justify-center gap-2 transition-all"
                     style={{ background: "#fff", color: C.text, borderColor: C.gold }}>
                     <HelpCircle className="w-4 h-4" style={{ color: C.gold }} /> Ask Question
@@ -1305,12 +1318,25 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
         )}
       </AnimatePresence>
 
-      {/* Registration Modals */}
-      {showWorkshopRegModal && selectedWorkshop && (
-        <WorkshopRegistrationModal workshop={selectedWorkshop} onClose={() => { setShowWorkshopRegModal(false); setSelectedWorkshop(null); }} />
+      {/* ✅ FIX: Use workshopForModal instead of selectedWorkshop so it persists after modal closes */}
+      {showWorkshopRegModal && workshopForModal && (
+        <WorkshopRegistrationModal
+          workshop={workshopForModal}
+          onClose={() => {
+            setShowWorkshopRegModal(false);
+            setWorkshopForModal(null);
+          }}
+        />
       )}
+
       {showInternshipRegModal && selectedInternship && (
-        <InternshipRegistrationModal internship={selectedInternship} onClose={() => { setShowInternshipRegModal(false); setSelectedInternship(null); }} />
+        <InternshipRegistrationModal
+          internship={selectedInternship}
+          onClose={() => {
+            setShowInternshipRegModal(false);
+            setSelectedInternship(null);
+          }}
+        />
       )}
 
       {/* ══ QUERY FORM SECTION ══ */}

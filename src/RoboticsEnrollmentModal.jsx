@@ -195,7 +195,7 @@ function RoboticsEnrollmentModal({ isOpen, onClose }) {
   const handleStudentSubmit = async (e) => {
     e.preventDefault(); setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/robotics-enrollments", {
+      const res = await fetch("http://localhost:3000/api/robotics-enrollments", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...studentForm, type: "student" }),
       });
@@ -212,7 +212,7 @@ function RoboticsEnrollmentModal({ isOpen, onClose }) {
   const handleSchoolSubmit = async (e) => {
     e.preventDefault(); setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/school-partnerships", {
+      const res = await fetch("http://localhost:3000/api/school-partnerships", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify(schoolForm),
       });
@@ -313,7 +313,7 @@ function RoboticsEnrollmentModal({ isOpen, onClose }) {
                     {enrollmentType === id && (
                       <motion.div layoutId="tab-bg" className="absolute inset-0 rounded-lg"
                         style={{ background: "#fff" }}
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }} />
+                        transition={{ type: "spring", stiffness: 370, damping: 30 }} />
                     )}
                     <Icon className="w-4 h-4 relative z-10" />
                     <span className="relative z-10">{label}</span>
