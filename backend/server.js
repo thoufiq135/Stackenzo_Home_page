@@ -30,18 +30,18 @@ app.get('/health', (req, res) => {
 });
 
 // Import routes
-const contactRoutes = require('./backend/src/routes/contactRoutes');
-const enrollmentRoutes = require('./backend/src/routes/enrollmentRoutes');
-const jobRoutes = require('./backend/src/routes/jobRoutes');
-const newsletterRoutes = require('./backend/src/routes/newsletterRoutes');
-const resumeRoutes = require('./backend/src/routes/resumeRoutes');
-const quoteRoutes = require('./backend/src/routes/quoteRoutes');
-const rndApplicationRoutes = require('./backend/src/routes/rndApplicationRoutes');
-const programRoutes = require('./backend/src/routes/programRoutes');
-const roboticsEnrollmentRoutes = require('./backend/src/routes/roboticsEnrollmentRoutes');
-const schoolPartnershipRoutes = require('./backend/src/routes/schoolPartnershipRoutes');
-const marketingAuditRoutes = require('./backend/src/routes/marketingAudit');
-const queryRoutes = require('./backend/src/routes/queryRoutes');
+const contactRoutes = require('./src/routes/contactRoutes');
+const enrollmentRoutes = require('./src/routes/enrollmentRoutes');
+const jobRoutes = require('./src/routes/jobRoutes');
+const newsletterRoutes = require('./src/routes/newsletterRoutes');
+const resumeRoutes = require('./src/routes/resumeRoutes');
+const quoteRoutes = require('./src/routes/quoteRoutes');
+const rndApplicationRoutes = require('./src/routes/rndApplicationRoutes');
+const programRoutes = require('./src/routes/programRoutes');
+const roboticsEnrollmentRoutes = require('./src/routes/roboticsEnrollmentRoutes');
+const schoolPartnershipRoutes = require('./src/routes/schoolPartnershipRoutes');
+const marketingAuditRoutes = require('./src/routes/marketingAudit');
+const queryRoutes = require('./src/routes/queryRoutes');
 // const workshopRegistrationRoutes = require('./backend/src/routes/workshopRegistrationRoutes'); // Add this if needed
 
 // API routes
@@ -67,9 +67,9 @@ app.get("*", (req, res) => {
 });
 
 // Error handling middleware
-const { errorHandler, notFound } = require('./backend/src/middleware/errorHandler');
+const { errorHandler, notFound } = require('./src/middleware/errorHandler');
 const mongoose = require('mongoose');
-const { initDatabase } = require('./backend/src/config/initDatabase');
+const { initDatabase } = require('./src/config/initDatabase');
 
 // MongoDB connection function
 const connectMongoDB = async () => {
