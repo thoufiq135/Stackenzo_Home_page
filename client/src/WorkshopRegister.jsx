@@ -640,7 +640,7 @@ export default function WorkshopRegister() {
                 <div className="relative rounded-2xl overflow-hidden"
                   style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15)" }}>
                   <img
-                    src="/images/AI + ROBOTICS SUMMER CAMP.png"
+                    src="/images/AI_Robotics_Summer_camp.png"
                     alt="AI + Robotics Summer Camp 2026 Poster"
                     className="w-full h-auto object-cover rounded-2xl"
                     // style={{ display: "block" }}
