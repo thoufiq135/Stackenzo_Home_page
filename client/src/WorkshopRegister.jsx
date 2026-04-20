@@ -643,7 +643,7 @@ export default function WorkshopRegister() {
                     src="/images/AI + ROBOTICS SUMMER CAMP.png"
                     alt="AI + Robotics Summer Camp 2026 Poster"
                     className="w-full h-auto object-cover rounded-2xl"
-                    style={{ display: "block" }}
+                    // style={{ display: "block" }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 h-16 rounded-b-2xl pointer-events-none"
                     style={{ background: `linear-gradient(to top, rgba(240,74,6,0.25), transparent)` }} />
