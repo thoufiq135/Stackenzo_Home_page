@@ -1,5 +1,3 @@
-require('dotenv').config({ path: './backend/.env' });
-
 const mongoose = require('mongoose');
 const { CounterModel } = require('../models/counterModel');
 
