@@ -63,7 +63,7 @@ function LiveRegistrationCounter() {
     console.error("Error fetching counts:", error);
     // Demo data for testing - store as numbers, display with + later
     const demoTotalNumber = 2000;
-    const demoTodayNumber = 100;
+    const demoTodayNumber = 120;
     
     setTotalRegistrations(demoTotalNumber);
     setTodayRegistrations(demoTodayNumber);
@@ -110,7 +110,7 @@ const animateTodayNumber = (start, end, duration) => {
     return () => clearInterval(interval);
   }, []);
 
-  const percentage = (totalRegistrations / summerCamp.totalSeats) * 100;
+  const percentage = 90;
 
   return (
     <div className="mt-6 p-4 rounded-2xl" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)" }}>
@@ -147,7 +147,7 @@ const animateTodayNumber = (start, end, duration) => {
           : totalRegistrations}
       </span>
     )}
-    <span className="text-lg text-white/60"> / {summerCamp.totalSeats}</span>
+    <span className="text-lg text-white/60"></span>
   </motion.div>
   <p className="text-xs text-white/70 mt-1">Total Registrations</p>
 </div>
