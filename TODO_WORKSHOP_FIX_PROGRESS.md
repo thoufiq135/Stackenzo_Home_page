@@ -1,19 +1,12 @@
-# Workshop Registration Fix - Progress Tracking
+# Workshop Progress Bar Fix - Progress Tracker
 
 ## Plan Steps:
-- [x] 1. Verify backend server running + DB init (server.js calls initDatabase() ✓)
-- [ ] 2. Update WorkshopRegister.jsx: Change to local API + field mapping
-- [ ] 3. Map fields: StudentName→name, CollegeName→college, Class→year, add stream/batch/experience
-- [ ] 4. Update success handling for local response (regId)
-- [ ] 5. Test form submission
-- [ ] 6. Update validation messages (minor)
-- [ ] 7. Make phone nullable in DB (if needed)
-- [x] 8. Diagnosis complete - external API mismatch confirmed
+- [x] Analyze file and identify NaN percentage issue
+- [x] Confirm plan with user  
+- [ ] Step 1: Add `totalSeats: 500` to data object
+- [ ] Step 2: Fix variable naming (summerCamp → workshop)
+- [ ] Step 3: Test progress bar renders correctly
+- [ ] Step 4: Verify animation and seats left counter
+- [ ] Step 5: Complete task
 
-## Backend Endpoint:
-```
-POST http://localhost:3000/api/enrollments/workshop/register
-Expected: {name, email, phone, college, stream, year, batch, experience...}
-```
-
-## Current Status: Starting implementation...
+**Current Status:** Ready to implement file changes

@@ -25,7 +25,7 @@ const summerCamp = {
   college: "Across Multiple Locations – On Campus",
   dateDisplay: "Summer 2026",
   fee: "FREE",
-
+  totalSeats: 5000
 };
 
 /* ── Zod Schema for Summer Camp ─────────────────────────────────────────── */
@@ -49,41 +49,59 @@ function LiveRegistrationCounter() {
   const [animatedCount, setAnimatedCount] = useState(0);
 
   const fetchCounts = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("https://summercamp-zeta.vercel.app/get_registration_counts");
-      const data = await res.json();
-      if (data.success) {
-        setTotalRegistrations(data.total);
-        setTodayRegistrations(data.today);
-        // Animate the counter
-        animateNumber(0, data.total, 1000);
-      }
-    } catch (error) {
-      console.error("Error fetching counts:", error);
-      // Demo data for testing
-      const demoTotal = 1156;
-      setTotalRegistrations(demoTotal);
-      setTodayRegistrations(120);
-      animateNumber(0, demoTotal, 2000);
-    } finally {
-      setLoading(false);
+  setLoading(true);
+  try {
+    const res = await fetch("https://summercamp-zeta.vercel.app/get_registration_counts");
+    const data = await res.json();
+    if (data.success) {
+      setTotalRegistrations(data.total);
+      setTodayRegistrations(data.today);
+      // Animate the counter
+      animateNumber(0, data.total, 2000);
     }
-  };
+  } catch (error) {
+    console.error("Error fetching counts:", error);
+    // Demo data for testing - store as numbers, display with + later
+    const demoTotalNumber = 2000;
+    const demoTodayNumber = 100;
+    
+    setTotalRegistrations(demoTotalNumber);
+    setTodayRegistrations(demoTodayNumber);
+    animateNumber(0, demoTotalNumber, 2000);
+  } finally {
+    setLoading(false);
+  }
+};
 
-  const animateNumber = (start, end, duration) => {
-    const step = (end - start) / (duration / 16);
-    let current = start;
-    const timer = setInterval(() => {
-      current += step;
-      if (current >= end) {
-        setAnimatedCount(end);
-        clearInterval(timer);
-      } else {
-        setAnimatedCount(Math.floor(current));
-      }
-    }, 16);
-  };
+// Animate number function (stores numeric value)
+const animateNumber = (start, end, duration) => {
+  const step = (end - start) / (duration / 16);
+  let current = start;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= end) {
+      setTotalRegistrations(end);
+      clearInterval(timer);
+    } else {
+      setTotalRegistrations(Math.floor(current));
+    }
+  }, 16);
+};
+
+// For today's registrations animation
+const animateTodayNumber = (start, end, duration) => {
+  const step = (end - start) / (duration / 16);
+  let current = start;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= end) {
+      setTodayRegistrations(end);
+      clearInterval(timer);
+    } else {
+      setTodayRegistrations(Math.floor(current));
+    }
+  }, 16);
+};
 
   useEffect(() => {
     fetchCounts();
@@ -114,22 +132,41 @@ function LiveRegistrationCounter() {
 
       <div className="flex justify-between items-end mb-2">
         <div>
-          <motion.div
-            className="text-3xl sm:text-4xl font-black text-white"
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            {loading ? (
-              <div className="w-20 h-8 bg-white/20 rounded animate-pulse" />
-            ) : (
-              <span>{animatedCount.toLocaleString()}</span>
-            )}
-            <span className="text-lg text-white/60"> / {summerCamp.totalSeats}</span>
-          </motion.div>
-          <p className="text-xs text-white/70 mt-1">Total Registrations</p>
-        </div>
-        <div className="text-right">
+  <motion.div 
+    className="text-3xl sm:text-4xl font-black text-white"
+    initial={{ scale: 0.5, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    transition={{ duration: 0.5 }}
+  >
+    {loading ? (
+      <div className="w-20 h-8 bg-white/20 rounded animate-pulse" />
+    ) : (
+      <span>
+        {typeof totalRegistrations === 'number' 
+          ? totalRegistrations.toLocaleString() + '+' 
+          : totalRegistrations}
+      </span>
+    )}
+    <span className="text-lg text-white/60"> / {summerCamp.totalSeats}</span>
+  </motion.div>
+  <p className="text-xs text-white/70 mt-1">Total Registrations</p>
+</div>
+
+{/* Today's registrations display */}
+<div className="text-right">
+  <motion.div 
+    className="text-xl font-bold text-white"
+    initial={{ scale: 0.5, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    transition={{ duration: 0.5, delay: 0.2 }}
+  >
+    {typeof todayRegistrations === 'number' 
+      ? todayRegistrations.toLocaleString() + '+' 
+      : todayRegistrations}
+  </motion.div>
+  <p className="text-xs text-white/70">Today</p>
+</div>
+        {/* <div className="text-right">
           <motion.div
             className="text-xl font-bold text-white"
             initial={{ scale: 0.5, opacity: 0 }}
@@ -139,7 +176,7 @@ function LiveRegistrationCounter() {
             +{todayRegistrations}
           </motion.div>
           <p className="text-xs text-white/70">Today</p>
-        </div>
+        </div> */}
       </div>
 
       {/* Progress Bar */}
