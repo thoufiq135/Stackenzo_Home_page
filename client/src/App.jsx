@@ -28,7 +28,7 @@ import WorkshopRegister from "./WorkshopRegister";
 import WorkshopSuccess from "./WorkshopSuccess";
 import WorkshopAlreadyRegistered from "./WorkshopAlreadyRegistered";
 import IntermediateResults from "./IntermediateResults";
-import JoinCommunity from "./JoinCommunity.jsx";
+import JoinCommunity from "./Joincommunity";
 
 
 function App() {
