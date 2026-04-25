@@ -20,90 +20,90 @@ import {
 ════════════════════════════════════════════════════════════ */
 const EASE_EXPO = [0.16, 1, 0.3, 1];
 const EASE_BACK = [0.34, 1.56, 0.64, 1];
-const EASE_IN   = [0.4, 0, 1, 1];
+const EASE_IN = [0.4, 0, 1, 1];
 
 /* ════════════════════════════════════════════════════════════
    DATA
 ════════════════════════════════════════════════════════════ */
 const TESTIMONIALS = [
   { name: "Arjun Kumar", role: "Engineering Student", quote: "Stackenzo completely changed how I approach real-world projects. The learning is practical and intense.", img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80" },
-  { name: "Sneha R",     role: "Startup Founder",     quote: "Their IT services helped us launch faster with a solid and scalable platform.",                          img: "https://images.unsplash.com/photo-1494790108777-766d5e5f4c9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80" },
-  { name: "Rahul M",     role: "Robotics Enthusiast", quote: "The robotics programs are hands-on and far better than typical classroom learning.",                      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80" },
+  { name: "Sneha R", role: "Startup Founder", quote: "Their IT services helped us launch faster with a solid and scalable platform.", img: "https://images.unsplash.com/photo-1494790108777-766d5e5f4c9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80" },
+  { name: "Rahul M", role: "Robotics Enthusiast", quote: "The robotics programs are hands-on and far better than typical classroom learning.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80" },
 ];
 const STATS = [
-  { label: "Students Trained",    value: "1200+", icon: Users,     iconKey: "users",    description: "Empowering future innovators"    },
-  { label: "Projects Delivered",  value: "150+",  icon: Package,   iconKey: "package",  description: "Successful implementations"     },
-  { label: "Workshops Conducted", value: "80+",   icon: Briefcase, iconKey: "briefcase",description: "Hands-on learning experiences"  },
-  { label: "Community Members",   value: "3000+", icon: Globe,     iconKey: "globe",    description: "Growing tech community"         },
+  { label: "Students Trained", value: "1200+", icon: Users, iconKey: "users", description: "Empowering future innovators" },
+  { label: "Projects Delivered", value: "150+", icon: Package, iconKey: "package", description: "Successful implementations" },
+  { label: "Workshops Conducted", value: "80+", icon: Briefcase, iconKey: "briefcase", description: "Hands-on learning experiences" },
+  { label: "Community Members", value: "3000+", icon: Globe, iconKey: "globe", description: "Growing tech community" },
 ];
 const SERVICES = [
   {
-    id:1,
-    title:"Research & Development",
-    path:"/R_AND_D",
-    shortDesc:"Cutting-edge R&D projects",
-    fullDesc:"We drive innovation through cutting-edge research, combining academic rigor with real-world impact to solve complex challenges in AI, robotics, and sustainable technology.",
-    icon:CpuIcon,
-    accent:"#4CAF50",
-    features:["AI & Machine Learning","Sustainable Tech","Prototype Development","Industry Collaboration"]
+    id: 1,
+    title: "Research & Development",
+    path: "/R_AND_D",
+    shortDesc: "Cutting-edge R&D projects",
+    fullDesc: "We drive innovation through cutting-edge research, combining academic rigor with real-world impact to solve complex challenges in AI, robotics, and sustainable technology.",
+    icon: CpuIcon,
+    accent: "#4CAF50",
+    features: ["AI & Machine Learning", "Sustainable Tech", "Prototype Development", "Industry Collaboration"]
   },
   {
-    id:2,
-    title:"IT Services",
-    path:"/WebServices",
-    shortDesc:"Custom web & mobile dev",
-    fullDesc:"We empower businesses with scalable IT solutions—from custom platforms to enterprise cloud systems—tailored to drive growth and efficiency.",
-    icon:Code2,
-    accent:"#2196F3",
-    features:["Digital Platforms","Cloud Solutions","Enterprise Systemss","Scalable Architecture"]
+    id: 2,
+    title: "IT Services",
+    path: "/WebServices",
+    shortDesc: "Custom web & mobile dev",
+    fullDesc: "We empower businesses with scalable IT solutions—from custom platforms to enterprise cloud systems—tailored to drive growth and efficiency.",
+    icon: Code2,
+    accent: "#2196F3",
+    features: ["Digital Platforms", "Cloud Solutions", "Enterprise Systemss", "Scalable Architecture"]
   },
   {
-    id:3,
-    title:"EdTech",
-    path:"/Robotics",
-    shortDesc:"Strategic EdTech initiatives",
-    fullDesc:"We transform education through innovative EdTech solutions, making learning engaging, accessible, and impactful while empowering future leaders.",
-    icon:BookOpen,
-    accent:"#FF9800",
-    features:["Robotics education with hands-on learning","Coding bootcamps using real tools","Problem-solving focused training","Guidance from experienced mentors"]
+    id: 3,
+    title: "EdTech",
+    path: "/Robotics",
+    shortDesc: "Strategic EdTech initiatives",
+    fullDesc: "We transform education through innovative EdTech solutions, making learning engaging, accessible, and impactful while empowering future leaders.",
+    icon: BookOpen,
+    accent: "#FF9800",
+    features: ["Robotics education with hands-on learning", "Coding bootcamps using real tools", "Problem-solving focused training", "Guidance from experienced mentors"]
   },
   {
-    id:4,
-    title:"Digital Marketing",
-    path:"/DigitalMarketing",
-    shortDesc:"SEO, branding & growth",
-    fullDesc:"We use data-driven digital marketing to build strong online presence, connect with the right audience, and drive engagement with measurable ROI.",
-    icon:TrendingUp,
-    accent:"#E91E63",
-    features:["SEO Optimization","Content Strategy","Social Media","Analytics & Reporting"]
+    id: 4,
+    title: "Digital Marketing",
+    path: "/DigitalMarketing",
+    shortDesc: "SEO, branding & growth",
+    fullDesc: "We use data-driven digital marketing to build strong online presence, connect with the right audience, and drive engagement with measurable ROI.",
+    icon: TrendingUp,
+    accent: "#E91E63",
+    features: ["SEO Optimization", "Content Strategy", "Social Media", "Analytics & Reporting"]
   },
   {
-    id:5,
-    title:"GSIN Platform",
-    path:"/Community",
-    shortDesc:"Gamified tech ecosystem",
-    fullDesc:"Our innovative GSIN platform creates an engaging ecosystem where tech enthusiasts collaborate, compete, and grow through challenges, leaderboards, project showcases, and community events that foster innovation.",
-    icon:Globe,
-    accent:"#00BCD4",
-    features:["Coding challenges with rewards","Project collaboration ecosystem","Leaderboards for engagement","Community events with mentorship"]
+    id: 5,
+    title: "GSIN Platform",
+    path: "/Community",
+    shortDesc: "Gamified tech ecosystem",
+    fullDesc: "Our innovative GSIN platform creates an engaging ecosystem where tech enthusiasts collaborate, compete, and grow through challenges, leaderboards, project showcases, and community events that foster innovation.",
+    icon: Globe,
+    accent: "#00BCD4",
+    features: ["Coding challenges with rewards", "Project collaboration ecosystem", "Leaderboards for engagement", "Community events with mentorship"]
   },
 ];
 const WHY = [
-  { icon: Zap,        title: "Swift Assistance", desc: "Quick turnaround without compromising quality"           },
-  { icon: Target,     title: "Expert Team",       desc: "Experienced professionals in tech and education"        },
-  { icon: Heart,      title: "24/7 Support",      desc: "Continuous support throughout your entire journey"      },
-  { icon: TrendingUp, title: "Proven Results",    desc: "Track record of successful projects & satisfied clients" },
+  { icon: Zap, title: "Swift Assistance", desc: "Quick turnaround without compromising quality" },
+  { icon: Target, title: "Expert Team", desc: "Experienced professionals in tech and education" },
+  { icon: Heart, title: "24/7 Support", desc: "Continuous support throughout your entire journey" },
+  { icon: TrendingUp, title: "Proven Results", desc: "Track record of successful projects & satisfied clients" },
 ];
 const PROGRAMS = [
-  { title:"R & D Projects",         desc:"Research-driven engineering projects for real-world challenges.",  img:"https://eu-images.contentstack.com/v3/assets/blt7a82e963f79cc4ec/blte9ba4bb5c8fc7e51/64b54806962d8e60ca1b576d/RD.jpg",              link:"/R_AND_D",          icon:CpuIcon,    accent:"#4CAF50" },
-  { title:"IT Services",            desc:"End-to-end software development and scalable digital platforms.",  img:"/images/it services.jpg",                                                                                                           link:"/WebServices",      icon:Code2,      accent:"#2196F3" },
-  { title:"Robotics Education",     desc:"Hands-on robotics programs promoting innovation.",                 img:"https://tse3.mm.bing.net/th/id/OIP.95DU085B5v2VMvLso-nfzAAAAA",                                                                     link:"/Robotics",         icon:Bot,        accent:"#9C27B0" },
-  { title:"Workshops & Internships",desc:"Industry-oriented programs bridging learning with practice.",      img:"/images/workshop&internship.jpg",            link:"/WorkShops",        icon:Users,      accent:"#FF9800" },
-  { title:"Digital Marketing",      desc:"Comprehensive SEO, branding and performance marketing.",           img:"/images/digital marketing.jpg",                                                                                                     link:"/DigitalMarketing", icon:TrendingUp, accent:"#00BCD4" },
-  { title:"GSIN Platform",          desc:"Gamified innovation ecosystem for collaboration and growth.",      img:"/images/gsin.jpg",                                                                                                                  link:"/Community",        icon:Globe,      accent:"#4CAF50" },
+  { title: "R & D Projects", desc: "Research-driven engineering projects for real-world challenges.", img: "https://eu-images.contentstack.com/v3/assets/blt7a82e963f79cc4ec/blte9ba4bb5c8fc7e51/64b54806962d8e60ca1b576d/RD.jpg", link: "/R_AND_D", icon: CpuIcon, accent: "#4CAF50" },
+  { title: "IT Services", desc: "End-to-end software development and scalable digital platforms.", img: "/images/it services.jpg", link: "/WebServices", icon: Code2, accent: "#2196F3" },
+  { title: "Robotics Education", desc: "Hands-on robotics programs promoting innovation.", img: "https://tse3.mm.bing.net/th/id/OIP.95DU085B5v2VMvLso-nfzAAAAA", link: "/Robotics", icon: Bot, accent: "#9C27B0" },
+  { title: "Workshops & Internships", desc: "Industry-oriented programs bridging learning with practice.", img: "/images/workshop&internship.jpg", link: "/WorkShops", icon: Users, accent: "#FF9800" },
+  { title: "Digital Marketing", desc: "Comprehensive SEO, branding and performance marketing.", img: "/images/digital marketing.jpg", link: "/DigitalMarketing", icon: TrendingUp, accent: "#00BCD4" },
+  { title: "GSIN Platform", desc: "Gamified innovation ecosystem for collaboration and growth.", img: "/images/gsin.jpg", link: "/Community", icon: Globe, accent: "#4CAF50" },
 ];
-const MARQUEE_ITEMS = ["Research & Development","IT Solutions","EdTech Innovation","Robotics","Digital Marketing","GSIN Platform","AI & Machine Learning","Cloud Solutions","IoT Integration","Smart Manufacturing"];
-const NAV_SECTIONS  = ["hero","services-section","programs","about","testimonials-section"];
+const MARQUEE_ITEMS = ["Research & Development", "IT Solutions", "EdTech Innovation", "Robotics", "Digital Marketing", "GSIN Platform", "AI & Machine Learning", "Cloud Solutions", "IoT Integration", "Smart Manufacturing"];
+const NAV_SECTIONS = ["hero", "services-section", "programs", "about", "testimonials-section"];
 
 /* ════════════════════════════════════════════════════════════
    HOOK — scroll direction
@@ -123,21 +123,21 @@ function useScrollDir() {
 export function Reveal({
   children,
   className = "",
-  delay     = 0,
-  from      = "bottom",   // "bottom" | "top" | "left" | "right" | "scale"
-  once      = false,      // if true only animates once (original behaviour)
+  delay = 0,
+  from = "bottom",   // "bottom" | "top" | "left" | "right" | "scale"
+  once = false,      // if true only animates once (original behaviour)
   threshold = 0.15,
 }) {
-  const ref   = useRef(null);
-  const inV   = useInView(ref, { once, margin: "-60px", amount: threshold });
-  const dir   = useScrollDir();
+  const ref = useRef(null);
+  const inV = useInView(ref, { once, margin: "-60px", amount: threshold });
+  const dir = useScrollDir();
 
   const offsets = {
-    bottom: { hidden: { y: 70,   opacity: 0, scale: 0.96, filter: "blur(6px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: -50, opacity: 0, scale: 0.97, filter: "blur(4px)" } },
-    top:    { hidden: { y: -70,  opacity: 0, scale: 0.96, filter: "blur(6px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: 50,  opacity: 0, scale: 0.97, filter: "blur(4px)" } },
-    left:   { hidden: { x: -80,  opacity: 0, scale: 0.96, filter: "blur(6px)" }, visible: { x: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { x: 60,  opacity: 0, scale: 0.97, filter: "blur(4px)" } },
-    right:  { hidden: { x: 80,   opacity: 0, scale: 0.96, filter: "blur(6px)" }, visible: { x: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { x: -60, opacity: 0, scale: 0.97, filter: "blur(4px)" } },
-    scale:  { hidden: { scale: 0.75, opacity: 0, filter: "blur(8px)" },           visible: { scale: 1, opacity: 1, filter: "blur(0px)" },         exit: { scale: 0.85, opacity: 0, filter: "blur(6px)" } },
+    bottom: { hidden: { y: 70, opacity: 0, scale: 0.96, filter: "blur(6px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: -50, opacity: 0, scale: 0.97, filter: "blur(4px)" } },
+    top: { hidden: { y: -70, opacity: 0, scale: 0.96, filter: "blur(6px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: 50, opacity: 0, scale: 0.97, filter: "blur(4px)" } },
+    left: { hidden: { x: -80, opacity: 0, scale: 0.96, filter: "blur(6px)" }, visible: { x: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { x: 60, opacity: 0, scale: 0.97, filter: "blur(4px)" } },
+    right: { hidden: { x: 80, opacity: 0, scale: 0.96, filter: "blur(6px)" }, visible: { x: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { x: -60, opacity: 0, scale: 0.97, filter: "blur(4px)" } },
+    scale: { hidden: { scale: 0.75, opacity: 0, filter: "blur(8px)" }, visible: { scale: 1, opacity: 1, filter: "blur(0px)" }, exit: { scale: 0.85, opacity: 0, filter: "blur(6px)" } },
   };
 
   const { hidden, visible, exit } = offsets[from] || offsets.bottom;
@@ -166,8 +166,8 @@ export function StaggerContainer({ children, className = "", stagger = 0.1, from
 
   const offsets = {
     bottom: { hidden: { y: 60, opacity: 0, scale: 0.95, filter: "blur(5px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: -40, opacity: 0, scale: 0.97, filter: "blur(3px)" } },
-    left:   { hidden: { x: -60, opacity: 0 }, visible: { x: 0, opacity: 1 }, exit: { x: 40, opacity: 0 } },
-    right:  { hidden: { x: 60,  opacity: 0 }, visible: { x: 0, opacity: 1 }, exit: { x: -40, opacity: 0 } },
+    left: { hidden: { x: -60, opacity: 0 }, visible: { x: 0, opacity: 1 }, exit: { x: 40, opacity: 0 } },
+    right: { hidden: { x: 60, opacity: 0 }, visible: { x: 0, opacity: 1 }, exit: { x: -40, opacity: 0 } },
   };
   const { hidden, visible, exit } = offsets[from] || offsets.bottom;
 
@@ -178,17 +178,17 @@ export function StaggerContainer({ children, className = "", stagger = 0.1, from
       initial="hidden"
       animate={inV ? "visible" : dir === "up" ? "exit" : "hidden"}
       variants={{
-        hidden:  {},
+        hidden: {},
         visible: { transition: { staggerChildren: stagger } },
-        exit:    { transition: { staggerChildren: stagger / 2, staggerDirection: -1 } },
+        exit: { transition: { staggerChildren: stagger / 2, staggerDirection: -1 } },
       }}
     >
       {Array.isArray(children)
         ? children.map((child, i) => (
-            <motion.div key={i} variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>
-              {child}
-            </motion.div>
-          ))
+          <motion.div key={i} variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>
+            {child}
+          </motion.div>
+        ))
         : <motion.div variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>{children}</motion.div>
       }
     </motion.div>
@@ -219,8 +219,8 @@ export function Float({ children, className = "", duration = 3, yRange = 12, del
    GLOWING BORDER CARD
 ════════════════════════════════════════════════════════════ */
 export function GlowCard({ children, className = "", accent = "#D4AF37", dark = false }) {
-  const ref   = useRef(null);
-  const inV   = useInView(ref, { once: false, margin: "-40px" });
+  const ref = useRef(null);
+  const inV = useInView(ref, { once: false, margin: "-40px" });
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
   const onMove = (e) => {
@@ -405,25 +405,25 @@ function SectionNavDots() {
     <div className="fixed right-5 top-1/2 -translate-y-1/2 z-[900] flex-col gap-4 hidden md:flex">
       {NAV_SECTIONS.map((id, i) => (
         <motion.button
-  key={i}
-  onClick={() =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="relative flex items-center gap-2"
-  title={labels[i]}
->
-  {/* 🔹 DOT */}
-  <motion.div
-    animate={{
-      scale: active === i ? 1.4 : 1,
-      background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
-    }}
-    transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    className="w-2.5 h-2.5 rounded-full"
-  />
+          key={i}
+          onClick={() =>
+            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="relative flex items-center gap-2"
+          title={labels[i]}
+        >
+          {/* 🔹 DOT */}
+          <motion.div
+            animate={{
+              scale: active === i ? 1.4 : 1,
+              background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 22 }}
+            className="w-2.5 h-2.5 rounded-full"
+          />
 
- 
-</motion.button>
+
+        </motion.button>
       ))}
     </div>
   );
@@ -444,9 +444,9 @@ function NoiseCanvas({ color1 = "#FFD5B8", color2 = "#FFF4ED", opacity = 0.4 }) 
         w * (0.3 + 0.22 * Math.sin(t * 0.38)), h * (0.3 + 0.16 * Math.cos(t * 0.28)), 0,
         w * 0.5, h * 0.5, Math.max(w, h) * 0.88
       );
-      grd.addColorStop(0,   color1 + "cc");
+      grd.addColorStop(0, color1 + "cc");
       grd.addColorStop(0.5, color2 + "88");
-      grd.addColorStop(1,   "transparent");
+      grd.addColorStop(1, "transparent");
       ctx.clearRect(0, 0, w, h); ctx.fillStyle = grd; ctx.fillRect(0, 0, w, h);
       t += 0.007; id = requestAnimationFrame(draw);
     };
@@ -480,11 +480,11 @@ function ParticleCanvas({ count = 30, color = "rgba(230,107,38,0.11)" }) {
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = color; ctx.fill();
       });
-      for (let i = 0; i < pts.length; i++) for (let j = i+1; j < pts.length; j++) {
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
         const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
         if (d < 90) {
           ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
-          ctx.strokeStyle = color.replace(/[\d.]+\)$/, `${(1 - d/90) * .065})`); ctx.stroke();
+          ctx.strokeStyle = color.replace(/[\d.]+\)$/, `${(1 - d / 90) * .065})`); ctx.stroke();
         }
       }
       id = requestAnimationFrame(draw);
@@ -518,8 +518,8 @@ function Spotlight({ color = "rgba(212,175,55,0.07)", size = 600 }) {
    SVG WAVE DIVIDER
 ════════════════════════════════════════════════════════════ */
 function WaveDivider({ color = "#D4AF37", flip = false, fromBg = "#fff", toBg = "#F7F4EF" }) {
-  const ref  = useRef(null);
-  const inV  = useInView(ref, { once: true, margin: "-10px" });
+  const ref = useRef(null);
+  const inV = useInView(ref, { once: true, margin: "-10px" });
   return (
     <div ref={ref} className={`relative w-full overflow-hidden ${flip ? "rotate-180" : ""}`} style={{ height: 56 }}>
       <svg viewBox="0 0 1440 56" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
@@ -565,7 +565,7 @@ function MagBtn({ children, className = "", onClick }) {
   const x = useMotionValue(0), y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 250, damping: 16 });
   const sy = useSpring(y, { stiffness: 250, damping: 16 });
-  const mm = e => { const r = ref.current.getBoundingClientRect(); x.set((e.clientX - r.left - r.width/2) * .38); y.set((e.clientY - r.top - r.height/2) * .38); };
+  const mm = e => { const r = ref.current.getBoundingClientRect(); x.set((e.clientX - r.left - r.width / 2) * .38); y.set((e.clientY - r.top - r.height / 2) * .38); };
   const ml = () => { x.set(0); y.set(0); };
   return (
     <motion.button ref={ref} style={{ x: sx, y: sy }} onMouseMove={mm} onMouseLeave={ml} whileTap={{ scale: .94 }} onClick={onClick} className={className}>
@@ -582,7 +582,7 @@ export function TiltCard({ children, className = "", intensity = 12 }) {
   const rx = useMotionValue(0), ry = useMotionValue(0);
   const srx = useSpring(rx, { stiffness: 200, damping: 22 });
   const sry = useSpring(ry, { stiffness: 200, damping: 22 });
-  const mm = e => { const r = ref.current.getBoundingClientRect(); rx.set(-((e.clientY - r.top)/r.height - .5) * intensity); ry.set(((e.clientX - r.left)/r.width - .5) * intensity); };
+  const mm = e => { const r = ref.current.getBoundingClientRect(); rx.set(-((e.clientY - r.top) / r.height - .5) * intensity); ry.set(((e.clientX - r.left) / r.width - .5) * intensity); };
   const ml = () => { rx.set(0); ry.set(0); };
   return (
     <motion.div ref={ref} onMouseMove={mm} onMouseLeave={ml}
@@ -600,8 +600,8 @@ function Counter({ value }) {
   const inV = useInView(ref, { once: false });
   const num = parseInt(value.replace(/\D/g, ""), 10);
   const sfx = value.replace(/[0-9]/g, "");
-  const mv  = useMotionValue(0);
-  const sp  = useSpring(mv, { stiffness: 55, damping: 14 });
+  const mv = useMotionValue(0);
+  const sp = useSpring(mv, { stiffness: 55, damping: 14 });
   const [d, setD] = useState(0);
   useEffect(() => { mv.set(inV ? num : 0); }, [inV]);
   useEffect(() => sp.on("change", v => setD(Math.round(v))), [sp]);
@@ -625,9 +625,9 @@ export function SLabel({ text }) {
    WORD-BY-WORD HEADING  (bidirectional)
 ════════════════════════════════════════════════════════════ */
 export function AHeading({ children, className = "", delay = 0 }) {
-  const ref  = useRef(null);
-  const inV  = useInView(ref, { once: false, margin: "-50px" });
-  const dir  = useScrollDir();
+  const ref = useRef(null);
+  const inV = useInView(ref, { once: false, margin: "-50px" });
+  const dir = useScrollDir();
   const words = typeof children === "string" ? children.split(" ") : [children];
   return (
     <h2 ref={ref} className={className}>
@@ -639,7 +639,7 @@ export function AHeading({ children, className = "", delay = 0 }) {
               ? { y: 0, opacity: 1, skewY: 0 }
               : dir === "up"
                 ? { y: "-110%", opacity: 0, skewY: -5 }
-                : { y: "110%",  opacity: 0, skewY: 5 }}
+                : { y: "110%", opacity: 0, skewY: 5 }}
             transition={{ duration: .72, delay: delay + i * .075, ease: EASE_EXPO }}>
             {w}
           </motion.span>
@@ -659,10 +659,10 @@ function HeroSection({ apiPrograms, loading }) {
   const { scrollYProgress } = useScroll({ target: secRef, offset: ["start start", "end start"] });
   const { scrollY } = useScroll();
   const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
-  const hY   = useTransform(scrollYProgress, [0,1], [0,-110]);
-  const hO   = useTransform(scrollYProgress, [0,.6], [1,0.9]);
-  const hS   = useTransform(scrollYProgress, [0,1], [1,.83]);
-  const bigY = useTransform(scrollYProgress, [0,1], [0, 200]);
+  const hY = useTransform(scrollYProgress, [0, 1], [0, -110]);
+  const hO = useTransform(scrollYProgress, [0, .6], [1, 0.9]);
+  const hS = useTransform(scrollYProgress, [0, 1], [1, .83]);
+  const bigY = useTransform(scrollYProgress, [0, 1], [0, 200]);
 
   const headlines = [
     "Empowering the Future Through Research & Smart IT",
@@ -672,17 +672,17 @@ function HeroSection({ apiPrograms, loading }) {
   const [hIdx, setHIdx] = useState(0), [trig, setTrig] = useState(false);
   const displayed = useTextScramble(headlines[hIdx], trig);
   useEffect(() => {
-    const t = setInterval(() => { setHIdx(p => (p+1) % headlines.length); setTrig(p => !p); }, 4500);
+    const t = setInterval(() => { setHIdx(p => (p + 1) % headlines.length); setTrig(p => !p); }, 4500);
     return () => clearInterval(t);
   }, []);
 
   const mx = useMotionValue(0), my = useMotionValue(0);
   const smx = useSpring(mx, { stiffness: 35, damping: 18 });
   const smy = useSpring(my, { stiffness: 35, damping: 18 });
-  const b1x = useTransform(smx, [-1,1], [-30,30]), b1y = useTransform(smy, [-1,1], [-18,18]);
-  const b2x = useTransform(smx, [-1,1], [22,-22]),  b2y = useTransform(smy, [-1,1], [16,-16]);
+  const b1x = useTransform(smx, [-1, 1], [-30, 30]), b1y = useTransform(smy, [-1, 1], [-18, 18]);
+  const b2x = useTransform(smx, [-1, 1], [22, -22]), b2y = useTransform(smy, [-1, 1], [16, -16]);
   useEffect(() => {
-    const fn = e => { mx.set((e.clientX/window.innerWidth-.5)*2); my.set((e.clientY/window.innerHeight-.5)*2); };
+    const fn = e => { mx.set((e.clientX / window.innerWidth - .5) * 2); my.set((e.clientY / window.innerHeight - .5) * 2); };
     window.addEventListener("mousemove", fn); return () => window.removeEventListener("mousemove", fn);
   }, []);
 
@@ -723,9 +723,9 @@ function HeroSection({ apiPrograms, loading }) {
 
       {/* Main content */}
       <motion.div style={{ y: hY, opacity: hO, scale: hS }} className="relative z-10 text-center px-6 max-w-6xl mx-auto mt-24 pb-24">
-        <motion.div initial={{ scale:.7, opacity:0, y:20 }} animate={{ scale:1, opacity:1, y:0 }} transition={{ duration:.65, ease: EASE_BACK }}
+        <motion.div initial={{ scale: .7, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} transition={{ duration: .65, ease: EASE_BACK }}
           className="inline-flex items-center gap-2 border border-[#F04A06]/14 rounded-full px-5 py-2.5 mb-8 bg-white/80 backdrop-blur-sm shadow-sm">
-          <motion.div animate={{ rotate:[0,20,-20,0] }} transition={{ duration:2.8, repeat:Infinity, ease:"easeInOut" }}>
+          <motion.div animate={{ rotate: [0, 20, -20, 0] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}>
             <Sparkles className="w-4 h-4 text-[#D4AF37]" />
           </motion.div>
           <span className="text-sm text-[#F04A06] font-bold tracking-wide">Innovation Through Technology</span>
@@ -744,39 +744,49 @@ function HeroSection({ apiPrograms, loading }) {
           </motion.h1>
         </div>
 
-        <motion.p initial={{ opacity:0, y:24 }} animate={{ opacity:1, y:0 }} transition={{ duration:.8, delay:.45, ease: EASE_EXPO }}
+        <motion.p initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, delay: .45, ease: EASE_EXPO }}
           className="text-base md:text-lg text-[#555] max-w-3xl mx-auto leading-relaxed mb-10">
           A technology-driven organization specializing in IT services, pioneering R&D, and transformative EdTech solutions—shaping the future of innovation.
         </motion.p>
 
         {/* BUTTON GROUP WITH SUMMER CAMP BUTTON */}
-        <motion.div initial={{ opacity:0, y:18 }} animate={{ opacity:1, y:0 }} transition={{ duration:.72, delay:.62 }}
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .72, delay: .62 }}
           className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
-          
-          <MagBtn onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior:"smooth" })}
+
+          <MagBtn onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
             className="group relative px-9 py-4 bg-[#F04A06] text-white rounded-full font-bold text-sm overflow-hidden shadow-xl shadow-[#F04A06]/30">
             <span className="relative z-10 flex items-center justify-center gap-2">
               Get Started
-              <motion.span animate={{ x:[0,4,0] }} transition={{ duration:1.6, repeat:Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
+              <motion.span animate={{ x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
             </span>
-            <motion.div className="absolute inset-0 bg-[#F04A06] rounded-full origin-center" initial={{ scale:0 }} whileHover={{ scale:3 }} transition={{ duration:.5 }} />
+            <motion.div className="absolute inset-0 bg-[#F04A06] rounded-full origin-center" initial={{ scale: 0 }} whileHover={{ scale: 3 }} transition={{ duration: .5 }} />
           </MagBtn>
-          
+
           <button
-            onClick={() => document.getElementById("about")?.scrollIntoView({ behavior:"smooth" })}
+            onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
             className="px-9 py-4 border-2 border-[#F04A06] text-[#F04A06] rounded-full font-bold text-sm bg-white hover:bg-[#FFF4ED] transition-colors"
           >
             Learn More
           </button>
-          
+        
+          <Link to="/joinCommunity">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-9 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F04A06] text-white rounded-full font-bold text-sm shadow-xl"
+            >
+              Join Our Community
+            </motion.button>
+          </Link>
+
           {/* SUMMER CAMP BUTTON - MOVED FROM CTA TO HERO */}
           <Link to="/Bootcamp2026">
             <MagBtn className="group relative px-9 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F04A06] text-white rounded-full font-bold text-sm overflow-hidden shadow-xl shadow-[#D4AF37]/30">
               <span className="relative z-10 flex items-center justify-center gap-2">
-                 AI & Robotics BootCamp for Students
-                <motion.span animate={{ x:[0,4,0] }} transition={{ duration:1.6, repeat:Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
+                AI & Robotics BootCamp for Students
+                <motion.span animate={{ x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
               </span>
-              <motion.div className="absolute inset-0 bg-gradient-to-r from-[#F04A06] to-[#D4AF37] rounded-full origin-center" initial={{ scale:0 }} whileHover={{ scale:3 }} transition={{ duration:.5 }} />
+              <motion.div className="absolute inset-0 bg-gradient-to-r from-[#F04A06] to-[#D4AF37] rounded-full origin-center" initial={{ scale: 0 }} whileHover={{ scale: 3 }} transition={{ duration: .5 }} />
             </MagBtn>
           </Link>
         </motion.div>
@@ -789,7 +799,7 @@ function HeroSection({ apiPrograms, loading }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 cursor-pointer"
-        onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior:"smooth" })}>
+        onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
         <Float duration={2} yRange={10}>
           <div className="w-7 h-12 border-2 border-[#F04A06]/28 rounded-full flex justify-center">
             <motion.div
@@ -810,24 +820,24 @@ function HeroSection({ apiPrograms, loading }) {
 ════════════════════════════════════════════════════════════ */
 function OrbitalCard({ index, total, active, angleRef, svc, Icon, onClick }) {
   const cardRef = useRef(null);
-  const RAD_LG  = 184;
-  const RAD_SM  = 130;
+  const RAD_LG = 184;
+  const RAD_SM = 130;
 
   useEffect(() => {
     let raf;
     const update = () => {
       if (!cardRef.current) return;
-      const rad   = window.innerWidth < 768 ? RAD_SM : RAD_LG;
-      const step  = 360 / total;
-      const ang   = ((index * step) - angleRef.current) * (Math.PI / 180);
-      const x     = Math.sin(ang) * rad;
-      const y     = -Math.cos(ang) * rad * 0.72;
-      const isA   = index === active;
+      const rad = window.innerWidth < 768 ? RAD_SM : RAD_LG;
+      const step = 360 / total;
+      const ang = ((index * step) - angleRef.current) * (Math.PI / 180);
+      const x = Math.sin(ang) * rad;
+      const y = -Math.cos(ang) * rad * 0.72;
+      const isA = index === active;
       const scale = isA ? 1.1 : 0.72;
       cardRef.current.style.transform =
         `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
       cardRef.current.style.opacity = isA ? "1" : "0.75";
-      cardRef.current.style.zIndex  = isA ? "10" : "1";
+      cardRef.current.style.zIndex = isA ? "10" : "1";
       raf = requestAnimationFrame(update);
     };
     raf = requestAnimationFrame(update);
@@ -870,16 +880,16 @@ function OrbitalCard({ index, total, active, angleRef, svc, Icon, onClick }) {
    ServicesSection
 ════════════════════════════════════════════════════════════ */
 function ServicesSection() {
-  const SPEED    = 0.006;
+  const SPEED = 0.006;
   const INTERVAL = 12000;
 
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  const angleRef  = useRef(0);
-  const rafRef    = useRef(null);
-  const dwellRef  = useRef(0);
-  const lastTRef  = useRef(null);
+  const angleRef = useRef(0);
+  const rafRef = useRef(null);
+  const dwellRef = useRef(0);
+  const lastTRef = useRef(null);
 
   useEffect(() => {
     const tick = (timestamp) => {
@@ -1116,10 +1126,10 @@ function StatsSection() {
       <section data-dots-anchor className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{ background: "#FFF4ED" }}>
         <NoiseCanvas color1="#FFD5B8" color2="#FFCBA4" opacity={0.28} />
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({length:4}).map((_,i)=>(
-            <Float key={i} duration={6+i} delay={i*1.2} yRange={24}
-              className="absolute" style={{ left:`${15+i*22}%`, bottom:`${10+i*8}%` }}>
-              <div className="rounded-full bg-[#F04A06]/[0.04]" style={{ width:80+i*30, height:80+i*30 }} />
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Float key={i} duration={6 + i} delay={i * 1.2} yRange={24}
+              className="absolute" style={{ left: `${15 + i * 22}%`, bottom: `${10 + i * 8}%` }}>
+              <div className="rounded-full bg-[#F04A06]/[0.04]" style={{ width: 80 + i * 30, height: 80 + i * 30 }} />
             </Float>
           ))}
         </div>
@@ -1131,23 +1141,25 @@ function StatsSection() {
             </AHeading>
           </div>
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-5" stagger={0.12} from="bottom">
-            {STATS.map((s,i) => { const Icon = s.icon; return (
-              <GlowCard key={i} accent="#D4AF37">
-                <TiltCard>
-                  <motion.div whileHover={{ y:-10, boxShadow:"0 30px 65px rgba(0,0,0,0.11)" }}
-                    className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 text-center hover:border-[#D4AF37] transition-all shadow-sm h-full">
-                    <motion.div whileHover={{ rotate:18, scale:1.18 }} className="inline-flex justify-center mb-5">
-                      <div
-                        data-tbi={s.icon === Users ? "stat-users" : s.icon === Package ? "stat-package" : s.icon === Globe ? "stat-globe" : undefined}
-                        className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/22"><Icon className="w-6 h-6 text-white" /></div>
+            {STATS.map((s, i) => {
+              const Icon = s.icon; return (
+                <GlowCard key={i} accent="#D4AF37">
+                  <TiltCard>
+                    <motion.div whileHover={{ y: -10, boxShadow: "0 30px 65px rgba(0,0,0,0.11)" }}
+                      className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 text-center hover:border-[#D4AF37] transition-all shadow-sm h-full">
+                      <motion.div whileHover={{ rotate: 18, scale: 1.18 }} className="inline-flex justify-center mb-5">
+                        <div
+                          data-tbi={s.icon === Users ? "stat-users" : s.icon === Package ? "stat-package" : s.icon === Globe ? "stat-globe" : undefined}
+                          className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/22"><Icon className="w-6 h-6 text-white" /></div>
+                      </motion.div>
+                      <h3 className="text-3xl md:text-4xl font-black text-[#1A1A1A] mb-1"><Counter value={s.value} /></h3>
+                      <p className="text-[#F04A06] uppercase tracking-widest text-[11px] font-bold mb-1">{s.label}</p>
+                      <p className="text-xs text-gray-400">{s.description}</p>
                     </motion.div>
-                    <h3 className="text-3xl md:text-4xl font-black text-[#1A1A1A] mb-1"><Counter value={s.value} /></h3>
-                    <p className="text-[#F04A06] uppercase tracking-widest text-[11px] font-bold mb-1">{s.label}</p>
-                    <p className="text-xs text-gray-400">{s.description}</p>
-                  </motion.div>
-                </TiltCard>
-              </GlowCard>
-            ); })}
+                  </TiltCard>
+                </GlowCard>
+              );
+            })}
           </StaggerContainer>
         </div>
       </section>
@@ -1167,17 +1179,17 @@ function ProgramsSection() {
         <div className="text-center mb-16">
           <SLabel text="Our Core Programs" />
           <AHeading
-  className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06] leading-tight pt-1"
-  delay={.05}
->
-  Programs We Deliver
-</AHeading>
+            className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06] leading-tight pt-1"
+            delay={.05}
+          >
+            Programs We Deliver
+          </AHeading>
           <Reveal from="scale" delay={.3}>
             <div className="w-20 h-0.5 bg-[#D4AF37] mx-auto mt-5" />
           </Reveal>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {PROGRAMS.map((p,i) => {
+          {PROGRAMS.map((p, i) => {
             const Icon = p.icon;
             // Alternate: even from bottom, odd from scale; left column from left, right from right
             const col = i % 3;
@@ -1187,31 +1199,31 @@ function ProgramsSection() {
                 <Link to={p.link}>
                   <TiltCard>
                     <GlowCard accent={p.accent} className="group cursor-pointer" style={{ minHeight: 290 }}>
-                      <motion.div whileHover={{ y:-7, boxShadow:`0 32px 65px ${p.accent}20` }}
-                        className="relative rounded-2xl overflow-hidden border border-transparent hover:border-[#D4AF37]/28 transition-all" style={{ minHeight:290 }}>
+                      <motion.div whileHover={{ y: -7, boxShadow: `0 32px 65px ${p.accent}20` }}
+                        className="relative rounded-2xl overflow-hidden border border-transparent hover:border-[#D4AF37]/28 transition-all" style={{ minHeight: 290 }}>
                         <div className="absolute inset-0 overflow-hidden">
                           <motion.img src={p.img} alt={p.title} className="w-full h-full object-cover"
-                            whileHover={{ scale:1.07 }} transition={{ duration:.65 }} />
-                          <div className="absolute inset-0" style={{ background:"linear-gradient(to top,rgba(0,0,0,.84) 0%,rgba(0,0,0,.3) 55%,transparent 100%)" }} />
-                          <div className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500" style={{ background:p.accent }} />
+                            whileHover={{ scale: 1.07 }} transition={{ duration: .65 }} />
+                          <div className="absolute inset-0" style={{ background: "linear-gradient(to top,rgba(0,0,0,.84) 0%,rgba(0,0,0,.3) 55%,transparent 100%)" }} />
+                          <div className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500" style={{ background: p.accent }} />
                         </div>
                         {/* Floating icon */}
-                        <Float duration={4} delay={i*0.4} className="absolute top-4 right-4">
+                        <Float duration={4} delay={i * 0.4} className="absolute top-4 right-4">
                           <motion.div
-                           
+
                             data-tbi={p.icon === CpuIcon ? "prog-cpu" : p.icon === Users ? "prog-users" : p.icon === Globe ? "prog-globe" : undefined}
-                            className="p-2.5 rounded-xl border" style={{ background:`${p.accent}20`, borderColor:`${p.accent}3c` }} whileHover={{ rotate:14, scale:1.18 }}>
-                            <Icon className="w-5 h-5" style={{ color:p.accent }} />
+                            className="p-2.5 rounded-xl border" style={{ background: `${p.accent}20`, borderColor: `${p.accent}3c` }} whileHover={{ rotate: 14, scale: 1.18 }}>
+                            <Icon className="w-5 h-5" style={{ color: p.accent }} />
                           </motion.div>
                         </Float>
-                        <div className="relative z-10 p-6 flex flex-col justify-end" style={{ minHeight:290 }}>
-                          <motion.div initial={{ y:12, opacity:0 }} whileHover={{ y:0, opacity:1 }} transition={{ duration:.28 }} className="mb-2">
-                            <span className="text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full" style={{ background:`${p.accent}22`, color:p.accent }}>View Program</span>
+                        <div className="relative z-10 p-6 flex flex-col justify-end" style={{ minHeight: 290 }}>
+                          <motion.div initial={{ y: 12, opacity: 0 }} whileHover={{ y: 0, opacity: 1 }} transition={{ duration: .28 }} className="mb-2">
+                            <span className="text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full" style={{ background: `${p.accent}22`, color: p.accent }}>View Program</span>
                           </motion.div>
                           <h3 className="text-xl font-black text-white mb-1.5">{p.title}</h3>
                           <p className="text-sm text-white/62 leading-relaxed line-clamp-2">{p.desc}</p>
-                          <motion.div className="flex items-center gap-1.5 mt-3 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity" style={{ color:p.accent }}>
-                            Explore <motion.span animate={{ x:[0,5,0] }} transition={{ duration:1.2, repeat:Infinity }}><ChevronRight className="w-4 h-4" /></motion.span>
+                          <motion.div className="flex items-center gap-1.5 mt-3 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: p.accent }}>
+                            Explore <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.2, repeat: Infinity }}><ChevronRight className="w-4 h-4" /></motion.span>
                           </motion.div>
                         </div>
                       </motion.div>
@@ -1233,14 +1245,14 @@ function ProgramsSection() {
 function WhyUsSection() {
   return (
     <>
-      
-      <section data-dots-anchor className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{ background:"#F7F4EF" }}>
-        <div className="absolute inset-0 opacity-[.03]" style={{ backgroundImage:"radial-gradient(circle,#F04A06 1px,transparent 1px)", backgroundSize:"24px 24px" }} />
+
+      <section data-dots-anchor className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{ background: "#F7F4EF" }}>
+        <div className="absolute inset-0 opacity-[.03]" style={{ backgroundImage: "radial-gradient(circle,#F04A06 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
         {/* Big floating background text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none">
           <motion.span className="text-[18vw] font-black leading-none tracking-tighter uppercase"
-            style={{ color:"rgba(230,107,38,0.018)" }}
-            animate={{ y:[0,-10,0] }} transition={{ duration:8, repeat:Infinity, ease:"easeInOut" }}>
+            style={{ color: "rgba(230,107,38,0.018)" }}
+            animate={{ y: [0, -10, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}>
             WHY US
           </motion.span>
         </div>
@@ -1252,28 +1264,30 @@ function WhyUsSection() {
             </AHeading>
           </div>
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" stagger={0.12} from="bottom">
-            {WHY.map((f,i) => { const Icon = f.icon; return (
-              <GlowCard key={i} accent="#D4AF37">
-                <TiltCard className="h-full">
-                  <motion.div whileHover={{ y:-10, boxShadow:"0 32px 65px rgba(230,107,38,0.12)" }}
-                    className="bg-white border border-gray-100 rounded-2xl p-8 text-center hover:border-[#D4AF37] transition-all shadow-sm h-full">
-                    <Float duration={4+i*0.5} delay={i*0.4}>
-                      <motion.div className="inline-flex justify-center mb-6" whileHover={{ scale:1.22, rotate:12 }}>
-                        <div
-                          data-tbi={i===0?"why-zap":i===1?"why-target":i===2?"why-heart":undefined}
-                          className="p-4 rounded-2xl bg-[#FFF4ED]"><Icon className="w-7 h-7 text-[#F04A06]" /></div>
-                      </motion.div>
-                    </Float>
-                    <h3 className="text-lg font-black text-[#1A1A1A] mb-3">{f.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
-                  </motion.div>
-                </TiltCard>
-              </GlowCard>
-            ); })}
+            {WHY.map((f, i) => {
+              const Icon = f.icon; return (
+                <GlowCard key={i} accent="#D4AF37">
+                  <TiltCard className="h-full">
+                    <motion.div whileHover={{ y: -10, boxShadow: "0 32px 65px rgba(230,107,38,0.12)" }}
+                      className="bg-white border border-gray-100 rounded-2xl p-8 text-center hover:border-[#D4AF37] transition-all shadow-sm h-full">
+                      <Float duration={4 + i * 0.5} delay={i * 0.4}>
+                        <motion.div className="inline-flex justify-center mb-6" whileHover={{ scale: 1.22, rotate: 12 }}>
+                          <div
+                            data-tbi={i === 0 ? "why-zap" : i === 1 ? "why-target" : i === 2 ? "why-heart" : undefined}
+                            className="p-4 rounded-2xl bg-[#FFF4ED]"><Icon className="w-7 h-7 text-[#F04A06]" /></div>
+                        </motion.div>
+                      </Float>
+                      <h3 className="text-lg font-black text-[#1A1A1A] mb-3">{f.title}</h3>
+                      <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
+                    </motion.div>
+                  </TiltCard>
+                </GlowCard>
+              );
+            })}
           </StaggerContainer>
         </div>
       </section>
-      
+
     </>
   );
 }
@@ -1303,11 +1317,11 @@ function AboutSection() {
           <Reveal from="left">
             <GlowCard accent="#F04A06" className="h-full">
               <TiltCard>
-                <motion.div whileHover={{ boxShadow:"0 28px 65px rgba(0,0,0,0.09)" }}
+                <motion.div whileHover={{ boxShadow: "0 28px 65px rgba(0,0,0,0.09)" }}
                   className="bg-white border border-gray-100 rounded-2xl p-8 md:p-10 hover:border-[#D4AF37] transition-all shadow-sm h-full">
                   <div className="flex items-center gap-4 mb-7">
                     <Float duration={4} yRange={6}>
-                      <motion.div whileHover={{ rotate:16, scale:1.12 }}
+                      <motion.div whileHover={{ rotate: 16, scale: 1.12 }}
                         data-tbi="about-target"
                         className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/18">
                         <Target className="w-6 h-6 text-white" />
@@ -1316,7 +1330,7 @@ function AboutSection() {
                     <h3 className="text-2xl font-black text-[#F04A06]">Our Mission</h3>
                   </div>
                   <p className="text-sm text-gray-500 leading-relaxed mb-7">Our mission is to design, develop, and deliver intelligent technology solutions that solve real-world challenges with precision, scalability, and long-term impact—across IT services, R&D, and EdTech. We focus on building scalable, secure, and future-ready digital solutions while seamlessly bridging academic knowledge with real-world implementation. By empowering startups, institutions, and enterprises through innovation, we enable sustainable growth and digital transformation. We automate complex processes to enhance productivity and efficiency, foster a strong research-driven engineering culture, and continuously promote learning, skill development, and technological excellence to prepare individuals and organizations for the future.</p>
-                  
+
                 </motion.div>
               </TiltCard>
             </GlowCard>
@@ -1325,11 +1339,11 @@ function AboutSection() {
           <Reveal from="right" delay={.1}>
             <GlowCard accent="#D4AF37" className="h-full">
               <TiltCard>
-                <motion.div whileHover={{ boxShadow:"0 28px 65px rgba(0,0,0,0.09)" }}
+                <motion.div whileHover={{ boxShadow: "0 28px 65px rgba(0,0,0,0.09)" }}
                   className="bg-white border border-gray-100 rounded-2xl p-8 md:p-10 hover:border-[#D4AF37] transition-all shadow-sm h-full">
                   <div className="flex items-center gap-4 mb-7">
                     <Float duration={4.5} yRange={6}>
-                      <motion.div whileHover={{ rotate:16, scale:1.12 }}
+                      <motion.div whileHover={{ rotate: 16, scale: 1.12 }}
                         data-tbi="about-eye"
                         className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/18">
                         <Eye className="w-6 h-6 text-white" />
@@ -1339,7 +1353,7 @@ function AboutSection() {
                   </div>
                   <p className="text-sm text-gray-500 leading-relaxed mb-7">To become a leading innovation-driven technology ecosystem where IT services, R&D, and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions, and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future.</p>
                   <Reveal from="bottom" delay={.35}>
-                    <div className="relative overflow-hidden rounded-2xl p-5" style={{ background:"linear-gradient(135deg,#FFF4ED,#FFF4ED)" }}>
+                    <div className="relative overflow-hidden rounded-2xl p-5" style={{ background: "linear-gradient(135deg,#FFF4ED,#FFF4ED)" }}>
                       <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl bg-[#D4AF37]" />
                       <p className="text-sm text-[#1A1A1A] italic leading-relaxed pl-3">"Through this innovation backbone, we strive to redefine education by integrating practical learning, industry exposure, and technology-enabled experiences — empowering the next generation to learn, build and inspire."</p>
                     </div>
@@ -1385,7 +1399,7 @@ function TestimonialsSection() {
       ))}
 
       <div className="max-w-4xl mx-auto relative z-10">
-        
+
         {/* Heading */}
         <div className="text-center mb-14">
           <SLabel text="Testimonials" />
@@ -1489,32 +1503,32 @@ function TestimonialsSection() {
 ════════════════════════════════════════════════════════════ */
 function CTASection() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target:ref, offset:["start end","end start"] });
-  const bgY  = useTransform(scrollYProgress, [0,1], [-55,55]);
-  const txtY = useTransform(scrollYProgress, [0,1], [24,-24]);
-  const inV  = useInView(ref, { once:true });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [-55, 55]);
+  const txtY = useTransform(scrollYProgress, [0, 1], [24, -24]);
+  const inV = useInView(ref, { once: true });
   const [trig, setTrig] = useState(false);
-  useEffect(()=>{ if(inV) setTrig(true); },[inV]);
+  useEffect(() => { if (inV) setTrig(true); }, [inV]);
   const scr = useTextScramble("Ready to Shape the Future with Us?", trig);
 
   return (
     <>
       <WaveDivider color="#F04A06" fromBg="#fff" toBg="#3D1A0A" />
       <section ref={ref} className="relative py-16 overflow-hidden">
-        <motion.div className="absolute inset-0" style={{ y:bgY }}>
+        <motion.div className="absolute inset-0" style={{ y: bgY }}>
           <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Team" className="w-full h-full object-cover" />
-          <div className="absolute inset-0" style={{ background:"linear-gradient(135deg,rgba(230,107,38,0.9) 0%,rgba(197,83,26,0.93) 50%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg,rgba(230,107,38,0.9) 0%,rgba(197,83,26,0.93) 50%)" }} />
         </motion.div>
         <Spotlight color="rgba(212,175,55,0.06)" />
         <div className="absolute inset-0"><ParticleCanvas count={20} color="rgba(212,175,55,0.09)" /></div>
         {/* Floating rings */}
-        {[120,200,300].map((s,i)=>(
-          <Float key={i} duration={6+i*2} yRange={12} delay={i}
+        {[120, 200, 300].map((s, i) => (
+          <Float key={i} duration={6 + i * 2} yRange={12} delay={i}
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none rounded-full border border-[#D4AF37]/10"
-            style={{ width:s, height:s }} />
+            style={{ width: s, height: s }} />
         ))}
 
-        <motion.div style={{ y:txtY }} className="relative z-10 max-w-4xl mx-auto text-center px-4">
+        <motion.div style={{ y: txtY }} className="relative z-10 max-w-4xl mx-auto text-center px-4">
           <Reveal from="top">
             <div className="inline-flex items-center gap-2 border border-[#D4AF37]/38 rounded-full px-5 py-2 mb-8 bg-[#D4AF37]/10 backdrop-blur-sm">
               <Sparkles className="w-4 h-4 text-[#D4AF37]" />
@@ -1533,24 +1547,33 @@ function CTASection() {
           </Reveal>
 
           {/* CTA Section - Updated without the Summer Camp button */}
-<Reveal from="bottom" delay={.35}>
-  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-    <MagBtn onClick={()=>document.getElementById("programs")?.scrollIntoView({ behavior:"smooth" })}
-      className="group relative px-10 py-4 bg-white text-[#F04A06] rounded-full font-black overflow-hidden shadow-2xl shadow-white/18">
-      <span className="relative z-10 flex items-center justify-center gap-2">
-        Start Your Journey
-        <motion.span animate={{ x:[0,5,0] }} transition={{ duration:1.5, repeat:Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
-      </span>
-      <motion.div className="absolute inset-0 bg-[#FFF4ED] rounded-full origin-center" initial={{ scale:0 }} whileHover={{ scale:3 }} transition={{ duration:.5 }} />
-    </MagBtn>
-    <Link to="/Contact">
-      <motion.button whileHover={{ scale:1.04, backgroundColor:"rgba(255,255,255,.1)" }} whileTap={{ scale:.97 }}
-        className="px-10 py-4 border-2 border-white/58 text-white rounded-full font-black hover:border-white transition-colors">
-        Schedule a Call
-      </motion.button>
-    </Link>
-  </div>
-</Reveal>
+          <Reveal from="bottom" delay={.35}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <MagBtn onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
+                className="group relative px-10 py-4 bg-white text-[#F04A06] rounded-full font-black overflow-hidden shadow-2xl shadow-white/18">
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Start Your Journey
+                  <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
+                </span>
+                <motion.div className="absolute inset-0 bg-[#FFF4ED] rounded-full origin-center" initial={{ scale: 0 }} whileHover={{ scale: 3 }} transition={{ duration: .5 }} />
+              </MagBtn>
+              <Link to="/Contact">
+                <motion.button whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,.1)" }} whileTap={{ scale: .97 }}
+                  className="px-10 py-4 border-2 border-white/58 text-white rounded-full font-black hover:border-white transition-colors">
+                  Schedule a Call
+                </motion.button>
+              </Link>
+              <Link to="/joinCommunity">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-9 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F04A06] text-white rounded-full font-bold text-sm shadow-xl"
+            >
+              Join Our Community
+            </motion.button>
+          </Link>
+            </div>
+          </Reveal>
         </motion.div>
       </section>
     </>
@@ -1562,51 +1585,51 @@ function CTASection() {
    HOME ROOT
 ════════════════════════════════════════════════════════════ */
 export default function Home() {
-  const [loaded,          setLoaded]          = useState(false);
-  const [toast,           setToast]           = useState({ show:false, message:"" });
-  const [apiPrograms,     setApiPrograms]     = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: "" });
+  const [apiPrograms, setApiPrograms] = useState([]);
   const [programsLoading, setProgramsLoading] = useState(true);
   const [showEventsModal, setShowEventsModal] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
-        const res  = await fetch("/api/programs");
+        const res = await fetch("/api/programs");
         const data = await res.json();
         if (data.success) {
-          const sorted = data.programs.sort((a,b)=>new Date(b.date)-new Date(a.date));
+          const sorted = data.programs.sort((a, b) => new Date(b.date) - new Date(a.date));
           setApiPrograms(sorted);
-          const active = sorted.filter(p=>p.status==="registration-open"||p.status==="upcoming");
-          if (active.length>0 && !localStorage.getItem("eventsModalShown")) {
-            setShowEventsModal(true); localStorage.setItem("eventsModalShown","true");
+          const active = sorted.filter(p => p.status === "registration-open" || p.status === "upcoming");
+          if (active.length > 0 && !localStorage.getItem("eventsModalShown")) {
+            setShowEventsModal(true); localStorage.setItem("eventsModalShown", "true");
           }
         }
       } catch { /* silent */ } finally { setProgramsLoading(false); }
     })();
-  },[]);
+  }, []);
 
-  useEffect(()=>{
-    document.body.style.overflow=(showEventsModal||!loaded)?"hidden":"unset";
-    return()=>{ document.body.style.overflow="unset"; };
-  },[showEventsModal,loaded]);
+  useEffect(() => {
+    document.body.style.overflow = (showEventsModal || !loaded) ? "hidden" : "unset";
+    return () => { document.body.style.overflow = "unset"; };
+  }, [showEventsModal, loaded]);
 
   return (
     <>
-      <AnimatePresence>{!loaded && <PageLoader onDone={()=>setLoaded(true)} />}</AnimatePresence>
+      <AnimatePresence>{!loaded && <PageLoader onDone={() => setLoaded(true)} />}</AnimatePresence>
 
       <motion.div className="bg-white text-[#1A1A1A] font-sans overflow-x-hidden relative"
-        initial={{ opacity:0 }} animate={{ opacity:loaded?1:0 }} transition={{ duration:.55 }}>
+        initial={{ opacity: 0 }} animate={{ opacity: loaded ? 1 : 0 }} transition={{ duration: .55 }}>
 
-      
+
         <ScrollProgressBar />
         <SectionNavDots />
-        
 
-        <Toast message={toast.message} isVisible={toast.show} onClose={()=>setToast({show:false,message:""})} />
+
+        <Toast message={toast.message} isVisible={toast.show} onClose={() => setToast({ show: false, message: "" })} />
         <Navbar />
 
         <HeroSection apiPrograms={apiPrograms} loading={programsLoading} />
-        
+
         <ServicesSection />
         <StatsSection />
         <ProgramsSection />
@@ -1617,13 +1640,13 @@ export default function Home() {
         <Footer />
 
         {/* WhatsApp FAB */}
-        <motion.div initial={{ scale:0, opacity:0 }} animate={{ scale:1, opacity:1 }}
-          transition={{ type:"spring", stiffness:260, damping:20, delay:1.5 }} className="fixed bottom-6 right-6 z-50">
+        <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20, delay: 1.5 }} className="fixed bottom-6 right-6 z-50">
           <div className="relative group">
             <motion.div className="absolute -inset-2 bg-[#D4AF37] rounded-full opacity-0 group-hover:opacity-35 blur-lg transition-all duration-300"
-              animate={{ scale:[1,1.2,1] }} transition={{ duration:2.5, repeat:Infinity }} />
+              animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2.5, repeat: Infinity }} />
             <motion.a href="https://wa.me/919247577907" target="_blank" rel="noopener noreferrer"
-              whileHover={{ scale:1.16, rotate:8 }} whileTap={{ scale:.93 }}
+              whileHover={{ scale: 1.16, rotate: 8 }} whileTap={{ scale: .93 }}
               className="relative flex items-center justify-center w-14 h-14 bg-[#F04A06] text-white rounded-full shadow-2xl border border-[#F04A06]">
               <MessageCircle className="w-6 h-6" />
             </motion.a>
@@ -1635,66 +1658,66 @@ export default function Home() {
         {/* Events Modal */}
         <AnimatePresence>
           {showEventsModal && (
-            <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/65 backdrop-blur-md"
-              onClick={()=>setShowEventsModal(false)}>
+              onClick={() => setShowEventsModal(false)}>
               <motion.div
-                initial={{ scale:.8, opacity:0, y:55 }} animate={{ scale:1, opacity:1, y:0 }} exit={{ scale:.8, opacity:0, y:55 }}
-                transition={{ type:"spring", stiffness:280, damping:24 }}
+                initial={{ scale: .8, opacity: 0, y: 55 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: .8, opacity: 0, y: 55 }}
+                transition={{ type: "spring", stiffness: 280, damping: 24 }}
                 className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden border border-gray-100"
-                onClick={e=>e.stopPropagation()}>
+                onClick={e => e.stopPropagation()}>
                 <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-[#FFF4ED] to-white">
                   <div>
                     <h2 className="text-2xl font-black flex items-center gap-2 text-[#1A1A1A]">
-                      <motion.div animate={{ rotate:[0,20,-20,0] }} transition={{ duration:2, repeat:Infinity, ease:"easeInOut" }}>
+                      <motion.div animate={{ rotate: [0, 20, -20, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
                         <Sparkles className="w-6 h-6 text-[#D4AF37]" />
                       </motion.div>
                       <span className="bg-gradient-to-r from-[#F04A06] to-[#F04A06] bg-clip-text text-transparent">Upcoming Events</span>
                     </h2>
                     <p className="text-sm text-gray-400 mt-1">Don't miss out on these exciting opportunities!</p>
                   </div>
-                  <motion.button whileHover={{ scale:1.1, rotate:90 }} transition={{ duration:.2 }}
-                    onClick={()=>setShowEventsModal(false)} className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+                  <motion.button whileHover={{ scale: 1.1, rotate: 90 }} transition={{ duration: .2 }}
+                    onClick={() => setShowEventsModal(false)} className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
                     <X className="w-5 h-5 text-gray-400" />
                   </motion.button>
                 </div>
                 <div className="p-6 max-h-96 overflow-y-auto">
                   {programsLoading
                     ? <div className="flex justify-center py-10"><div className="w-10 h-10 border-4 border-gray-100 border-t-[#D4AF37] rounded-full animate-spin" /></div>
-                    : (()=>{
-                        const active=apiPrograms.filter(p=>p.status==="registration-open"||p.status==="upcoming");
-                        if(!active.length) return <p className="text-center py-8 text-gray-400">No upcoming events at the moment.</p>;
-                        return (
-                          <div className="space-y-4">
-                            {active.map(program=>(
-                              <Link to={`/Programs/${program.id}`} key={program.id} onClick={()=>setShowEventsModal(false)}>
-                                <motion.div whileHover={{ y:-3, boxShadow:"0 12px 40px rgba(0,0,0,0.07)" }}
-                                  className="bg-[#FFF4ED] border border-gray-100 rounded-xl p-5 transition-all cursor-pointer">
-                                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                                    <div className="flex-1">
-                                      <h3 className="text-base font-black text-[#1A1A1A] mb-2 hover:text-[#F04A06] transition-colors">{program.title}</h3>
-                                      <p className="text-sm text-gray-500 mb-3 line-clamp-2">{program.description}</p>
-                                      <div className="flex flex-wrap items-center gap-4 text-xs text-gray-400">
-                                        <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-[#D4AF37]"/>{new Date(program.date).toLocaleDateString()}</span>
-                                        <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-[#D4AF37]"/>{program.location}</span>
-                                        <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#D4AF37]"/>{program.duration}</span>
-                                      </div>
-                                    </div>
-                                    <div className="flex items-center gap-3 shrink-0">
-                                      <span className={`px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${program.status==="registration-open"?"bg-[#D4AF37] text-[#1A1A1A]":"bg-blue-100 text-blue-700"}`}>
-                                        {program.status.replace("-"," ")}
-                                      </span>
-                                      <motion.div animate={{ x:[0,4,0] }} transition={{ duration:1.5, repeat:Infinity }}>
-                                        <ChevronRight className="w-5 h-5 text-gray-300" />
-                                      </motion.div>
+                    : (() => {
+                      const active = apiPrograms.filter(p => p.status === "registration-open" || p.status === "upcoming");
+                      if (!active.length) return <p className="text-center py-8 text-gray-400">No upcoming events at the moment.</p>;
+                      return (
+                        <div className="space-y-4">
+                          {active.map(program => (
+                            <Link to={`/Programs/${program.id}`} key={program.id} onClick={() => setShowEventsModal(false)}>
+                              <motion.div whileHover={{ y: -3, boxShadow: "0 12px 40px rgba(0,0,0,0.07)" }}
+                                className="bg-[#FFF4ED] border border-gray-100 rounded-xl p-5 transition-all cursor-pointer">
+                                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                                  <div className="flex-1">
+                                    <h3 className="text-base font-black text-[#1A1A1A] mb-2 hover:text-[#F04A06] transition-colors">{program.title}</h3>
+                                    <p className="text-sm text-gray-500 mb-3 line-clamp-2">{program.description}</p>
+                                    <div className="flex flex-wrap items-center gap-4 text-xs text-gray-400">
+                                      <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-[#D4AF37]" />{new Date(program.date).toLocaleDateString()}</span>
+                                      <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />{program.location}</span>
+                                      <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#D4AF37]" />{program.duration}</span>
                                     </div>
                                   </div>
-                                </motion.div>
-                              </Link>
-                            ))}
-                          </div>
-                        );
-                      })()
+                                  <div className="flex items-center gap-3 shrink-0">
+                                    <span className={`px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${program.status === "registration-open" ? "bg-[#D4AF37] text-[#1A1A1A]" : "bg-blue-100 text-blue-700"}`}>
+                                      {program.status.replace("-", " ")}
+                                    </span>
+                                    <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+                                      <ChevronRight className="w-5 h-5 text-gray-300" />
+                                    </motion.div>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            </Link>
+                          ))}
+                        </div>
+                      );
+                    })()
                   }
                 </div>
               </motion.div>

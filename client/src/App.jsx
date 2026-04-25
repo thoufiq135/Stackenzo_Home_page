@@ -28,6 +28,8 @@ import WorkshopRegister from "./WorkshopRegister";
 import WorkshopSuccess from "./WorkshopSuccess";
 import WorkshopAlreadyRegistered from "./WorkshopAlreadyRegistered";
 import IntermediateResults from "./IntermediateResults";
+import JoinCommunity from "./JoinCommunity";
+
 
 function App() {
   return (
@@ -60,6 +62,8 @@ function App() {
      <Route path="/workshop/success" element={<WorkshopSuccess/>}/>
      <Route path="/workshop/already-registered" element={<WorkshopAlreadyRegistered/>}/>
      <Route path="/Bootcamp2026" element={<IntermediateResults/>}/>
+     <Route path="/joinCommunity" element={<JoinCommunity />} />
+     
    </Routes>
    </>
   );
