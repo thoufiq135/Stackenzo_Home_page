@@ -29,6 +29,7 @@ import WorkshopSuccess from "./WorkshopSuccess";
 import WorkshopAlreadyRegistered from "./WorkshopAlreadyRegistered";
 import IntermediateResults from "./IntermediateResults";
 import JoinCommunity from "./Joincommunity";
+import SummerCampGallery from "./SummerCampGallery";
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
      <Route path="/workshop/already-registered" element={<WorkshopAlreadyRegistered/>}/>
      <Route path="/Bootcamp2026" element={<IntermediateResults/>}/>
      <Route path="/joinCommunity" element={<JoinCommunity />} />
+     <Route path="/summer-camp-gallery" element={<SummerCampGallery />} />
      
    </Routes>
    </>
