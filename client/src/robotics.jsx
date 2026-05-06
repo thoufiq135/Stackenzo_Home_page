@@ -1171,7 +1171,7 @@ function Robotics() {
 
         {/* View Programs Button */}
         <Link
-          to="/summer-camp-gallery"
+          to="/schoolCamp"
           className="inline-block bg-[#F04A06] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#d63f05] transition"
         >
           View Gallery

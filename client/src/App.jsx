@@ -64,7 +64,7 @@ function App() {
      <Route path="/workshop/already-registered" element={<WorkshopAlreadyRegistered/>}/>
      <Route path="/Bootcamp2026" element={<IntermediateResults/>}/>
      <Route path="/joinCommunity" element={<JoinCommunity />} />
-     <Route path="/summer-camp-gallery" element={<SummerCampGallery />} />
+     <Route path="/schoolCamp" element={<SummerCampGallery />} />
      
    </Routes>
    </>
