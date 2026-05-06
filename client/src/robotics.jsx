@@ -9,12 +9,13 @@ import {
   Smile, Lightbulb, Compass, GraduationCap, Gamepad2,
   MessageCircle, ChevronRight, CheckCircle, X,
   School, UsersRound, HandHeart, Shield, TrendingUp,
-  Calendar, BookMarked,ArrowRight,
+  Calendar, BookMarked, ArrowRight,
 } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import RoboticsEnrollmentModal from "./RoboticsEnrollmentModal";
+import { Link } from "react-router-dom";
 
 /* ══════════════════════════════════════════════
    BRAND COLOR MAP  (green → orange)
@@ -31,16 +32,16 @@ import RoboticsEnrollmentModal from "./RoboticsEnrollmentModal";
    #D4AF37       →  #D4AF37   gold (unchanged)
 ══════════════════════════════════════════════ */
 const C = {
-  dark:     "#F04A06",
-  mid:      "#C5531A",
-  gold:     "#D4AF37",
-  light:    "#FFF4ED",
-  text:     "#1A1A1A",
-  tint:     "#FFD5B8",
-  tint2:    "#FFCBA4",
-  warmBg:   "#FFF0E6",
+  dark: "#F04A06",
+  mid: "#C5531A",
+  gold: "#D4AF37",
+  light: "#FFF4ED",
+  text: "#1A1A1A",
+  tint: "#FFD5B8",
+  tint2: "#FFCBA4",
+  warmBg: "#FFF0E6",
   veryDark: "#3D1A0A",
-  p:  (a) => `rgba(230,107,38,${a})`,
+  p: (a) => `rgba(230,107,38,${a})`,
   pd: (a) => `rgba(197,83,26,${a})`,
 };
 
@@ -48,7 +49,7 @@ const EASE_EXPO = [0.16, 1, 0.3, 1];
 const EASE_BACK = [0.34, 1.56, 0.64, 1];
 
 const NAV_SECTIONS = ["rb-hero", "rb-intro", "rb-why", "rb-journey", "rb-faq"];
-const NAV_LABELS   = ["Top", "Intro", "Why Us", "Journey", "FAQ"];
+const NAV_LABELS = ["Top", "Intro", "Why Us", "Journey", "FAQ"];
 
 /* ══ SCROLL DIR ══ */
 function useScrollDir() {
@@ -66,10 +67,10 @@ function Reveal({ children, className = "", delay = 0, from = "bottom" }) {
   const dir = useScrollDir();
   const V = {
     bottom: { hidden: { y: 65, opacity: 0, scale: .96, filter: "blur(6px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: -48, opacity: 0, scale: .97, filter: "blur(4px)" } },
-    top:    { hidden: { y: -65, opacity: 0, scale: .96, filter: "blur(6px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: 48, opacity: 0 } },
-    left:   { hidden: { x: -75, opacity: 0, scale: .96, filter: "blur(6px)" }, visible: { x: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { x: 55, opacity: 0 } },
-    right:  { hidden: { x: 75, opacity: 0, scale: .96, filter: "blur(6px)" }, visible: { x: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { x: -55, opacity: 0 } },
-    scale:  { hidden: { scale: .75, opacity: 0, filter: "blur(8px)" }, visible: { scale: 1, opacity: 1, filter: "blur(0px)" }, exit: { scale: .85, opacity: 0 } },
+    top: { hidden: { y: -65, opacity: 0, scale: .96, filter: "blur(6px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: 48, opacity: 0 } },
+    left: { hidden: { x: -75, opacity: 0, scale: .96, filter: "blur(6px)" }, visible: { x: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { x: 55, opacity: 0 } },
+    right: { hidden: { x: 75, opacity: 0, scale: .96, filter: "blur(6px)" }, visible: { x: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { x: -55, opacity: 0 } },
+    scale: { hidden: { scale: .75, opacity: 0, filter: "blur(8px)" }, visible: { scale: 1, opacity: 1, filter: "blur(0px)" }, exit: { scale: .85, opacity: 0 } },
   };
   const { hidden, visible, exit } = V[from] || V.bottom;
   return (
@@ -90,9 +91,9 @@ function StaggerContainer({ children, className = "", stagger = 0.1, from = "bot
   const dir = useScrollDir();
   const base = {
     bottom: { hidden: { y: 55, opacity: 0, scale: .95, filter: "blur(5px)" }, visible: { y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }, exit: { y: -38, opacity: 0, scale: .97 } },
-    left:   { hidden: { x: -55, opacity: 0 }, visible: { x: 0, opacity: 1 }, exit: { x: 38, opacity: 0 } },
-    right:  { hidden: { x: 55, opacity: 0 }, visible: { x: 0, opacity: 1 }, exit: { x: -38, opacity: 0 } },
-    scale:  { hidden: { scale: .75, opacity: 0 }, visible: { scale: 1, opacity: 1 }, exit: { scale: .85, opacity: 0 } },
+    left: { hidden: { x: -55, opacity: 0 }, visible: { x: 0, opacity: 1 }, exit: { x: 38, opacity: 0 } },
+    right: { hidden: { x: 55, opacity: 0 }, visible: { x: 0, opacity: 1 }, exit: { x: -38, opacity: 0 } },
+    scale: { hidden: { scale: .75, opacity: 0 }, visible: { scale: 1, opacity: 1 }, exit: { scale: .85, opacity: 0 } },
   };
   const { hidden, visible, exit } = base[from] || base.bottom;
   return (
@@ -217,25 +218,25 @@ function SectionNavDots() {
     <div className="fixed right-5 top-1/2 -translate-y-1/2 z-[900] flex-col gap-4 hidden md:flex">
       {NAV_SECTIONS.map((id, i) => (
         <motion.button
-  key={i}
-  onClick={() =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="relative flex items-center justify-center"
-  title={NAV_LABELS[i]}
->
-  {/* 🔹 DOT */}
-  <motion.div
-    animate={{
-      scale: active === i ? 1.4 : 1,
-      background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
-    }}
-    transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    className="w-2.5 h-2.5 rounded-full"
-  />
+          key={i}
+          onClick={() =>
+            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="relative flex items-center justify-center"
+          title={NAV_LABELS[i]}
+        >
+          {/* 🔹 DOT */}
+          <motion.div
+            animate={{
+              scale: active === i ? 1.4 : 1,
+              background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 22 }}
+            className="w-2.5 h-2.5 rounded-full"
+          />
 
- 
-</motion.button>
+
+        </motion.button>
       ))}
     </div>
   );
@@ -360,8 +361,8 @@ function Counter({ value }) {
   const raw = value.replace(/[^0-9]/g, "");
   const num = parseInt(raw, 10) || 0;
   const sfx = value.replace(/[0-9]/g, "");
-  const mv  = useMotionValue(0);
-  const sp  = useSpring(mv, { stiffness: 55, damping: 14 });
+  const mv = useMotionValue(0);
+  const sp = useSpring(mv, { stiffness: 55, damping: 14 });
   const [d, setD] = useState(0);
   useEffect(() => { mv.set(inV ? num : 0); }, [inV]);
   useEffect(() => sp.on("change", v => setD(Math.round(v))), [sp]);
@@ -370,10 +371,10 @@ function Counter({ value }) {
 
 /* ══ DATA ══ */
 const classProgression = [
-  { level: "Foundation Level", title: "Explore & Play",   icon: "🎮", points: ["Introduction to robotics through games", "Free exploration and curiosity-based learning", "Touch, build, and experiment"], benefit: "Students discover the joy of building and creating" },
+  { level: "Foundation Level", title: "Explore & Play", icon: "🎮", points: ["Introduction to robotics through games", "Free exploration and curiosity-based learning", "Touch, build, and experiment"], benefit: "Students discover the joy of building and creating" },
   { level: "Intermediate Level", title: "Think & Control", icon: "🧠", points: ["Simple logic and control", "Understanding how ideas become actions", "Fun challenges and teamwork"], benefit: "Students develop logical thinking skills" },
-  { level: "Advanced Level", title: "Solve & Create",     icon: "⚙️", points: ["Small real-life problem-solving projects", "Structured thinking", "Team-based activities"], benefit: "Students learn to solve real problems confidently" },
-  { level: "Master Level", title: "Design & Innovate",    icon: "🚀", points: ["Designing solutions", "Creative thinking", "Confidence and presentation skills"], benefit: "Students become confident creators and innovators" },
+  { level: "Advanced Level", title: "Solve & Create", icon: "⚙️", points: ["Small real-life problem-solving projects", "Structured thinking", "Team-based activities"], benefit: "Students learn to solve real problems confidently" },
+  { level: "Master Level", title: "Design & Innovate", icon: "🚀", points: ["Designing solutions", "Creative thinking", "Confidence and presentation skills"], benefit: "Students become confident creators and innovators" },
 ];
 
 const faqs = [
@@ -384,44 +385,44 @@ const faqs = [
 ];
 
 const benefits = [
-  { icon: Brain,   title: "Sharper Thinking",     desc: "Watch them figure out challenges on their own" },
-  { icon: Rocket,  title: "Confidence to Create", desc: "From 'I can't' to 'I built this!'.with confidence and pride" },
-  { icon: Trophy,  title: "Learning Together",    desc: "Collaboration skills that last a lifetime" },
-  { icon: Star,    title: "Future-Ready Skills",  desc: "Early exposure to tomorrow's technology" },
+  { icon: Brain, title: "Sharper Thinking", desc: "Watch them figure out challenges on their own" },
+  { icon: Rocket, title: "Confidence to Create", desc: "From 'I can't' to 'I built this!'.with confidence and pride" },
+  { icon: Trophy, title: "Learning Together", desc: "Collaboration skills that last a lifetime" },
+  { icon: Star, title: "Future-Ready Skills", desc: "Early exposure to tomorrow's technology" },
 ];
 
 const stats = [
-  { icon: Users,  value: "500+",    label: "Students Enrolled" },
-  { icon: Clock,  value: "1-3 hrs", label: "Per Week" },
-  { icon: Trophy, value: "50+",     label: "Projects Built" },
-  { icon: Smile,  value: "98%",     label: "Happy Students" },
+  { icon: Users, value: "500+", label: "Students Enrolled" },
+  { icon: Clock, value: "1-3 hrs", label: "Per Week" },
+  { icon: Trophy, value: "50+", label: "Projects Built" },
+  { icon: Smile, value: "98%", label: "Happy Students" },
 ];
 
 const whyChoose = [
-  { icon: HandHeart,  title: "Stress-Free Learning",   desc: "Just pure joy of discovery, without pressure." },
-  { icon: TrendingUp, title: "Future-Ready Skills",    desc: "Prepare students for tomorrow's world" },
-  { icon: Shield,     title: "Safe Environment",       desc: "Guided learning in a supportive atmosphere" },
-  { icon: BookMarked, title: "Structured Curriculum",  desc: "Ready-to-use program that fits any schedule" },
+  { icon: HandHeart, title: "Stress-Free Learning", desc: "Just pure joy of discovery, without pressure." },
+  { icon: TrendingUp, title: "Future-Ready Skills", desc: "Prepare students for tomorrow's world" },
+  { icon: Shield, title: "Safe Environment", desc: "Guided learning in a supportive atmosphere" },
+  { icon: BookMarked, title: "Structured Curriculum", desc: "Ready-to-use program that fits any schedule" },
 ];
 
 /* ══════════════════════════════════════════════
    MAIN COMPONENT
 ══════════════════════════════════════════════ */
 function Robotics() {
-  const [openFaq,       setOpenFaq]       = useState(null);
-  const [isModalOpen,   setIsModalOpen]   = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedClass, setSelectedClass] = useState(null);
 
   /* hero parallax */
   const heroRef = useRef(null);
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const { scrollY } = useScroll();
-const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
   const heroY = useTransform(heroScroll, [0, 1], [0, -100]);
   const heroO = useTransform(heroScroll, [0, .6], [1, 0.9]);
   const heroS = useTransform(heroScroll, [0, 1], [1, .85]);
-  const bigY  = useTransform(heroScroll, [0, 1], [0, 160]);
+  const bigY = useTransform(heroScroll, [0, 1], [0, 160]);
 
   /* mouse parallax */
   const mx = useMotionValue(0), my = useMotionValue(0);
@@ -440,7 +441,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
   return (
     <div className="bg-white text-[#1A1A1A] min-h-screen overflow-x-hidden">
       <Toaster position="top-center" />
-     
+
       <ScrollProgressBar />
       <SectionNavDots />
       <Navbar />
@@ -453,11 +454,13 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
         {/* animated gradient — orange (was rgba(46,125,50,0.18)) */}
         <motion.div className="absolute inset-0 z-[2] opacity-25"
-          animate={{ background: [
-            `radial-gradient(circle at 20% 30%,${C.pd(.18)} 0%,transparent 40%)`,
-            `radial-gradient(circle at 80% 70%,${C.pd(.18)} 0%,transparent 40%)`,
-            `radial-gradient(circle at 20% 30%,${C.pd(.18)} 0%,transparent 40%)`,
-          ]}}
+          animate={{
+            background: [
+              `radial-gradient(circle at 20% 30%,${C.pd(.18)} 0%,transparent 40%)`,
+              `radial-gradient(circle at 80% 70%,${C.pd(.18)} 0%,transparent 40%)`,
+              `radial-gradient(circle at 20% 30%,${C.pd(.18)} 0%,transparent 40%)`,
+            ]
+          }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }} />
 
         {/* mouse-parallax blobs — warm tint (was #C8E6C9) */}
@@ -470,8 +473,8 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
         {/* floating orbs — orange tints (was C.dark/#1E301E and C.mid/#2E7D32) */}
         {[
-          { t: "22%", l: "7%",  d: 12, c: `${C.gold}44` },
-          { t: "35%", r: "9%",  d: 8,  c: `${C.p(.32)}35` },
+          { t: "22%", l: "7%", d: 12, c: `${C.gold}44` },
+          { t: "35%", r: "9%", d: 8, c: `${C.p(.32)}35` },
           { b: "25%", l: "13%", d: 14, c: `${C.pd(.22)}35` },
           { b: "35%", r: "16%", d: 10, c: `${C.gold}33` },
         ].map((o, i) => (
@@ -565,21 +568,21 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           </motion.div>
 
           {/* scroll cue — border: orange (was rgba(30,48,30,0.25)) */}
-         <motion.div
-  style={{ opacity: scrollOpacity }}
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 2.2 }}
+          <motion.div
+            style={{ opacity: scrollOpacity }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.2 }}
             className="flex justify-center mt-12 cursor-pointer"
             onClick={() => document.getElementById("rb-intro")?.scrollIntoView({ behavior: "smooth" })}>
             <Float duration={2} yRange={10}>
               <div className="w-7 h-12 border-2 border-[#F04A06]/28 rounded-full flex justify-center">
-  <motion.div
-    className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
-    animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
-    transition={{ duration: 1.8, repeat: Infinity }}
-  />
-</div>
+                <motion.div
+                  className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
+                  animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 1.8, repeat: Infinity }}
+                />
+              </div>
             </Float>
           </motion.div>
         </motion.div>
@@ -595,7 +598,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           <SLabel text="Our Program" />
           {/* gradient: orange (was from-[#1E301E] to-[#2E7D32]) */}
           <AHeading className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
-           delay={.05}>
+            delay={.05}>
             Robotics the Way It Should Be
           </AHeading>
           <Reveal from="bottom" delay={.1}>
@@ -653,9 +656,9 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{ background: `linear-gradient(135deg,${C.p(.05)},${C.pd(.05)})` }} />
                     <Float duration={4 + i * .4} delay={i * .25}>
-                      <motion.div whileHover={{rotate:360,scale:1.2}} transition={{duration:.5}} className="text-[#D4AF37] mb-4 inline-block">
+                      <motion.div whileHover={{ rotate: 360, scale: 1.2 }} transition={{ duration: .5 }} className="text-[#D4AF37] mb-4 inline-block">
                         <item.icon className="w-10 h-10 sm:w-12 sm:h-12 mb-4" style={{ color: C.gold }} />
-                        
+
                       </motion.div>
                     </Float>
                     <h3 className="text-lg sm:text-xl font-bold mb-2 transition-colors" style={{ color: C.text }}>{item.title}</h3>
@@ -680,7 +683,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           <div className="text-center mb-14">
             <SLabel text="Student Outcomes" />
             <AHeading className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
-            delay={.05}>
+              delay={.05}>
               What Students Gain
             </AHeading>
           </div>
@@ -692,7 +695,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                     className="group p-6 rounded-xl border border-gray-200 transition-all shadow-sm h-full"
                     style={{ background: C.light }}>
                     <Float duration={4 + i * .4} delay={i * .25}>
-                      <motion.div whileHover={{rotate:360,scale:1.2}} transition={{duration:.5}} className="text-[#D4AF37] mb-4 inline-block">
+                      <motion.div whileHover={{ rotate: 360, scale: 1.2 }} transition={{ duration: .5 }} className="text-[#D4AF37] mb-4 inline-block">
                         <b.icon className="w-10 h-10 sm:w-12 sm:h-12 mb-4" style={{ color: C.gold }} />
                       </motion.div>
                     </Float>
@@ -715,7 +718,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
             <div className="lg:w-1/2">
               <SLabel text="Hands-On Learning" />
               <AHeading className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
-              delay={.05}>
+                delay={.05}>
                 Experience Hands-On Robotics
               </AHeading>
               <Reveal from="left" delay={.1}>
@@ -772,7 +775,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           <div className="text-center mb-14">
             <SLabel text="Early Advantage" />
             <AHeading className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
-            delay={.05}>
+              delay={.05}>
               Where Curiosity Builds Robots
             </AHeading>
           </div>
@@ -784,9 +787,9 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
               <StaggerContainer className="space-y-3" stagger={0.09} from="left">
                 {[
                   { icon: Lightbulb, text: "Curiosity is at its peak" },
-                  { icon: Brain,     text: "Independent thinking begins" },
-                  { icon: Compass,   text: "Students love exploring and experimenting" },
-                  { icon: Gamepad2,  text: "Learning through play works best" },
+                  { icon: Brain, text: "Independent thinking begins" },
+                  { icon: Compass, text: "Students love exploring and experimenting" },
+                  { icon: Gamepad2, text: "Learning through play works best" },
                 ].map((item, i) => (
                   <GlowCard key={i} accent={C.gold}>
                     <motion.div whileHover={{ x: 4, boxShadow: `0 8px 24px ${C.p(.07)}` }}
@@ -850,7 +853,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           </Reveal>
           <SLabel text="Time Commitment" />
           <AHeading className="text-2xl sm:text-3xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
-          delay={.05}>
+            delay={.05}>
             Where learning feels like joy ✨
           </AHeading>
           <StaggerContainer className="grid sm:grid-cols-2 gap-4 mb-8" stagger={0.09} from="scale">
@@ -936,7 +939,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           <div className="text-center mb-4">
             <SLabel text="Learning Journey" />
             <AHeading className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
-            delay={.05}>
+              delay={.05}>
               4 Levels of Progression
             </AHeading>
           </div>
@@ -1102,40 +1105,83 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
       </section>
 
       {/* ══ FINAL CTA — gold bg (unchanged) ══ */}
-      <section className="py-20 px-4 sm:px-6 relative overflow-hidden" style={{ background: C.gold }}>
-        {/* particles: orange (was rgba(30,48,30,0.1)) */}
-        <div className="absolute inset-0 z-[1]"><ParticleCanvas count={14} color={C.pd(.12)} /></div>
-        {[100, 180].map((s, i) => (
-          <Float key={i} duration={5 + i * 2} yRange={10} delay={i}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none rounded-full"
-            style={{ width: s, height: s, border: `1px solid ${C.pd(.18)}` }} />
-        ))}
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <Reveal from="bottom">
-            {/* headline: very dark orange (was C.dark=#1E301E) */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4" style={{ color: C.veryDark }}>
-              Give Your Child the Gift of Joyful Learning
-            </h2>
-          </Reveal>
-          <Reveal from="bottom" delay={.1}>
-            {/* sub: orange transparent (was rgba(30,48,30,0.75)) */}
-            <p className="text-base sm:text-lg md:text-xl mb-8 max-w-2xl mx-auto" style={{ color: C.pd(.75) }}>
-              Join our robotics program for Classes 6–9 where learning feels like play and curiosity leads the way.
-            </p>
-          </Reveal>
-          <Reveal from="bottom" delay={.2}>
-            {/* CTA button: orange gradient (was from-[#1E301E] to-[#2E7D32]) */}
-            <MagBtn onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center gap-2 px-8 sm:px-10 py-3 sm:py-4 text-white rounded-full font-semibold text-base sm:text-lg shadow-lg hover:shadow-xl transition-shadow"
-              style={{ background: `linear-gradient(135deg,${C.dark},${C.mid})`, boxShadow: `0 8px 28px ${C.pd(.35)}` }}>
-              <span>Enroll Your Child Now</span>
-              <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                <ChevronRight className="w-5 h-5" />
-              </motion.div>
-            </MagBtn>
-          </Reveal>
-        </div>
-      </section>
+      <section
+  className="py-20 px-4 sm:px-6 relative overflow-hidden"
+  style={{ background: C.gold }}
+>
+  {/* particles */}
+  <div className="absolute inset-0 z-[1]">
+    <ParticleCanvas count={14} color={C.pd(.12)} />
+  </div>
+
+  {[100, 180].map((s, i) => (
+    <Float
+      key={i}
+      duration={5 + i * 2}
+      yRange={10}
+      delay={i}
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none rounded-full"
+      style={{ width: s, height: s, border: `1px solid ${C.pd(.18)}` }}
+    />
+  ))}
+
+  <div className="max-w-4xl mx-auto text-center relative z-10">
+    
+    {/* Heading */}
+    <Reveal from="bottom">
+      <h2
+        className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4"
+        style={{ color: C.veryDark }}
+      >
+        Give Your Child the Gift of Joyful Learning
+      </h2>
+    </Reveal>
+
+    {/* Subtext */}
+    <Reveal from="bottom" delay={0.1}>
+      <p
+        className="text-base sm:text-lg md:text-xl mb-8 max-w-2xl mx-auto"
+        style={{ color: C.pd(.75) }}
+      >
+        Join our robotics program for Classes 6–9 where learning feels like play and curiosity leads the way.
+      </p>
+    </Reveal>
+
+    {/* Buttons */}
+    <Reveal from="bottom" delay={0.2}>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        
+        {/* Enroll Button */}
+        <MagBtn
+          onClick={() => setIsModalOpen(true)}
+          className="inline-flex items-center gap-2 px-8 sm:px-10 py-3 sm:py-4 text-white rounded-full font-semibold text-base sm:text-lg shadow-lg hover:shadow-xl transition-shadow"
+          style={{
+            background: `linear-gradient(135deg,${C.dark},${C.mid})`,
+            boxShadow: `0 8px 28px ${C.pd(.35)}`
+          }}
+        >
+          <span>Enroll Your Child Now</span>
+          <motion.div
+            animate={{ x: [0, 4, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <ChevronRight className="w-5 h-5" />
+          </motion.div>
+        </MagBtn>
+
+        {/* View Programs Button */}
+        <Link
+          to="/summer-camp-gallery"
+          className="inline-block bg-[#F04A06] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#d63f05] transition"
+        >
+          View Gallery
+        </Link>
+
+      </div>
+    </Reveal>
+
+  </div>
+</section>
 
       <RoboticsEnrollmentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <Footer />

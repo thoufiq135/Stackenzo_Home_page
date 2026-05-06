@@ -67,7 +67,7 @@ const getFallback2 = (rawId) =>
 const PLACEHOLDER =
   "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='%23d1d5db'/><text x='50%' y='50%' fill='%236b7280' font-size='16' font-family='sans-serif' text-anchor='middle' dominant-baseline='middle'>Image</text></svg>";
 
-const WHATSAPP_NUMBER = "6281704664"; // 🔁 replace with your number
+const WHATSAPP_NUMBER = "9247577906"; // 🔁 replace with your number
 
 const getWhatsappLink = (text) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
