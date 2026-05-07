@@ -16,16 +16,6 @@ const extractDriveId = (input) => {
 
 // ✅ All images with full Drive share URLs
 const GALLERY_DATA = [
-  // {
-  //   id: "https://drive.google.com/file/d/1ZiokM3bI40SY47fap_jPC4ipLfnN0hDU/view?usp=sharing",
-  //   category: "Activities",
-  //   title: "Camp Opening Day",
-  // },
-  // {
-  //   id: "https://drive.google.com/file/d/1gLEAfwXPG9LwExywIVVFjGVOMP_BN2vn/view?usp=sharing",
-  //   category: "Activities",
-  //   title: "Fun Outdoor Activities",
-  // },
   {
     id: "https://drive.google.com/file/d/1uWLnOAFgf5KlUR_1tSZEedgboLsdol3D/view?usp=sharing",
     category: "Activities",
@@ -46,11 +36,6 @@ const GALLERY_DATA = [
     category: "Learning",
     title: "Skill Development",
   },
-  // {
-  //   id: "https://drive.google.com/file/d/1qzuyaXA7csUEqdpqe7PS9AxkyrNBmer3/view?usp=sharing",
-  //   category: "Activities",
-  //   title: "Outdoor Exploration",
-  // },
   {
     id: "https://drive.google.com/file/d/1i-ULOBbdSylLsw__n7lz8Ld7Z90kwzUn/view?usp=sharing",
     category: "Activities",
@@ -91,11 +76,10 @@ function FilterButton({ label, active, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
-        active
+      className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${active
           ? "bg-[#F04A06] text-white scale-105 shadow-lg"
           : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-      }`}
+        }`}
     >
       {label}
     </button>
@@ -137,9 +121,8 @@ function GalleryCard({ item, onClick }) {
       <img
         src={imageSrc}
         alt={item.title || item.category}
-        className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
+        className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${isLoaded ? "opacity-100" : "opacity-0"
+          }`}
         onError={handleError}
         onLoad={() => setIsLoaded(true)}
         loading="lazy"
@@ -158,43 +141,191 @@ function GalleryCard({ item, onClick }) {
   );
 }
 
+// ── 3-Day Workshop Info Component ──
+function WorkshopInfo() {
+  const workshopDays = [
+    {
+      day: "Day 1",
+      title: "Basics & Concepts",
+      description: "Introduction to fundamentals, core concepts, and theoretical knowledge. Participants will learn the essential building blocks and understand the foundation of the subject.",
+      icon: "📖", // Book - represents learning fundamentals
+      iconOfficial: "fa-book",
+      color: "from-blue-500 to-cyan-500",
+      topics: [
+        "Introduction to core concepts",
+        "Understanding fundamentals",
+        "Basic principles and theory",
+        "Interactive Q&A session"
+      ]
+    },
+    {
+      day: "Day 2",
+      title: "Connections & Implementation",
+      description: "Hands-on sessions connecting concepts with real-world applications. Practical implementation and collaborative learning activities.",
+      icon: "🔧", // Tools - represents practical implementation
+      iconOfficial: "fa-tools",
+      color: "from-purple-500 to-pink-500",
+      topics: [
+        "Connecting concepts to practice",
+        "Real-world applications",
+        "Collaborative exercises",
+        "Hands-on experience"
+      ]
+    },
+    {
+      day: "Day 3",
+      title: "Demo Verification & Certification",
+      description: "Project demonstrations, verification of skills learned, and certification distribution. Celebrate your achievement!",
+      icon: "🎯", // Target - represents achievement and verification
+      iconOfficial: "fa-bullseye",
+      color: "from-orange-500 to-red-500",
+      topics: [
+        "Project presentations",
+        "Skills verification",
+        "Feedback & assessment",
+        "Certificate distribution ceremony"
+      ]
+    }
+  ];
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.15 }}
+      className="mb-16"
+    >
+      <div className="text-center mb-8">
+        <span className="inline-block px-4 py-1 bg-[#F04A06]/10 text-[#F04A06] rounded-full text-sm font-semibold mb-3">
+          🎯 Workshop Schedule
+        </span>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+          3-Day Immersive Workshop
+        </h2>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Join our comprehensive 3-day workshop designed to take you from beginner to certified student.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {workshopDays.map((day, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            className="relative group"
+          >
+            <div className={`absolute inset-0 bg-gradient-to-br ${day.color} rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300`} />
+            <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+              {/* Day Header */}
+              <div className={`bg-gradient-to-r ${day.color} p-4 text-white`}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-4xl">{day.icon}</span>
+                  <span className="text-xs font-semibold bg-white/20 px-3 py-1 rounded-full">
+                    {day.day}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold">{day.title}</h3>
+              </div>
+
+              {/* Content */}
+              <div className="p-5">
+                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                  {day.description}
+                </p>
+
+                {/* Topics List */}
+                <div className="space-y-2">
+                  {day.topics.map((topic, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-sm text-gray-700">
+                      <svg className="w-4 h-4 text-[#F04A06] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span>{topic}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Decorative Line */}
+              <div className={`h-1 bg-gradient-to-r ${day.color}`} />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Call to Action */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="text-center mt-10"
+      >
+        <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#F04A06]/10 to-[#F04A06]/5 rounded-full px-6 py-3 flex-wrap justify-center">
+          <span className="text-2xl">🎉</span>
+          <p className="text-gray-700">
+            <span className="font-bold text-[#F04A06]">Limited Seats Available!</span> Register now to secure your spot
+          </p>
+          <a
+            href={getWhatsappLink("Hi! I want to register for the 3-day workshop")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#F04A06] text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-[#C5531A] transition-all duration-300 transform hover:scale-105"
+          >
+            Register Now →
+          </a>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 // ── Infinite Auto-Scrolling RTL Carousel ──
 function AutoScrollCarousel({ items, onCardClick, speed = 0.5 }) {
   const trackRef = useRef(null);
   const animFrameRef = useRef(null);
   const isPausedRef = useRef(false);
   const scrollPositionRef = useRef(0);
-  
+
   // Calculate card width including margin
   const CARD_WIDTH = 320 + 24; // width + margin-right
   const totalWidth = items.length * CARD_WIDTH;
-  
+
   // Create 3 copies for seamless infinite scroll
   const duplicatedItems = [...items, ...items, ...items];
 
   const animate = useCallback(() => {
-    if (!isPausedRef.current && trackRef.current) {
+    if (!isPausedRef.current && trackRef.current && items.length > 0) {
       // Move from right to left (negative direction)
       scrollPositionRef.current -= speed;
-      
+
       // Reset position when we've scrolled past one set
       if (Math.abs(scrollPositionRef.current) >= totalWidth) {
         scrollPositionRef.current = 0;
       }
-      
+
       trackRef.current.style.transform = `translateX(${scrollPositionRef.current}px)`;
     }
     animFrameRef.current = requestAnimationFrame(animate);
-  }, [speed, totalWidth]);
+  }, [speed, totalWidth, items.length]);
 
   useEffect(() => {
+    // Reset position when items change
+    scrollPositionRef.current = 0;
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(0px)`;
+    }
+
     animFrameRef.current = requestAnimationFrame(animate);
     return () => {
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current);
       }
     };
-  }, [animate]);
+  }, [animate, items]);
+
+  if (items.length === 0) return null;
 
   return (
     <div
@@ -209,7 +340,7 @@ function AutoScrollCarousel({ items, onCardClick, speed = 0.5 }) {
       <div
         ref={trackRef}
         className="flex"
-        style={{ 
+        style={{
           willChange: "transform",
           width: `${duplicatedItems.length * CARD_WIDTH}px`
         }}
@@ -222,13 +353,6 @@ function AutoScrollCarousel({ items, onCardClick, speed = 0.5 }) {
           />
         ))}
       </div>
-      
-      {/* Scroll Indicator */}
-      {/* <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs">
-        <span className="inline-flex items-center gap-1">
-          <span>◀</span> Scrolls Automatically <span>▶</span>
-        </span>
-      </div> */}
     </div>
   );
 }
@@ -352,6 +476,9 @@ function SummerCampGallery() {
             </a>
           </motion.div>
 
+          {/* 3-DAY WORKSHOP INFO SECTION */}
+          <WorkshopInfo />
+
           {/* Filters */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -370,14 +497,14 @@ function SummerCampGallery() {
           </motion.div>
 
           {/* Speed Control */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex justify-center items-center gap-4 mb-6"
           >
-            <span className="text-xs text-gray-500">Scroll Speed:</span>
-            <input
+            {/* <span className="text-xs text-gray-500">Scroll Speed:</span> */}
+          {/* <input
               type="range"
               min="0.3"
               max="1.5"
@@ -385,9 +512,9 @@ function SummerCampGallery() {
               value={scrollSpeed}
               onChange={(e) => setScrollSpeed(parseFloat(e.target.value))}
               className="w-32 h-1 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-[#F04A06]"
-            />
-            <span className="text-xs font-semibold text-[#F04A06]">{scrollSpeed.toFixed(1)}x</span>
-          </motion.div>
+            /> */}
+          {/* <span className="text-xs font-semibold text-[#F04A06]">{scrollSpeed.toFixed(1)}x</span>
+          </motion.div>  */}
 
           {/* Count hint */}
           <motion.div
@@ -396,12 +523,12 @@ function SummerCampGallery() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-center mb-8"
           >
-            {/* <p className="text-sm text-gray-500 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full inline-block">
+            <p className="text-sm text-gray-500 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full inline-block">
               Showing{" "}
               <span className="font-bold text-[#F04A06]">{filtered.length}</span>{" "}
               images in <span className="font-semibold">{activeCategory}</span>
-              {" "} <i class="fa-solid fa-arrow-pointer"></i>Click to enlarge
-            </p> */}
+              {" "}· Hover to pause · Click to enlarge
+            </p>
           </motion.div>
 
           {/* Auto-Scrolling RTL Carousel */}
