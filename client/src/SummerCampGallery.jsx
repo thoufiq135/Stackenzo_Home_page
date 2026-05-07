@@ -517,7 +517,7 @@ function SummerCampGallery() {
           </motion.div>  */}
 
           {/* Count hint */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -529,7 +529,7 @@ function SummerCampGallery() {
               images in <span className="font-semibold">{activeCategory}</span>
               {" "}· Hover to pause · Click to enlarge
             </p>
-          </motion.div>
+          </motion.div> */}
 
           {/* Auto-Scrolling RTL Carousel */}
           <motion.div
