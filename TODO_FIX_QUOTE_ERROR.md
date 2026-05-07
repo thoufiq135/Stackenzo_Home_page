@@ -21,7 +21,7 @@
 Restart backend server (node server.js), then:
 
 ```bash
-curl -X POST http://localhost:3000/api/quotes \
+curl -X POST https://stackenzo-backend.onrender.com/api/quotes \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test User",

@@ -100,7 +100,7 @@ const programData = {
   tags: ["AI", "Web Dev", "Mobile"]
 };
 
-fetch('http://localhost:3000/api/programs', {
+fetch('https://stackenzo-backend.onrender.com/api/programs', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(programData)
@@ -197,7 +197,7 @@ EMAIL_PASSWORD=your-app-password
 
 ## Usage Example
 1. Run `node insertProgramData.js` to add sample programs
-2. Visit `http://localhost:3000/Programs` to see the programs
+2. Visit `https://stackenzo-backend.onrender.com/Programs` to see the programs
 3. Click "Learn More" to view program details
 4. Register for programs and receive email confirmations
 

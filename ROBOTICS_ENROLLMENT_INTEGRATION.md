@@ -20,7 +20,7 @@
 ## How It Works
 
 1. **User fills the enrollment form** on the robotics page
-2. **Form data is submitted** to `http://localhost:3000/api/enrollments`
+2. **Form data is submitted** to `https://stackenzo-backend.onrender.com/api/enrollments`
 3. **Backend stores the data** in the database with type="robotics"
 4. **Confirmation emails** are sent to both user and admin
 5. **Success/error feedback** is shown to the user
@@ -53,7 +53,7 @@ npm run dev
 
 ### Manual API test:
 ```bash
-curl -X POST http://localhost:3000/api/enrollments \
+curl -X POST https://stackenzo-backend.onrender.com/api/enrollments \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test Student",
@@ -71,10 +71,10 @@ curl -X POST http://localhost:3000/api/enrollments \
 View all robotics enrollments:
 ```bash
 # Get all robotics enrollments
-curl "http://localhost:3000/api/enrollments?type=robotics"
+curl "https://stackenzo-backend.onrender.com/api/enrollments?type=robotics"
 
 # Get enrollment statistics
-curl http://localhost:3000/api/enrollments/stats
+curl https://stackenzo-backend.onrender.com/api/enrollments/stats
 ```
 
 ## Features

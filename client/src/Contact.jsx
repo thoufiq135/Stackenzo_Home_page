@@ -1,6 +1,12 @@
 import {
-  motion, AnimatePresence, useInView, useScroll, useTransform,
-  useSpring, useMotionValue, useVelocity,
+  motion as Motion,  // ✅ Renamed to avoid conflicts
+  AnimatePresence,
+  useInView,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionValue,
+  useVelocity,
 } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
@@ -10,9 +16,8 @@ import {
   Mail, Phone, MapPin, Send, MessageSquare,
   Clock, Linkedin, Twitter, Instagram, Facebook, Youtube,
   Sparkles, ChevronRight, CheckCircle, Headphones, Rocket,
-  Shield, Plus, Minus, Star,ArrowRight,
+  Shield, Plus, Minus, Star, ArrowRight,
 } from "lucide-react";
-import { href } from "react-router-dom";
 
 /* ══════════════════════════════════════════════
    EASING
@@ -58,13 +63,13 @@ function Reveal({ children, className = "", delay = 0, from = "bottom" }) {
   };
   const { hidden, visible, exit } = V[from] || V.bottom;
   return (
-    <motion.div ref={ref} className={className}
+    <Motion.div ref={ref} className={className}
       initial="hidden"
       animate={inV ? "visible" : dir === "up" ? "exit" : "hidden"}
       variants={{ hidden, visible, exit }}
       transition={{ duration: 0.75, delay, ease: EASE_EXPO }}>
       {children}
-    </motion.div>
+    </Motion.div>
   );
 }
 
@@ -83,7 +88,7 @@ function StaggerContainer({ children, className = "", stagger = 0.1, from = "bot
   };
   const { hidden, visible, exit } = base[from] || base.bottom;
   return (
-    <motion.div ref={ref} className={className}
+    <Motion.div ref={ref} className={className}
       initial="hidden"
       animate={inV ? "visible" : dir === "up" ? "exit" : "hidden"}
       variants={{
@@ -93,11 +98,11 @@ function StaggerContainer({ children, className = "", stagger = 0.1, from = "bot
       }}>
       {Array.isArray(children)
         ? children.map((child, i) => (
-            <motion.div key={i} variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>{child}</motion.div>
+            <Motion.div key={i} variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>{child}</Motion.div>
           ))
-        : <motion.div variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>{children}</motion.div>
+        : <Motion.div variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>{children}</Motion.div>
       }
-    </motion.div>
+    </Motion.div>
   );
 }
 
@@ -106,11 +111,11 @@ function StaggerContainer({ children, className = "", stagger = 0.1, from = "bot
 ══════════════════════════════════════════════ */
 function Float({ children, className = "", duration = 4, yRange = 14, delay = 0, style }) {
   return (
-    <motion.div className={className} style={style}
+    <Motion.div className={className} style={style}
       animate={{ y: [-yRange / 2, yRange / 2, -yRange / 2] }}
       transition={{ duration, repeat: Infinity, ease: "easeInOut", delay }}>
       {children}
-    </motion.div>
+    </Motion.div>
   );
 }
 
@@ -122,19 +127,19 @@ function GlowCard({ children, className = "", accent = C.gold }) {
   const inV = useInView(ref, { once: false, margin: "-40px" });
   const [pos, setPos] = useState({ x: 0, y: 0 });
   return (
-    <motion.div ref={ref} className={`relative rounded-2xl overflow-hidden ${className}`}
+    <Motion.div ref={ref} className={`relative rounded-2xl overflow-hidden ${className}`}
       onMouseMove={e => { const r = ref.current?.getBoundingClientRect(); if (r) setPos({ x: e.clientX - r.left, y: e.clientY - r.top }); }}
       initial={{ opacity: 0, y: 40, scale: .96 }}
       animate={inV ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: .96 }}
       transition={{ duration: 0.75, ease: EASE_EXPO }}>
       <div className="absolute pointer-events-none rounded-2xl z-0"
         style={{ inset: -1, background: `radial-gradient(320px circle at ${pos.x}px ${pos.y}px,${accent}30,transparent 60%)` }} />
-      <motion.div className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+      <Motion.div className="absolute inset-0 rounded-2xl pointer-events-none z-0"
         animate={inV ? { opacity: [.28, .6, .28] } : { opacity: 0 }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         style={{ boxShadow: `inset 0 0 0 1px ${accent}38` }} />
       <div className="relative z-10">{children}</div>
-    </motion.div>
+    </Motion.div>
   );
 }
 
@@ -147,12 +152,12 @@ function TiltCard({ children, className = "", intensity = 10 }) {
   const srx = useSpring(rx, { stiffness: 200, damping: 22 });
   const sry = useSpring(ry, { stiffness: 200, damping: 22 });
   return (
-    <motion.div ref={ref}
+    <Motion.div ref={ref}
       onMouseMove={e => { const r = ref.current.getBoundingClientRect(); rx.set(-((e.clientY - r.top) / r.height - .5) * intensity); ry.set(((e.clientX - r.left) / r.width - .5) * intensity); }}
       onMouseLeave={() => { rx.set(0); ry.set(0); }}
       style={{ rotateX: srx, rotateY: sry, transformPerspective: 900 }} className={className}>
       {children}
-    </motion.div>
+    </Motion.div>
   );
 }
 
@@ -165,17 +170,15 @@ function MagBtn({ children, className = "", onClick, type = "button", disabled =
   const sx = useSpring(x, { stiffness: 250, damping: 16 });
   const sy = useSpring(y, { stiffness: 250, damping: 16 });
   return (
-    <motion.button ref={ref} type={type} disabled={disabled}
+    <Motion.button ref={ref} type={type} disabled={disabled}
       style={{ x: sx, y: sy }}
       onMouseMove={e => { if (!disabled) { const r = ref.current.getBoundingClientRect(); x.set((e.clientX - r.left - r.width / 2) * .38); y.set((e.clientY - r.top - r.height / 2) * .38); } }}
       onMouseLeave={() => { x.set(0); y.set(0); }}
       whileTap={{ scale: .94 }} onClick={onClick} className={className}>
       {children}
-    </motion.button>
+    </Motion.button>
   );
 }
-
-
 
 /* ══════════════════════════════════════════════
    SCROLL PROGRESS BAR
@@ -185,7 +188,7 @@ function ScrollProgressBar() {
   const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
   return (
-    <motion.div
+    <Motion.div
       className="fixed top-0 right-0 w-[4px] h-full origin-top z-[9997]"
       style={{
         scaleY,
@@ -224,26 +227,23 @@ function SectionNavDots() {
   return (
     <div className="fixed right-5 top-1/2 -translate-y-1/2 z-[900] flex-col gap-4 hidden md:flex">
       {NAV_SECTIONS.map((id, i) => (
-        <motion.button
-  key={i}
-  onClick={() =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="relative flex items-center justify-center"
-  title={NAV_LABELS[i]}
->
-  {/* 🔹 DOT */}
-  <motion.div
-    animate={{
-      scale: active === i ? 1.4 : 1,
-      background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
-    }}
-    transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    className="w-2.5 h-2.5 rounded-full"
-  />
-
-
-</motion.button>
+        <Motion.button
+          key={i}
+          onClick={() =>
+            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="relative flex items-center justify-center"
+          title={NAV_LABELS[i]}
+        >
+          <Motion.div
+            animate={{
+              scale: active === i ? 1.4 : 1,
+              background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 22 }}
+            className="w-2.5 h-2.5 rounded-full"
+          />
+        </Motion.button>
       ))}
     </div>
   );
@@ -317,12 +317,12 @@ function WaveDivider({ color = C.gold, flip = false, toBg = "#fff" }) {
   return (
     <div ref={ref} className={`relative w-full overflow-hidden ${flip ? "rotate-180" : ""}`} style={{ height: 56 }}>
       <svg viewBox="0 0 1440 56" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-        <motion.path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28 L1440,56 L0,56 Z"
+        <Motion.path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28 L1440,56 L0,56 Z"
           fill={toBg} initial={{ pathLength: 0 }} animate={inV ? { pathLength: 1 } : {}} transition={{ duration: 1.2, ease: EASE_EXPO }} />
-        <motion.path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28"
+        <Motion.path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28"
           stroke={color} strokeWidth="1.5" fill="none"
           initial={{ pathLength: 0, opacity: 0 }} animate={inV ? { pathLength: 1, opacity: 1 } : {}} transition={{ duration: 1.4, ease: EASE_EXPO, delay: .15 }} />
-        <motion.path d="M0,36 C240,8 480,64 720,36 C960,8 1200,64 1440,36"
+        <Motion.path d="M0,36 C240,8 480,64 720,36 C960,8 1200,64 1440,36"
           stroke={color} strokeWidth=".6" fill="none" opacity=".4"
           initial={{ pathLength: 0 }} animate={inV ? { pathLength: 1 } : {}} transition={{ duration: 1.4, ease: EASE_EXPO, delay: .3 }} />
       </svg>
@@ -337,15 +337,15 @@ function SLabel({ text }) {
   const ref = useRef(null);
   const inV = useInView(ref, { once: false, margin: "-40px" });
   return (
-    <motion.div ref={ref} className="flex items-center gap-3 justify-center mb-3"
+    <Motion.div ref={ref} className="flex items-center gap-3 justify-center mb-3"
       initial={{ opacity: 0, y: -20 }} animate={inV ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
       transition={{ duration: .6, ease: EASE_EXPO }}>
-      <motion.div initial={{ scaleX: 0 }} animate={inV ? { scaleX: 1 } : { scaleX: 0 }} transition={{ duration: .5 }}
+      <Motion.div initial={{ scaleX: 0 }} animate={inV ? { scaleX: 1 } : { scaleX: 0 }} transition={{ duration: .5 }}
         className="h-px w-8 origin-left" style={{ background: C.gold }} />
       <span style={{ color: C.gold, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase" }}>{text}</span>
-      <motion.div initial={{ scaleX: 0 }} animate={inV ? { scaleX: 1 } : { scaleX: 0 }} transition={{ duration: .5 }}
+      <Motion.div initial={{ scaleX: 0 }} animate={inV ? { scaleX: 1 } : { scaleX: 0 }} transition={{ duration: .5 }}
         className="h-px w-8 origin-right" style={{ background: C.gold }} />
-    </motion.div>
+    </Motion.div>
   );
 }
 
@@ -361,12 +361,12 @@ function AHeading({ children, className = "", delay = 0 }) {
     <h2 ref={ref} className={className}>
       {words.map((w, i) => (
         <span key={i} className="inline-block overflow-hidden mr-[.28em]">
-          <motion.span className="inline-block"
+          <Motion.span className="inline-block"
             initial={{ y: "110%", opacity: 0, skewY: 5 }}
             animate={inV ? { y: 0, opacity: 1, skewY: 0 } : dir === "up" ? { y: "-110%", opacity: 0, skewY: -5 } : { y: "110%", opacity: 0, skewY: 5 }}
             transition={{ duration: .72, delay: delay + i * .075, ease: EASE_EXPO }}>
             {w}
-          </motion.span>
+          </Motion.span>
         </span>
       ))}
     </h2>
@@ -415,15 +415,55 @@ function Contact() {
   const [openFaq, setOpenFaq] = useState(null);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); setIsSubmitting(true);
-    try {
-      const res = await fetch("http://localhost:3000/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) });
-      const data = await res.json();
-      if (data.success) { setToast({ show: true, message: "Thank you! We'll contact you within 24 hours." }); setFormData({ name: "", email: "", phone: "", subject: "", message: "" }); }
-      else { const msg = data.errors ? data.errors.map(e => e.msg || e.message).join(", ") : data.message; setToast({ show: true, message: msg || "Failed to submit. Please try again." }); }
-    } catch { setToast({ show: true, message: "Error submitting. Please try again." }); }
-    finally { setIsSubmitting(false); }
-  };
+  e.preventDefault();
+  setIsSubmitting(true);
+  
+  try {
+    const res = await fetch("https://stackenzo-backend.onrender.com/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+    
+    const data = await res.json();
+    console.log("contact response", res.status, data);
+
+    if (res.ok && data.success) {
+      // Success - show success message
+      setToast({ 
+        show: true, 
+        message: "Thank you! We'll contact you within 24 hours." 
+      });
+      
+      // Reset form
+      setFormData({ 
+        name: "", 
+        email: "", 
+        phone: "", 
+        subject: "", 
+        message: "" 
+      });
+    } else {
+      // Error from backend
+      const errorMsg = data.errors 
+        ? data.errors.map(e => e.msg || e.message).join(", ") 
+        : data.message || "Failed to submit. Please try again.";
+      
+      setToast({ 
+        show: true, 
+        message: errorMsg 
+      });
+    }
+  } catch (error) {
+    // Network or other error
+    setToast({ 
+      show: true, 
+      message: "Error submitting. Please check your connection and try again." 
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -431,7 +471,7 @@ function Contact() {
   const heroRef = useRef(null);
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const { scrollY } = useScroll();
-const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
   const heroY = useTransform(heroScroll, [0, 1], [0, -100]);
   const heroO = useTransform(heroScroll, [0, .6], [1, 0.9]);
@@ -466,17 +506,17 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
         <div className="absolute inset-0 z-[1]"><ParticleCanvas count={20} /></div>
 
         {/* animated gradient pulse */}
-        <motion.div className="absolute inset-0 z-[2] opacity-22"
+        <Motion.div className="absolute inset-0 z-[2] opacity-22"
           animate={{ background: ["radial-gradient(circle at 20% 30%,rgba(230,107,38,0.18) 0%,transparent 40%)","radial-gradient(circle at 80% 70%,rgba(230,107,38,0.18) 0%,transparent 40%)","radial-gradient(circle at 20% 30%,rgba(230,107,38,0.18) 0%,transparent 40%)"] }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }} />
 
         {/* mouse blobs */}
-        <motion.div style={{ x: b1x, y: b1y }} className="absolute top-12 left-[4%] w-[340px] h-[340px] pointer-events-none z-[2]">
+        <Motion.div style={{ x: b1x, y: b1y }} className="absolute top-12 left-[4%] w-[340px] h-[340px] pointer-events-none z-[2]">
           <div className="w-full h-full rounded-full" style={{ filter: "blur(100px)", opacity: .3, background: "radial-gradient(circle,#FFD5B8,transparent)" }} />
-        </motion.div>
-        <motion.div style={{ x: b2x, y: b2y }} className="absolute bottom-12 right-[4%] w-[400px] h-[400px] pointer-events-none z-[2]">
+        </Motion.div>
+        <Motion.div style={{ x: b2x, y: b2y }} className="absolute bottom-12 right-[4%] w-[400px] h-[400px] pointer-events-none z-[2]">
           <div className="w-full h-full rounded-full" style={{ filter: "blur(110px)", opacity: .18, background: `radial-gradient(circle,${C.gold},transparent)` }} />
-        </motion.div>
+        </Motion.div>
 
         {/* floating orbs */}
         {[{ t: "22%", l: "7%", d: 12, c: `${C.gold}44` }, { t: "35%", r: "9%", d: 8, c: `${C.dark}33` }, { b: "28%", l: "13%", d: 14, c: `${C.mid}2a` }, { b: "38%", r: "16%", d: 10, c: `${C.gold}33` }].map((o, i) => (
@@ -487,93 +527,93 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
         {/* floating emojis */}
         <Float className="absolute top-[18%] left-[7%] hidden sm:block z-[2]" duration={5} yRange={22} delay={0}>
-          <motion.div animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-            className="text-6xl" style={{ opacity: .22, filter: "drop-shadow(0 8px 24px rgba(212,175,55,0.3))" }}>✨</motion.div>
+          <Motion.div animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+            className="text-6xl" style={{ opacity: .22, filter: "drop-shadow(0 8px 24px rgba(212,175,55,0.3))" }}>✨</Motion.div>
         </Float>
         <Float className="absolute bottom-[22%] right-[7%] hidden sm:block z-[2]" duration={4} yRange={20} delay={1}>
-          <motion.div animate={{ y: [0, 20, 0], rotate: [0, -10, 10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-            className="text-6xl" style={{ opacity: .2, filter: "drop-shadow(0 8px 24px rgba(212,175,55,0.3))" }}>💬</motion.div>
+          <Motion.div animate={{ y: [0, 20, 0], rotate: [0, -10, 10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            className="text-6xl" style={{ opacity: .2, filter: "drop-shadow(0 8px 24px rgba(212,175,55,0.3))" }}>💬</Motion.div>
         </Float>
         <Float className="absolute top-[55%] left-[5%] hidden lg:block z-[2]" duration={6} yRange={14} delay={2}>
           <span className="text-4xl" style={{ opacity: .14 }}>📧</span>
         </Float>
 
         {/* kinetic bg text */}
-        <motion.div style={{ y: bigY }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-[2]">
+        <Motion.div style={{ y: bigY }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-[2]">
           <span className="font-black leading-none tracking-tighter uppercase whitespace-nowrap"
             style={{ fontSize: "18vw", color: "rgba(230,107,38,0.018)" }}>CONTACT</span>
-        </motion.div>
+        </Motion.div>
 
         {/* dot grid */}
         <div className="absolute inset-0 z-[2] opacity-[.03] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle,#F04A06 1px,transparent 1px)", backgroundSize: "28px 28px" }} />
 
         {/* content */}
-        <motion.div style={{ y: heroY, opacity: heroO, scale: heroS }} className="max-w-6xl mx-auto text-center relative z-10 w-full">
+        <Motion.div style={{ y: heroY, opacity: heroO, scale: heroS }} className="max-w-6xl mx-auto text-center relative z-10 w-full">
 
           {/* badge */}
-          <motion.div initial={{ scale: .7, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} transition={{ duration: .65, ease: EASE_BACK }} className="inline-block mb-8">
+          <Motion.div initial={{ scale: .7, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} transition={{ duration: .65, ease: EASE_BACK }} className="inline-block mb-8">
             <span className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold backdrop-blur-sm shadow-lg"
               style={{ background: "rgba(230,107,38,0.12)", border: "1px solid rgba(230,107,38,0.28)", color: C.dark }}>
-              <motion.span animate={{ opacity: [.7, 1, .7] }} transition={{ duration: 2, repeat: Infinity }} className="text-[#D4AF37]">✦</motion.span>
+              <Motion.span animate={{ opacity: [.7, 1, .7] }} transition={{ duration: 2, repeat: Infinity }} className="text-[#D4AF37]">✦</Motion.span>
               Let's Connect
-              <motion.span animate={{ opacity: [.7, 1, .7] }} transition={{ duration: 2, repeat: Infinity }} className="text-[#D4AF37]">✦</motion.span>
+              <Motion.span animate={{ opacity: [.7, 1, .7] }} transition={{ duration: 2, repeat: Infinity }} className="text-[#D4AF37]">✦</Motion.span>
             </span>
-          </motion.div>
+          </Motion.div>
 
           {/* heading */}
-          <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .3, duration: .75, ease: EASE_EXPO }}
+          <Motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .3, duration: .75, ease: EASE_EXPO }}
             className="font-bold mb-4 leading-tight"
             style={{ fontSize: "clamp(3rem,8vw,5rem)", color: C.dark }}>
             Get In Touch
-          </motion.h1>
+          </Motion.h1>
 
           {/* gold bar */}
-          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: .55, duration: .6, ease: EASE_EXPO }}
+          <Motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: .55, duration: .6, ease: EASE_EXPO }}
             className="mx-auto mb-6 rounded-full origin-center" style={{ width: 64, height: 3, background: C.gold }} />
 
           {/* sub */}
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .5, ease: EASE_EXPO }}
+          <Motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .5, ease: EASE_EXPO }}
             className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed mb-12 px-4 rounded-2xl border backdrop-blur-sm p-6"
             style={{ color: C.text, borderColor: "rgba(229,231,235,0.8)", background: "rgba(255,255,255,0.35)" }}>
             Have a question or want to work together? We'd love to hear from you.
             Send us a message and we'll respond as soon as possible.
-          </motion.p>
+          </Motion.p>
 
           {/* stat pills */}
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .7, ease: EASE_EXPO }}
+          <Motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .7, ease: EASE_EXPO }}
             className="flex flex-wrap justify-center gap-4 sm:gap-6">
             {stats.map((s, i) => (
-              <motion key={i} duration={4 + i * .5} delay={i * .3}>
+              <Motion.div key={i} duration={4 + i * .5} delay={i * .3}>
                 <GlowCard accent={C.gold}>
-                  <motion.div whileHover={{ scale: 1.06, y: -4, boxShadow: "0 14px 32px rgba(0,0,0,0.08)" }}
+                  <Motion.div whileHover={{ scale: 1.06, y: -4, boxShadow: "0 14px 32px rgba(0,0,0,0.08)" }}
                     className="flex items-center gap-2 sm:gap-3 bg-white shadow-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 border border-gray-200 cursor-default">
                     <s.icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: C.gold }} />
                     <div>
                       <p className="text-xs sm:text-sm" style={{ color: "rgba(26,26,26,0.6)" }}>{s.label}</p>
                       <p className="text-sm sm:text-base font-semibold" style={{ color: C.text }}>{s.value}</p>
                     </div>
-                  </motion.div>
+                  </Motion.div>
                 </GlowCard>
-              </motion>
+              </Motion.div>
             ))}
-          </motion.div>
+          </Motion.div>
 
           {/* scroll cue */}
-          <motion.div
-  style={{ opacity: scrollOpacity }}
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 2.2 }}
+          <Motion.div
+            style={{ opacity: scrollOpacity }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.2 }}
             className="flex justify-center mt-14 cursor-pointer"
             onClick={() => document.getElementById("ct-form")?.scrollIntoView({ behavior: "smooth" })}>
             <Float duration={2} yRange={10}>
               <div className="w-7 h-12 rounded-full flex justify-center" style={{ border: "2px solid rgba(230,107,38,0.25)" }}>
-                <motion.div className="w-1 h-2 rounded-full mt-2" style={{ background: C.gold }}
+                <Motion.div className="w-1 h-2 rounded-full mt-2" style={{ background: C.gold }}
                   animate={{ y: [0, 10, 0], opacity: [1, .4, 1] }} transition={{ duration: 1.8, repeat: Infinity }} />
               </div>
             </Float>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       </section>
 
       {/* ══ FORM + INFO ══ */}
@@ -606,7 +646,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                         { name: "phone",   label: "Phone Number",    type: "tel",   placeholder: "+91 XXXXX XXXXX",        required: false },
                         { name: "subject", label: "Subject",         type: "text",  placeholder: "How can we help you?",   required: true  },
                       ].map((field, fi) => (
-                        <motion.div key={field.name} className="relative"
+                        <Motion.div key={field.name} className="relative"
                           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: false }} transition={{ delay: fi * .07, ease: EASE_EXPO }}>
                           <label className="block text-xs sm:text-sm font-medium mb-1.5" style={{ color: C.text }}>
@@ -621,16 +661,16 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                               color: C.text, boxShadow: focusedField === field.name ? `0 0 0 3px rgba(230,107,38,0.12)` : undefined,
                             }} />
                           {focusedField === field.name && (
-                            <motion.div layoutId="field-focus"
+                            <Motion.div layoutId="field-focus"
                               className="absolute inset-0 rounded-xl pointer-events-none"
                               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                               style={{ boxShadow: `0 0 0 2px rgba(212,175,55,0.45)`, borderRadius: 12 }} />
                           )}
-                        </motion.div>
+                        </Motion.div>
                       ))}
 
                       {/* message */}
-                      <motion.div className="relative"
+                      <Motion.div className="relative"
                         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: false }} transition={{ delay: .28, ease: EASE_EXPO }}>
                         <label className="block text-xs sm:text-sm font-medium mb-1.5" style={{ color: C.text }}>
@@ -645,12 +685,12 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                             color: C.text, boxShadow: focusedField === "message" ? `0 0 0 3px rgba(230,107,38,0.12)` : undefined,
                           }} />
                         {focusedField === "message" && (
-                          <motion.div layoutId="field-focus"
+                          <Motion.div layoutId="field-focus"
                             className="absolute inset-0 rounded-xl pointer-events-none"
                             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                             style={{ boxShadow: `0 0 0 2px rgba(212,175,55,0.45)`, borderRadius: 12 }} />
                         )}
-                      </motion.div>
+                      </Motion.div>
 
                       <MagBtn type="submit" disabled={isSubmitting}
                         className="w-full text-black py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-md hover:shadow-lg overflow-hidden relative group"
@@ -658,20 +698,20 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                         <span className="relative z-10 flex items-center gap-2">
                           {isSubmitting ? (
                             <>
-                              <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                              <Motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
                                 className="w-4 h-4 border-2 border-black border-t-transparent rounded-full" />
                               Sending…
                             </>
                           ) : (
                             <>
                               Send Message
-                              <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+                              <Motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
                                 <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-                              </motion.div>
+                              </Motion.div>
                             </>
                           )}
                         </span>
-                        <motion.div className="absolute inset-0" initial={{ x: "100%" }} whileHover={{ x: 0 }} transition={{ duration: .3 }}
+                        <Motion.div className="absolute inset-0" initial={{ x: "100%" }} whileHover={{ x: 0 }} transition={{ duration: .3 }}
                           style={{ background: `linear-gradient(135deg,${C.mid},#8B3A0F)` }} />
                       </MagBtn>
                     </form>
@@ -703,7 +743,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                 {contactInfo.map((info, i) => (
                   <GlowCard key={i} accent={C.gold}>
                     <TiltCard intensity={5}>
-                      <motion.a href={info.link} whileHover={{ x: 5 }}
+                      <Motion.a href={info.link} whileHover={{ x: 5 }}
                         className="group flex items-center gap-4 p-4 rounded-xl border border-transparent hover:border-gray-200 transition-all duration-300"
                         style={{ background: "#fff" }}
                         target={info.link !== "#" ? "_blank" : "_self"}
@@ -720,10 +760,10 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                           <h3 className="font-semibold text-base mb-0.5" style={{ color: C.text }}>{info.title}</h3>
                           <p className="text-sm transition-colors group-hover:text-[#F04A06]" style={{ color: "rgba(26,26,26,0.65)" }}>{info.details}</p>
                         </div>
-                        <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 2, repeat: Infinity, delay: i * .3 }}>
+                        <Motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 2, repeat: Infinity, delay: i * .3 }}>
                           <ChevronRight className="w-5 h-5 flex-shrink-0 transition-colors group-hover:text-[#F04A06]" style={{ color: C.gold }} />
-                        </motion.div>
-                      </motion.a>
+                        </Motion.div>
+                      </Motion.a>
                     </TiltCard>
                   </GlowCard>
                 ))}
@@ -742,24 +782,24 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                       <div className="flex flex-wrap gap-3">
                         {socialLinks.map((social, i) => (
                           <Float key={i} duration={4 + i * .3} delay={i * .2}>
-                            <motion.a href="#" whileHover={{ y: -4, scale: 1.1 }} whileTap={{ scale: .95 }}
+                            <Motion.a href="#" whileHover={{ y: -4, scale: 1.1 }} whileTap={{ scale: .95 }}
                               className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center border border-gray-200 transition-all duration-300 group/icon"
                               style={{ background: C.light }} aria-label={social.name} target="_blank" rel="noopener noreferrer">
                               <social.icon className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: C.dark }} />
-                              <motion.div className="absolute inset-0 rounded-xl opacity-0 group-hover/icon:opacity-100 transition-opacity"
+                              <Motion.div className="absolute inset-0 rounded-xl opacity-0 group-hover/icon:opacity-100 transition-opacity"
                                 style={{ background: `${C.gold}22` }} />
                               <span className="absolute -top-10 left-1/2 -translate-x-1/2 text-white text-xs py-1 px-2 rounded opacity-0 group-hover/icon:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden sm:block z-10 border"
                                 style={{ background: C.dark, borderColor: C.mid }}>
                                 {social.name}
                               </span>
-                            </motion.a>
+                            </Motion.a>
                           </Float>
                         ))}
                       </div>
                     </div>
 
                     {/* trust badge */}
-                    <motion.div whileHover={{ x: 4 }}
+                    <Motion.div whileHover={{ x: 4 }}
                       className="flex items-center gap-4 p-4 rounded-xl border border-transparent hover:border-gray-200 transition-all duration-300"
                       style={{ background: C.light }}>
                       <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -774,7 +814,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                           <p className="text-xs" style={{ color: "rgba(26,26,26,0.55)" }}>Trusted by 1000+ clients</p>
                         </div>
                       </div>
-                    </motion.div>
+                    </Motion.div>
                   </div>
                 </GlowCard>
               </Reveal>
@@ -788,11 +828,11 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
       <section id="ct-map" className="py-16 sm:py-20 px-4 sm:px-6 relative overflow-hidden" style={{ background: C.light }}>
         <NoiseCanvas opacity={0.18} />
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-          <motion.span className="font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.022]"
+          <Motion.span className="font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.022]"
             style={{ fontSize: "16vw" }}
             animate={{ y: [0, -10, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}>
             LOCATION
-          </motion.span>
+          </Motion.span>
         </div>
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12">
@@ -807,17 +847,17 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           <Reveal from="scale" delay={.1}>
             <GlowCard accent={C.gold}>
               <TiltCard intensity={3}>
-                <motion.div whileHover={{ boxShadow: "0 32px 80px rgba(0,0,0,0.14)" }}
+                <Motion.div whileHover={{ boxShadow: "0 32px 80px rgba(0,0,0,0.14)" }}
                   className="relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl"
                   style={{ height: "clamp(260px,40vw,420px)" }}>
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1462.208654815225!2d79.94902621077726!3d14.40748826002402!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTTCsDI0JzI2LjkiTiA3OcKwNTYnNTcuMCJF!5e1!3m2!1sen!2sin!4v1775304227880!5m2!1sen!2sin"
                     width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade" title="Stackenzo Location" />
-                  <motion.div className="absolute inset-0 pointer-events-none rounded-2xl"
+                  <Motion.div className="absolute inset-0 pointer-events-none rounded-2xl"
                     animate={{ opacity: [0, .06, 0] }} transition={{ duration: 3, repeat: Infinity }}
                     style={{ background: `linear-gradient(135deg,${C.gold},transparent)` }} />
-                </motion.div>
+                </Motion.div>
               </TiltCard>
             </GlowCard>
           </Reveal>
@@ -843,7 +883,7 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
           <StaggerContainer className="space-y-3 sm:space-y-4" stagger={0.08} from="bottom">
             {faqs.map((faq, i) => (
               <GlowCard key={i} accent={openFaq === i ? C.gold : C.dark}>
-                <motion.div
+                <Motion.div
                   className="bg-white rounded-xl overflow-hidden transition-all cursor-pointer shadow-sm"
                   style={{ border: `1px solid ${openFaq === i ? C.gold : "#e5e7eb"}`, boxShadow: openFaq === i ? `0 6px 24px rgba(212,175,55,0.16)` : undefined }}
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}>
@@ -853,17 +893,17 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                       style={{ color: openFaq === i ? C.dark : C.text }}>
                       {faq.q}
                     </h3>
-                    <motion.div animate={{ rotate: openFaq === i ? 45 : 0 }} transition={{ duration: .3 }}
+                    <Motion.div animate={{ rotate: openFaq === i ? 45 : 0 }} transition={{ duration: .3 }}
                       className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-colors"
                       style={{ background: openFaq === i ? `${C.gold}22` : C.light }}>
                       {openFaq === i
                         ? <Minus className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: C.gold }} />
                         : <Plus  className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: C.gold }} />}
-                    </motion.div>
+                    </Motion.div>
                   </div>
                   <AnimatePresence>
                     {openFaq === i && (
-                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+                      <Motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden">
                         <div className="px-4 sm:px-6 pb-4 sm:pb-6">
                           <div className="pt-3 sm:pt-4 border-t border-gray-100">
@@ -877,19 +917,19 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                             )}
                             {i === 2 && (
                               <div className="mt-3">
-                                <motion.a href="#" whileHover={{ x: 4 }} className="inline-flex items-center gap-1 text-xs sm:text-sm transition-colors"
+                                <Motion.a href="#" whileHover={{ x: 4 }} className="inline-flex items-center gap-1 text-xs sm:text-sm transition-colors"
                                   style={{ color: C.dark }}>
                                   Schedule a call now
                                   <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
-                                </motion.a>
+                                </Motion.a>
                               </div>
                             )}
                           </div>
                         </div>
-                      </motion.div>
+                      </Motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+                </Motion.div>
               </GlowCard>
             ))}
           </StaggerContainer>

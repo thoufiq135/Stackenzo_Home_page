@@ -195,7 +195,7 @@ function RoboticsEnrollmentModal({ isOpen, onClose }) {
   const handleStudentSubmit = async (e) => {
     e.preventDefault(); setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/api/robotics-enrollments", {
+      const res = await fetch("https://stackenzo-backend.onrender.com/api/robotics-enrollments", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...studentForm, type: "student" }),
       });
@@ -212,7 +212,7 @@ function RoboticsEnrollmentModal({ isOpen, onClose }) {
   const handleSchoolSubmit = async (e) => {
     e.preventDefault(); setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/api/school-partnerships", {
+      const res = await fetch("https://stackenzo-backend.onrender.com/api/school-partnerships", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify(schoolForm),
       });

@@ -1,0 +1,443 @@
+/* SummerCampGallery.css */
+
+/* Gallery Container - RTL Scroll */
+.gallery-rtl-scroll {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+}
+
+/* Scroll Wrapper */
+.gallery-scroll-wrapper-rtl {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  direction: rtl; /* Right to left direction */
+  cursor: grab;
+  position: relative;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-scroll-wrapper-rtl:active {
+  cursor: grabbing;
+}
+
+/* Scroll Track */
+.gallery-scroll-track-rtl {
+  display: flex;
+  flex-direction: row-reverse; /* Reverses the order for RTL */
+  gap: 24px;
+  padding: 20px 20px 30px 20px;
+  width: max-content;
+  direction: ltr; /* Reset inner content direction */
+}
+
+/* Custom Scrollbar */
+.gallery-scroll-wrapper-rtl::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gallery-scroll-wrapper-rtl::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.gallery-scroll-wrapper-rtl::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #F04A06, #FF6B35);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.gallery-scroll-wrapper-rtl::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #FF6B35, #F04A06);
+}
+
+/* Gallery Card Styles */
+.gallery-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 320px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.gallery-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(240, 74, 6, 0.2);
+}
+
+/* Card Image */
+.gallery-card-image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-card:hover .gallery-card-image {
+  transform: scale(1.05);
+}
+
+/* Card Overlay */
+.gallery-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gallery-card:hover .gallery-card-overlay {
+  opacity: 1;
+}
+
+/* Card Content */
+.gallery-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  color: white;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+}
+
+.gallery-card:hover .gallery-card-content {
+  transform: translateY(0);
+}
+
+.gallery-card-category {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #F04A06;
+  margin-bottom: 4px;
+}
+
+.gallery-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Badge on Card */
+.gallery-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(240, 74, 6, 0.9);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 2;
+  backdrop-filter: blur(5px);
+}
+
+/* Navigation Buttons */
+.gallery-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(240, 74, 6, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-nav-btn:hover {
+  background: #F04A06;
+  border-color: #F04A06;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 15px rgba(240, 74, 6, 0.4);
+}
+
+.gallery-nav-btn:hover svg {
+  stroke: white;
+}
+
+.gallery-nav-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #F04A06;
+  stroke-width: 2;
+  transition: stroke 0.3s ease;
+}
+
+.gallery-nav-left {
+  left: -20px;
+}
+
+.gallery-nav-right {
+  right: -20px;
+}
+
+/* Scroll Progress Indicator */
+.gallery-scroll-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #F04A06, #FF6B35);
+  border-radius: 3px;
+  transition: width 0.1s ease;
+}
+
+/* Loading Skeleton */
+.gallery-skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease infinite;
+  border-radius: 16px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .gallery-card {
+    width: 280px;
+  }
+  
+  .gallery-card-image {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-scroll-track-rtl {
+    gap: 16px;
+    padding: 15px 15px 25px 15px;
+  }
+  
+  .gallery-card {
+    width: 260px;
+  }
+  
+  .gallery-card-image {
+    height: 220px;
+  }
+  
+  .gallery-nav-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .gallery-nav-left {
+    left: -10px;
+  }
+  
+  .gallery-nav-right {
+    right: -10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery-card {
+    width: 240px;
+  }
+  
+  .gallery-card-image {
+    height: 200px;
+  }
+  
+  .gallery-scroll-track-rtl {
+    gap: 12px;
+    padding: 10px 10px 20px 10px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .gallery-card:hover {
+    transform: none;
+  }
+  
+  .gallery-card:hover .gallery-card-image {
+    transform: none;
+  }
+  
+  .gallery-card:hover .gallery-card-content {
+    transform: translateY(100%);
+  }
+}
+
+/* Firefox Scrollbar */
+@-moz-document url-prefix() {
+  .gallery-scroll-wrapper-rtl {
+    scrollbar-width: thin;
+    scrollbar-color: #F04A06 #e0e0e0;
+  }
+}
+
+/* Edge/IE Fallback */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .gallery-scroll-wrapper-rtl {
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+}
+
+/* Gradient Text Animation */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Optional: Add floating animation to cards */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Custom Selection Color */
+::selection {
+  background: rgba(240, 74, 6, 0.3);
+  color: #F04A06;
+}
+
+/* SummerCampGallery.css */
+
+/* Gallery Carousel Container */
+.gallery-carousel-container {
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.gallery-images-container {
+  overflow: visible;
+  padding: 10px 40px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .gallery-images-container {
+    padding: 10px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-images-container {
+    padding: 10px 20px;
+  }
+  
+  .gallery-carousel-container button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery-images-container {
+    padding: 10px 15px;
+  }
+  
+  .gallery-carousel-container button {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Custom Animation for Images */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+
+/* Progress Bar Animation */
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Hover Effects */
+.gallery-carousel-container button:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 20px rgba(240, 74, 6, 0.3);
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .gallery-carousel-container button {
+    opacity: 0.7;
+  }
+}
+
+/* Smooth Loading for Images */
+img {
+  transition: opacity 0.3s ease;
+}
+
+img.loading {
+  opacity: 0;
+}
+
+img.loaded {
+  opacity: 1;
+}

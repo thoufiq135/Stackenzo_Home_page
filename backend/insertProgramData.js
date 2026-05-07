@@ -119,7 +119,7 @@ const insertHackathonData = async () => {
     }
 
     console.log('\n🎉 All sample programs inserted successfully!');
-    console.log('🔗 You can now view them at: http://localhost:3000/Programs');
+    console.log('🔗 You can now view them at: https://stackenzo-backend.onrender.com/Programs');
 
   } catch (error) {
     console.error('❌ Error inserting data:', error.message);

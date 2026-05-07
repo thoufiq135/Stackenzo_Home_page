@@ -35,10 +35,10 @@ Server will start at: `http://localhost:3000`
 ### 5. Test the API
 ```bash
 # Health check
-curl http://localhost:3000/health
+curl https://stackenzo-backend.onrender.com/health
 
 # Test contact form
-curl -X POST http://localhost:3000/api/contact \
+curl -X POST https://stackenzo-backend.onrender.com/api/contact \
   -H "Content-Type: application/json" \
   -d "{\"name\":\"Test User\",\"email\":\"test@test.com\",\"subject\":\"Test\",\"message\":\"Hello\"}"
 ```

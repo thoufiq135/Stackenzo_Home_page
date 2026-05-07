@@ -1,19 +1,21 @@
 const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs');
 const dotenv = require('dotenv');
 
 // Try multiple possible paths for .env
 const possiblePaths = [
-  path.resolve(__dirname, '../../.env'),    // backend/src/config/../../.env -> backend/.env
-  path.resolve(__dirname, '../.env'),       // backend/src/config/../.env -> backend/.env
-  path.resolve(process.cwd(), '.env'),      // current working directory/.env
+  path.resolve(__dirname, '../../.env'),       // backend/src/config/../../.env -> backend/.env
+  path.resolve(process.cwd(), '.env'),         // current working directory/.env
   path.resolve(process.cwd(), 'backend/.env'), // cwd/backend/.env
 ];
+
+const existingPaths = possiblePaths.filter(fs.existsSync);
 
 let envLoaded = false;
 let loadedPath = null;
 
-for (const envPath of possiblePaths) {
+for (const envPath of existingPaths) {
   const result = dotenv.config({ path: envPath });
   if (!result.error) {
     envLoaded = true;
@@ -23,10 +25,14 @@ for (const envPath of possiblePaths) {
   }
 }
 
-if (!envLoaded) {
+if (!envLoaded && process.env.MONGODB_URI) {
+  console.log('✅ Using MONGODB_URI from environment variables');
+}
+
+if (!envLoaded && !process.env.MONGODB_URI) {
   console.error('❌ Could not find .env file. Searched paths:');
   possiblePaths.forEach(p => console.error(`   - ${p}`));
-  throw new Error('MONGODB_URI is required in backend/.env');
+  throw new Error('MONGODB_URI is required in backend/.env or environment');
 }
 
 // Validate required env var

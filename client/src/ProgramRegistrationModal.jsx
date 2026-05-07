@@ -24,7 +24,7 @@ function ProgramRegistrationModal({ program, isOpen, onClose }) {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/programs/register", {
+      const response = await fetch("https://stackenzo-backend.onrender.com/api/programs/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

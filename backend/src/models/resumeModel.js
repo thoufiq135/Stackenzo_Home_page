@@ -26,7 +26,7 @@ const resumeSchema = new mongoose.Schema({
 });
 
 resumeSchema.virtual('resume_url').get(function() {
-  return `http://localhost:3000/api/resumes/${this._id}/view`;
+  return `https://stackenzo-backend.onrender.com/api/resumes/${this._id}/view`;
 });
 
 resumeSchema.set('toJSON', { virtuals: true });

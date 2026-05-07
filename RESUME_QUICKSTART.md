@@ -36,7 +36,7 @@ Your backend server is already running on port 3000 with the resume API endpoint
 #### Option C: Test with cURL
 ```bash
 # Create a test PDF first or use an existing one
-curl -X POST http://localhost:3000/api/resumes/submit \
+curl -X POST https://stackenzo-backend.onrender.com/api/resumes/submit \
   -F "name=Test User" \
   -F "email=test@example.com" \
   -F "phone=9876543210" \

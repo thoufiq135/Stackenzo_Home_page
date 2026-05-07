@@ -1028,7 +1028,7 @@ function Career() {
 
   const fetchJobs = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/jobs/postings");
+      const response = await fetch("https://stackenzo-backend.onrender.com/api/jobs/postings");
       const data = await response.json();
       if (data.success) setJobOpenings(data.data);
     } catch (error) {

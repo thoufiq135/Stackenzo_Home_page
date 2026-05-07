@@ -11,7 +11,7 @@ Server should start at: `http://localhost:3000`
 
 ### 2. Test Health Check
 ```bash
-curl http://localhost:3000/health
+curl https://stackenzo-backend.onrender.com/health
 ```
 Expected Response:
 ```json
@@ -35,7 +35,7 @@ Expected Response:
 
 **Test Command:**
 ```bash
-curl -X POST http://localhost:3000/api/contact \
+curl -X POST https://stackenzo-backend.onrender.com/api/contact \
   -H "Content-Type: application/json" \
   -d "{\"name\":\"Test User\",\"email\":\"test@example.com\",\"phone\":\"+91 9876543210\",\"subject\":\"Test Inquiry\",\"message\":\"Testing contact form\"}"
 ```
@@ -68,7 +68,7 @@ curl -X POST http://localhost:3000/api/contact \
 
 **Test Command:**
 ```bash
-curl -X POST http://localhost:3000/api/enrollments \
+curl -X POST https://stackenzo-backend.onrender.com/api/enrollments \
   -H "Content-Type: application/json" \
   -d "{\"name\":\"Jane Smith\",\"email\":\"jane@example.com\",\"phone\":\"9876543210\",\"course\":\"Robotics Education\",\"education\":\"undergraduate\",\"message\":\"Interested in robotics\",\"type\":\"enrollment\"}"
 ```
@@ -99,7 +99,7 @@ curl -X POST http://localhost:3000/api/enrollments \
 
 **Test Command:**
 ```bash
-curl http://localhost:3000/api/jobs/postings
+curl https://stackenzo-backend.onrender.com/api/jobs/postings
 ```
 
 **Expected Response:**
@@ -128,7 +128,7 @@ curl http://localhost:3000/api/jobs/postings
 
 **Test Command:**
 ```bash
-curl -X POST http://localhost:3000/api/jobs/applications \
+curl -X POST https://stackenzo-backend.onrender.com/api/jobs/applications \
   -H "Content-Type: application/json" \
   -d "{\"job_id\":1,\"name\":\"Alex Johnson\",\"email\":\"alex@example.com\",\"phone\":\"9876543210\",\"resume_url\":\"https://example.com/resume.pdf\",\"cover_letter\":\"I am interested in this position\"}"
 ```
@@ -160,7 +160,7 @@ curl -X POST http://localhost:3000/api/jobs/applications \
 
 **Test Command:**
 ```bash
-curl -X POST http://localhost:3000/api/newsletter/subscribe \
+curl -X POST https://stackenzo-backend.onrender.com/api/newsletter/subscribe \
   -H "Content-Type: application/json" \
   -d "{\"email\":\"subscriber@example.com\"}"
 ```
@@ -200,7 +200,7 @@ npm run dev
 #### Test 1: Contact Form
 ```bash
 # Terminal test
-curl -X POST http://localhost:3000/api/contact \
+curl -X POST https://stackenzo-backend.onrender.com/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@test.com","subject":"Test","message":"Testing"}'
 
@@ -212,7 +212,7 @@ curl -X POST http://localhost:3000/api/contact \
 #### Test 2: Enrollment
 ```bash
 # Terminal test
-curl -X POST http://localhost:3000/api/enrollments \
+curl -X POST https://stackenzo-backend.onrender.com/api/enrollments \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@test.com","phone":"9876543210","course":"Robotics","education":"undergraduate","type":"enrollment"}'
 
@@ -224,7 +224,7 @@ curl -X POST http://localhost:3000/api/enrollments \
 #### Test 3: Newsletter
 ```bash
 # Terminal test
-curl -X POST http://localhost:3000/api/newsletter/subscribe \
+curl -X POST https://stackenzo-backend.onrender.com/api/newsletter/subscribe \
   -H "Content-Type: application/json" \
   -d '{"email":"test@test.com"}'
 
@@ -253,7 +253,7 @@ These pages need to be connected to backend:
 useEffect(() => {
   const fetchJobs = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/jobs/postings');
+      const response = await fetch('https://stackenzo-backend.onrender.com/api/jobs/postings');
       const data = await response.json();
       if (data.success) {
         setJobOpenings(data.data);
@@ -273,7 +273,7 @@ useEffect(() => {
 // Add this to Footer.jsx newsletter handler
 const handleSubscribe = async (email) => {
   try {
-    const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
+    const response = await fetch('https://stackenzo-backend.onrender.com/api/newsletter/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
@@ -327,7 +327,7 @@ SELECT * FROM job_applications;
 **Fix:** 
 ```bash
 # Check if backend is running
-curl http://localhost:3000/health
+curl https://stackenzo-backend.onrender.com/health
 
 # If not, start it
 cd backend
@@ -389,7 +389,7 @@ Open browser console (F12) and run:
 
 ```javascript
 // Test Contact API
-fetch('http://localhost:3000/api/contact', {
+fetch('https://stackenzo-backend.onrender.com/api/contact', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -403,7 +403,7 @@ fetch('http://localhost:3000/api/contact', {
 .then(d => console.log('Contact API:', d));
 
 // Test Enrollment API
-fetch('http://localhost:3000/api/enrollments', {
+fetch('https://stackenzo-backend.onrender.com/api/enrollments', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -419,7 +419,7 @@ fetch('http://localhost:3000/api/enrollments', {
 .then(d => console.log('Enrollment API:', d));
 
 // Test Newsletter API
-fetch('http://localhost:3000/api/newsletter/subscribe', {
+fetch('https://stackenzo-backend.onrender.com/api/newsletter/subscribe', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ email: 'test@test.com' })
@@ -428,7 +428,7 @@ fetch('http://localhost:3000/api/newsletter/subscribe', {
 .then(d => console.log('Newsletter API:', d));
 
 // Test Jobs API
-fetch('http://localhost:3000/api/jobs/postings')
+fetch('https://stackenzo-backend.onrender.com/api/jobs/postings')
 .then(r => r.json())
 .then(d => console.log('Jobs API:', d));
 ```
@@ -522,11 +522,11 @@ fetch('http://localhost:3000/api/jobs/postings')
 
 | API Endpoint | Method | Page Used | Test URL |
 |-------------|--------|-----------|----------|
-| `/api/contact` | POST | Contact, Home | `http://localhost:3000/api/contact` |
-| `/api/enrollments` | POST | Robotics, Workshops | `http://localhost:3000/api/enrollments` |
-| `/api/jobs/postings` | GET | Career | `http://localhost:3000/api/jobs/postings` |
-| `/api/jobs/applications` | POST | Career | `http://localhost:3000/api/jobs/applications` |
-| `/api/newsletter/subscribe` | POST | All pages (footer) | `http://localhost:3000/api/newsletter/subscribe` |
+| `/api/contact` | POST | Contact, Home | `https://stackenzo-backend.onrender.com/api/contact` |
+| `/api/enrollments` | POST | Robotics, Workshops | `https://stackenzo-backend.onrender.com/api/enrollments` |
+| `/api/jobs/postings` | GET | Career | `https://stackenzo-backend.onrender.com/api/jobs/postings` |
+| `/api/jobs/applications` | POST | Career | `https://stackenzo-backend.onrender.com/api/jobs/applications` |
+| `/api/newsletter/subscribe` | POST | All pages (footer) | `https://stackenzo-backend.onrender.com/api/newsletter/subscribe` |
 
 ---
 

@@ -254,7 +254,7 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
     console.log("  File:", resumeFile.name, resumeFile.type, resumeFile.size);
     
     try {
-      const res = await fetch("http://localhost:3000/api/resumes/submit", { 
+      const res = await fetch("https://stackenzo-backend.onrender.com/api/resumes/submit", { 
         method: "POST", 
         body: fd 
       });

@@ -185,14 +185,14 @@ npm start
 
 ### Health Check
 ```bash
-curl http://localhost:3000/health
+curl https://stackenzo-backend.onrender.com/health
 ```
 
 ## 📚 API Documentation
 
 ### Base URL
 ```
-http://localhost:3000/api
+https://stackenzo-backend.onrender.com/api
 ```
 
 ---
@@ -400,17 +400,17 @@ All errors follow this format:
 ### Using cURL
 ```bash
 # Contact form
-curl -X POST http://localhost:3000/api/contact \
+curl -X POST https://stackenzo-backend.onrender.com/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@test.com","subject":"Test","message":"Testing"}'
 
 # Get jobs
-curl http://localhost:3000/api/jobs/postings
+curl https://stackenzo-backend.onrender.com/api/jobs/postings
 ```
 
 ### Using Postman
 1. Import the API endpoints
-2. Set base URL: `http://localhost:3000/api`
+2. Set base URL: `https://stackenzo-backend.onrender.com/api`
 3. Test each endpoint
 
 ## 📝 Notes

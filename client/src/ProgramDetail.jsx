@@ -23,7 +23,7 @@ function ProgramDetail() {
   const fetchProgram = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3000/api/programs/${id}`);
+      const response = await fetch(`https://stackenzo-backend.onrender.com/api/programs/${id}`);
       const data = await response.json();
       
       if (data.success) {

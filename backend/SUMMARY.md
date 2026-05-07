@@ -172,7 +172,7 @@ Replace hardcoded data with API calls:
 // Contact Form (Contact.jsx)
 const handleSubmit = async (e) => {
   e.preventDefault();
-  const response = await fetch('http://localhost:3000/api/contact', {
+  const response = await fetch('https://stackenzo-backend.onrender.com/api/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData)
@@ -186,7 +186,7 @@ const handleSubmit = async (e) => {
 // Enrollment Modal (EnrollmentModal.jsx)
 const handleSubmit = async (e) => {
   e.preventDefault();
-  const response = await fetch('http://localhost:3000/api/enrollments', {
+  const response = await fetch('https://stackenzo-backend.onrender.com/api/enrollments', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData)
@@ -201,7 +201,7 @@ const handleSubmit = async (e) => {
 // Job Listings (Career.jsx)
 useEffect(() => {
   const fetchJobs = async () => {
-    const response = await fetch('http://localhost:3000/api/jobs/postings');
+    const response = await fetch('https://stackenzo-backend.onrender.com/api/jobs/postings');
     const data = await response.json();
     if (data.success) {
       setJobOpenings(data.data);
@@ -212,7 +212,7 @@ useEffect(() => {
 
 // Newsletter (Footer.jsx)
 const handleSubscribe = async (email) => {
-  const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
+  const response = await fetch('https://stackenzo-backend.onrender.com/api/newsletter/subscribe', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email })
@@ -288,15 +288,15 @@ const handleSubscribe = async (email) => {
 ### Manual Testing
 ```bash
 # Health check
-curl http://localhost:3000/health
+curl https://stackenzo-backend.onrender.com/health
 
 # Contact form
-curl -X POST http://localhost:3000/api/contact \
+curl -X POST https://stackenzo-backend.onrender.com/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@test.com","subject":"Test","message":"Testing"}'
 
 # Get jobs
-curl http://localhost:3000/api/jobs/postings
+curl https://stackenzo-backend.onrender.com/api/jobs/postings
 ```
 
 ### Automated Testing (Ready to add)

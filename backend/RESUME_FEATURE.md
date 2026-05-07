@@ -39,7 +39,7 @@ The resume submission system allows users to upload their resume (PDF only) alon
 
 **Example using cURL:**
 ```bash
-curl -X POST http://localhost:3000/api/resumes/submit \
+curl -X POST https://stackenzo-backend.onrender.com/api/resumes/submit \
   -F "name=John Doe" \
   -F "email=john@example.com" \
   -F "phone=9876543210" \
@@ -68,8 +68,8 @@ curl -X POST http://localhost:3000/api/resumes/submit \
 
 **Example:**
 ```bash
-curl http://localhost:3000/api/resumes
-curl http://localhost:3000/api/resumes?status=pending
+curl https://stackenzo-backend.onrender.com/api/resumes
+curl https://stackenzo-backend.onrender.com/api/resumes?status=pending
 ```
 
 **Response:**
@@ -100,7 +100,7 @@ curl http://localhost:3000/api/resumes?status=pending
 
 **Example:**
 ```bash
-curl http://localhost:3000/api/resumes/1/download -o resume.pdf
+curl https://stackenzo-backend.onrender.com/api/resumes/1/download -o resume.pdf
 ```
 
 This will download the PDF file.
@@ -117,7 +117,7 @@ This will download the PDF file.
 
 **Example:**
 ```bash
-curl -X PATCH http://localhost:3000/api/resumes/1/status \
+curl -X PATCH https://stackenzo-backend.onrender.com/api/resumes/1/status \
   -H "Content-Type: application/json" \
   -d '{"status": "reviewed"}'
 ```
@@ -175,13 +175,13 @@ const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
 ### 2. Backend Testing
 ```bash
 # Check if resume was stored
-curl http://localhost:3000/api/resumes
+curl https://stackenzo-backend.onrender.com/api/resumes
 
 # Download the resume
-curl http://localhost:3000/api/resumes/1/download -o test_resume.pdf
+curl https://stackenzo-backend.onrender.com/api/resumes/1/download -o test_resume.pdf
 
 # Update status
-curl -X PATCH http://localhost:3000/api/resumes/1/status \
+curl -X PATCH https://stackenzo-backend.onrender.com/api/resumes/1/status \
   -H "Content-Type: application/json" \
   -d '{"status": "reviewed"}'
 ```

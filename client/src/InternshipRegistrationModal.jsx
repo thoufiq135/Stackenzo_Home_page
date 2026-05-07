@@ -126,7 +126,7 @@ function InternshipRegistrationModal({ internship, onClose }) {
     e.preventDefault();
     setLoading(true); setSubmitStatus(null);
     try {
-      const res = await fetch("http://localhost:3000/api/enrollments", {
+      const res = await fetch("https://stackenzo-backend.onrender.com/api/enrollments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, course: internship.title, type: "internship" }),
