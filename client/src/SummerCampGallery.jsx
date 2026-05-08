@@ -14,7 +14,7 @@ const extractDriveId = (input) => {
   return input;
 };
 
-// ✅ All images with full Drive share URLs
+// ✅ Summer Camp Images
 const GALLERY_DATA = [
   {
     id: "https://drive.google.com/file/d/1uWLnOAFgf5KlUR_1tSZEedgboLsdol3D/view?usp=sharing",
@@ -58,6 +58,40 @@ const GALLERY_DATA = [
   },
 ];
 
+// ✅ School Workshop Images with School Names
+const SCHOOL_WORKSHOPS = [
+  {
+    id: "https://drive.google.com/file/d/1XSjwTZWwTlHjDgLe1KbNtFs-wMyiGst2/view?usp=sharing",
+    schoolName: "Podar International School",
+    location: "Nellore",
+    date: "May 2026",
+  },
+  {
+    id: "https://drive.google.com/file/d/1FBi-A1wmxNyKENLfflEqQTQds5fNZBGp/view?usp=sharing",
+    schoolName: "Sangamithra Narayana School",
+    location: "Nellore",
+    date: "May 2026",
+  },
+  {
+    id: "https://drive.google.com/file/d/1w305sjxllD_MhpB4cU2GujuWPZoAt1ZW/view?usp=sharing",
+    schoolName: "ST.Joseph's E.M High School",
+    location: "Nellore",
+    date: "April 2026",
+  },
+  {
+    id: "https://drive.google.com/file/d/1Jmhyzcp-7ardo-5KZ2IEcWJE8qgQxT1D/view?usp=sharing",
+    schoolName: "Sri Venkateswara Institutions",
+    location: "Nellore",
+    date: "April 2026",
+  },
+  {
+    id: "https://drive.google.com/file/d/1Z14HRTgC_0gI38UfqGdbJQ0SwmVTJqzS/view?usp=sharing",
+    schoolName: "Sri Siva Sivani E.M High School",
+    location: "Maipadu",
+    date: "May 2026",
+  },
+];
+
 const CATEGORIES = ["All", "Activities", "Learning"];
 
 const getThumbUrl = (id) => `https://lh3.googleusercontent.com/d/${id}`;
@@ -76,10 +110,11 @@ function FilterButton({ label, active, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${active
+      className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+        active
           ? "bg-[#F04A06] text-white scale-105 shadow-lg"
           : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-        }`}
+      }`}
     >
       {label}
     </button>
@@ -121,8 +156,9 @@ function GalleryCard({ item, onClick }) {
       <img
         src={imageSrc}
         alt={item.title || item.category}
-        className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${isLoaded ? "opacity-100" : "opacity-0"
-          }`}
+        className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${
+          isLoaded ? "opacity-100" : "opacity-0"
+        }`}
         onError={handleError}
         onLoad={() => setIsLoaded(true)}
         loading="lazy"
@@ -141,15 +177,170 @@ function GalleryCard({ item, onClick }) {
   );
 }
 
+// ── School Workshop Card with Logo and Name ──
+function SchoolWorkshopCard({ workshop, onClick }) {
+  const rawId = extractDriveId(workshop.id);
+  const [imageSrc, setImageSrc] = useState(getThumbUrl(rawId));
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [errorCount, setErrorCount] = useState(0);
+
+  const handleError = () => {
+    if (errorCount === 0) {
+      setImageSrc(getFallback1(rawId));
+      setErrorCount(1);
+    } else if (errorCount === 1) {
+      setImageSrc(getFallback2(rawId));
+      setErrorCount(2);
+    } else {
+      setImageSrc(PLACEHOLDER);
+      setIsLoaded(true);
+    }
+  };
+
+  useEffect(() => {
+    setImageSrc(getThumbUrl(rawId));
+    setIsLoaded(false);
+    setErrorCount(0);
+  }, [rawId]);
+
+  const getSchoolLogo = (schoolName) => {
+    const initials = schoolName
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .substring(0, 2)
+      .toUpperCase();
+    return initials;
+  };
+
+  return (
+    <div
+      className="group relative flex-shrink-0 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2"
+      style={{ width: "320px", marginRight: "24px" }}
+      onClick={() => onClick(workshop)}
+    >
+      <div className="relative h-56 overflow-hidden">
+        <img
+          src={imageSrc}
+          alt={workshop.schoolName}
+          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onError={handleError}
+          onLoad={() => setIsLoaded(true)}
+          loading="lazy"
+        />
+        {!isLoaded && (
+          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200" />
+        )}
+        
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
+              <span className="text-[#F04A06] font-bold text-lg">
+                {getSchoolLogo(workshop.schoolName)}
+              </span>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-white font-bold text-base leading-tight">
+                {workshop.schoolName}
+              </h3>
+              <p className="text-white/70 text-xs">
+                {workshop.location} • {workshop.date}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div className="text-center text-white p-4">
+          <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
+            <span className="text-3xl">🏆</span>
+          </div>
+          <p className="text-sm font-semibold">Workshop Completed</p>
+          <p className="text-xs text-white/80">{workshop.date}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Continuous Auto-Scrolling School Workshops Section ──
+function SchoolWorkshopsSection({ workshops, onCardClick, speed = 0.8 }) {
+  const trackRef = useRef(null);
+  const animFrameRef = useRef(null);
+  const isPausedRef = useRef(false);
+  const scrollPositionRef = useRef(0);
+
+  const CARD_WIDTH = 320 + 24;
+  const totalWidth = workshops.length * CARD_WIDTH;
+  const duplicatedWorkshops = [...workshops, ...workshops, ...workshops];
+
+  const animate = useCallback(() => {
+    if (!isPausedRef.current && trackRef.current && workshops.length > 0) {
+      scrollPositionRef.current -= speed;
+      if (Math.abs(scrollPositionRef.current) >= totalWidth) {
+        scrollPositionRef.current = 0;
+      }
+      trackRef.current.style.transform = `translateX(${scrollPositionRef.current}px)`;
+    }
+    animFrameRef.current = requestAnimationFrame(animate);
+  }, [speed, totalWidth, workshops.length]);
+
+  useEffect(() => {
+    scrollPositionRef.current = 0;
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(0px)`;
+    }
+    animFrameRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animFrameRef.current) {
+        cancelAnimationFrame(animFrameRef.current);
+      }
+    };
+  }, [animate, workshops]);
+
+  if (workshops.length === 0) return null;
+
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{
+        maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+      }}
+      onMouseEnter={() => { isPausedRef.current = true; }}
+      onMouseLeave={() => { isPausedRef.current = false; }}
+    >
+      <div
+        ref={trackRef}
+        className="flex"
+        style={{
+          willChange: "transform",
+          width: `${duplicatedWorkshops.length * CARD_WIDTH}px`
+        }}
+      >
+        {duplicatedWorkshops.map((workshop, idx) => (
+          <SchoolWorkshopCard
+            key={`${workshop.id}-${idx}`}
+            workshop={workshop}
+            onClick={onCardClick}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── 3-Day Workshop Info Component ──
 function WorkshopInfo() {
   const workshopDays = [
     {
       day: "Day 1",
       title: "Basics & Concepts",
-      description: "Introduction to fundamentals, core concepts, and theoretical knowledge. Participants will learn the essential building blocks and understand the foundation of the subject.",
-      icon: "📖", // Book - represents learning fundamentals
-      iconOfficial: "fa-book",
+      description: "Introduction to fundamentals, core concepts, and theoretical knowledge.",
+      icon: "📖",
       color: "from-blue-500 to-cyan-500",
       topics: [
         "Introduction to core concepts",
@@ -161,9 +352,8 @@ function WorkshopInfo() {
     {
       day: "Day 2",
       title: "Connections & Implementation",
-      description: "Hands-on sessions connecting concepts with real-world applications. Practical implementation and collaborative learning activities.",
-      icon: "🔧", // Tools - represents practical implementation
-      iconOfficial: "fa-tools",
+      description: "Hands-on sessions connecting concepts with real-world applications.",
+      icon: "🔧",
       color: "from-purple-500 to-pink-500",
       topics: [
         "Connecting concepts to practice",
@@ -175,9 +365,8 @@ function WorkshopInfo() {
     {
       day: "Day 3",
       title: "Demo Verification & Certification",
-      description: "Project demonstrations, verification of skills learned, and certification distribution. Celebrate your achievement!",
-      icon: "🎯", // Target - represents achievement and verification
-      iconOfficial: "fa-bullseye",
+      description: "Project demonstrations, verification of skills learned, and certification distribution.",
+      icon: "🎯",
       color: "from-orange-500 to-red-500",
       topics: [
         "Project presentations",
@@ -187,6 +376,7 @@ function WorkshopInfo() {
       ]
     }
   ];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -213,12 +403,11 @@ function WorkshopInfo() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            whileHover={{ y: -8 }}
             className="relative group"
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${day.color} rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300`} />
             <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
-              {/* Day Header */}
               <div className={`bg-gradient-to-r ${day.color} p-4 text-white`}>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-4xl">{day.icon}</span>
@@ -228,14 +417,10 @@ function WorkshopInfo() {
                 </div>
                 <h3 className="text-xl font-bold">{day.title}</h3>
               </div>
-
-              {/* Content */}
               <div className="p-5">
                 <p className="text-gray-600 text-sm mb-4 leading-relaxed">
                   {day.description}
                 </p>
-
-                {/* Topics List */}
                 <div className="space-y-2">
                   {day.topics.map((topic, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-sm text-gray-700">
@@ -247,15 +432,12 @@ function WorkshopInfo() {
                   ))}
                 </div>
               </div>
-
-              {/* Decorative Line */}
               <div className={`h-1 bg-gradient-to-r ${day.color}`} />
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* Call to Action */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -288,35 +470,26 @@ function AutoScrollCarousel({ items, onCardClick, speed = 0.5 }) {
   const isPausedRef = useRef(false);
   const scrollPositionRef = useRef(0);
 
-  // Calculate card width including margin
-  const CARD_WIDTH = 320 + 24; // width + margin-right
+  const CARD_WIDTH = 320 + 24;
   const totalWidth = items.length * CARD_WIDTH;
-
-  // Create 3 copies for seamless infinite scroll
   const duplicatedItems = [...items, ...items, ...items];
 
   const animate = useCallback(() => {
     if (!isPausedRef.current && trackRef.current && items.length > 0) {
-      // Move from right to left (negative direction)
       scrollPositionRef.current -= speed;
-
-      // Reset position when we've scrolled past one set
       if (Math.abs(scrollPositionRef.current) >= totalWidth) {
         scrollPositionRef.current = 0;
       }
-
       trackRef.current.style.transform = `translateX(${scrollPositionRef.current}px)`;
     }
     animFrameRef.current = requestAnimationFrame(animate);
   }, [speed, totalWidth, items.length]);
 
   useEffect(() => {
-    // Reset position when items change
     scrollPositionRef.current = 0;
     if (trackRef.current) {
       trackRef.current.style.transform = `translateX(0px)`;
     }
-
     animFrameRef.current = requestAnimationFrame(animate);
     return () => {
       if (animFrameRef.current) {
@@ -411,15 +584,16 @@ function Lightbox({ item, onClose }) {
         </button>
         <img
           src={imageSrc}
-          alt={item.title}
+          alt={item.title || item.schoolName}
           className="w-full max-h-[80vh] object-contain bg-gray-100"
           onError={handleError}
         />
         <div className="px-6 py-4">
           <span className="text-xs font-bold text-[#F04A06] uppercase tracking-wider">
-            {item.category}
+            {item.category || "School Workshop"}
           </span>
-          <h3 className="text-xl font-bold text-gray-800 mt-1">{item.title}</h3>
+          <h3 className="text-xl font-bold text-gray-800 mt-1">{item.title || item.schoolName}</h3>
+          {item.location && <p className="text-gray-500 text-sm mt-1">{item.location} • {item.date}</p>}
         </div>
       </motion.div>
     </motion.div>
@@ -454,7 +628,7 @@ function SummerCampGallery() {
               Summer Camp Gallery
             </h1>
             <p className="text-gray-500 mt-3 text-lg">
-              Memories from our fun-filled summer camp
+              Memories from our fun-filled summer camp & school workshops
             </p>
           </motion.div>
 
@@ -476,83 +650,81 @@ function SummerCampGallery() {
             </a>
           </motion.div>
 
-          {/* 3-DAY WORKSHOP INFO SECTION */}
+          {/* SECTION 1: 3-Day Workshop Schedule */}
           <WorkshopInfo />
 
-          {/* Filters */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center gap-3 mb-6 flex-wrap"
-          >
-            {CATEGORIES.map((cat) => (
-              <FilterButton
-                key={cat}
-                label={cat}
-                active={activeCategory === cat}
-                onClick={() => setActiveCategory(cat)}
-              />
-            ))}
-          </motion.div>
+          {/* SECTION 2: Summer Camp Moments Gallery */}
+          <div className="mb-16">
+            <div className="text-center mb-6">
+              <span className="inline-block px-4 py-1 bg-[#F04A06]/10 text-[#F04A06] rounded-full text-sm font-semibold">
+                📸 Summer Camp Moments
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mt-3">
+                Summer Camp Gallery
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Cherishing the beautiful moments from our summer camp
+              </p>
+            </div>
 
-          {/* Speed Control */}
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex justify-center items-center gap-4 mb-6"
-          >
-            {/* <span className="text-xs text-gray-500">Scroll Speed:</span> */}
-          {/* <input
-              type="range"
-              min="0.3"
-              max="1.5"
-              step="0.1"
-              value={scrollSpeed}
-              onChange={(e) => setScrollSpeed(parseFloat(e.target.value))}
-              className="w-32 h-1 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-[#F04A06]"
-            /> */}
-          {/* <span className="text-xs font-semibold text-[#F04A06]">{scrollSpeed.toFixed(1)}x</span>
-          </motion.div>  */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center gap-3 mb-6 flex-wrap"
+            >
+              {CATEGORIES.map((cat) => (
+                <FilterButton
+                  key={cat}
+                  label={cat}
+                  active={activeCategory === cat}
+                  onClick={() => setActiveCategory(cat)}
+                />
+              ))}
+            </motion.div>
 
-          {/* Count hint */}
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-center mb-8"
-          >
-            <p className="text-sm text-gray-500 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full inline-block">
-              Showing{" "}
-              <span className="font-bold text-[#F04A06]">{filtered.length}</span>{" "}
-              images in <span className="font-semibold">{activeCategory}</span>
-              {" "}· Hover to pause · Click to enlarge
-            </p>
-          </motion.div> */}
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              {filtered.length > 0 ? (
+                <AutoScrollCarousel
+                  items={filtered}
+                  onCardClick={setLightboxItem}
+                  speed={scrollSpeed}
+                />
+              ) : (
+                <div className="text-center py-20">
+                  <div className="text-6xl mb-4">📸</div>
+                  <h3 className="text-2xl font-semibold text-gray-700 mb-2">No images found</h3>
+                  <p className="text-gray-500">Try selecting a different category</p>
+                </div>
+              )}
+            </motion.div>
+          </div>
 
-          {/* Auto-Scrolling RTL Carousel */}
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-          >
-            {filtered.length > 0 ? (
-              <AutoScrollCarousel
-                items={filtered}
-                onCardClick={setLightboxItem}
-                speed={scrollSpeed}
-              />
-            ) : (
-              <div className="text-center py-20">
-                <div className="text-6xl mb-4">📸</div>
-                <h3 className="text-2xl font-semibold text-gray-700 mb-2">No images found</h3>
-                <p className="text-gray-500">Try selecting a different category</p>
-              </div>
-            )}
-          </motion.div>
+          {/* SECTION 3: School Workshops */}
+          <div>
+            <div className="text-center mb-6">
+              <span className="inline-block px-4 py-1 bg-green-500/10 text-green-600 rounded-full text-sm font-semibold">
+                🏫 Academic partner schools
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mt-3">
+                Schools We've Conducted Workshops In
+              </h2>
+              <p className="text-gray-600 mt-2">
+                We're proud to have partnered with these prestigious institutions
+              </p>
+            </div>
+
+            <SchoolWorkshopsSection 
+              workshops={SCHOOL_WORKSHOPS} 
+              onCardClick={setLightboxItem}
+            />
+          </div>
         </div>
       </section>
 
