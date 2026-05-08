@@ -22,7 +22,7 @@ const app = express();
 app.use(cors({
   origin: process.env.FRONTEND_URL 
     ? process.env.FRONTEND_URL.split(',')
-    : ['http://localhost:5173', 'https://stackenzo-home-page-bcor.vercel.app'],
+    : ['http://localhost:5173', 'https://stackenzo-home-page-bcor.vercel.app','https://www.stackenzo.com', 'https://stackenzo.com'],
   credentials: true
 }));
 app.use(express.json());

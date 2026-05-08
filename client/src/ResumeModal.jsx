@@ -256,6 +256,7 @@ function ResumeModal({ isOpen, onClose, jobTitle = "" }) {
     try {
       const res = await fetch("https://stackenzo-backend.onrender.com/api/resumes/submit", { 
         method: "POST", 
+        credentials: 'include',
         body: fd 
       });
       
