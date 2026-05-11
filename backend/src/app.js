@@ -17,14 +17,27 @@ const marketingAuditRoutes = require('./routes/marketingAudit');
 const queryRoutes = require('./routes/queryRoutes');
 
 const app = express();
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://stackenzo-home-page-bcor.vercel.app',
+  'https://www.stackenzo.com',
+  'https://stackenzo.com'
+];
 
-// Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL 
-    ? process.env.FRONTEND_URL.split(',')
-    : ['http://localhost:5173', 'https://stackenzo-home-page-bcor.vercel.app','https://www.stackenzo.com', 'https://stackenzo.com'],
+  origin: allowedOrigins,
   credentials: true
 }));
+
+app.options('*', cors());
+
+// Middleware
+// app.use(cors({
+//   origin: process.env.FRONTEND_URL 
+//     ? process.env.FRONTEND_URL.split(',')
+//     : ['http://localhost:5173', 'https://stackenzo-home-page-bcor.vercel.app','https://www.stackenzo.com', 'https://stackenzo.com'],
+//   credentials: true
+// }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
