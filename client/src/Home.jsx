@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import Toast from "./Toast";
 import ScrollToTop from "./ScrollToTop";
 import Footer from "./Footer";
+import WelcomeDialog from "./WelcomeDialog";
 import {
   Bot, Code2, Globe, Users, Briefcase, Zap, TrendingUp, MessageCircle,
   X, ArrowRight, ChevronRight, Sparkles, Target, Eye, Clock, MapPin,
@@ -55,7 +56,7 @@ const SERVICES = [
     fullDesc: "We empower businesses with scalable IT solutions—from custom platforms to enterprise cloud systems—tailored to drive growth and efficiency.",
     icon: Code2,
     accent: "#2196F3",
-    features: ["Digital Platforms", "Cloud Solutions", "Enterprise Systemss", "Scalable Architecture"]
+    features: ["Digital Platforms", "Cloud Solutions", "Enterprise Systems", "Scalable Architecture"]
   },
   {
     id: 3,
@@ -118,14 +119,13 @@ function useScrollDir() {
 
 /* ════════════════════════════════════════════════════════════
    BIDIRECTIONAL REVEAL WRAPPER
-   – slides up when scrolling down, slides down when scrolling up
 ════════════════════════════════════════════════════════════ */
 export function Reveal({
   children,
   className = "",
   delay = 0,
-  from = "bottom",   // "bottom" | "top" | "left" | "right" | "scale"
-  once = false,      // if true only animates once (original behaviour)
+  from = "bottom",
+  once = false,
   threshold = 0.15,
 }) {
   const ref = useRef(null);
@@ -157,7 +157,7 @@ export function Reveal({
 }
 
 /* ════════════════════════════════════════════════════════════
-   STAGGER CONTAINER  (children stagger in/out together)
+   STAGGER CONTAINER
 ════════════════════════════════════════════════════════════ */
 export function StaggerContainer({ children, className = "", stagger = 0.1, from = "bottom" }) {
   const ref = useRef(null);
@@ -196,7 +196,7 @@ export function StaggerContainer({ children, className = "", stagger = 0.1, from
 }
 
 /* ════════════════════════════════════════════════════════════
-   FLOATING ELEMENT  (drifts upward continuously)
+   FLOATING ELEMENT
 ════════════════════════════════════════════════════════════ */
 export function Float({ children, className = "", duration = 3, yRange = 12, delay = 0 }) {
   return (
@@ -238,7 +238,6 @@ export function GlowCard({ children, className = "", accent = "#D4AF37", dark = 
       animate={inV ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.96 }}
       transition={{ duration: 0.75, ease: EASE_EXPO }}
     >
-      {/* Glow follow */}
       <div
         className="absolute pointer-events-none rounded-2xl z-0 transition-opacity duration-300"
         style={{
@@ -247,7 +246,6 @@ export function GlowCard({ children, className = "", accent = "#D4AF37", dark = 
           opacity: inV ? 1 : 0,
         }}
       />
-      {/* Border glow */}
       <motion.div
         className="absolute inset-0 rounded-2xl pointer-events-none z-0"
         animate={inV ? { opacity: [0.3, 0.7, 0.3] } : { opacity: 0 }}
@@ -285,7 +283,6 @@ function PageLoader({ onDone }) {
       exit={{ clipPath: "inset(0 0 100% 0)", transition: { duration: 0.7, ease: EASE_EXPO } }}
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#1A0800] overflow-hidden"
     >
-      {/* Animated grid bg */}
       <div
         className="absolute inset-0 opacity-[0.06]"
         style={{
@@ -293,8 +290,6 @@ function PageLoader({ onDone }) {
           backgroundSize: "40px 40px",
         }}
       />
-
-      {/* Full-screen radial glow — grows with progress */}
       <motion.div
         className="absolute inset-0"
         style={{
@@ -306,16 +301,12 @@ function PageLoader({ onDone }) {
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       />
-
-      {/* Secondary pulse ring — always animating */}
       <motion.div
         className="absolute w-[300px] h-[300px] rounded-full"
         style={{ background: "radial-gradient(circle, rgba(240,74,6,0.35), transparent 70%)" }}
         animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0.15, 0.5] }}
         transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
       />
-
-      {/* Logo */}
       <motion.div
         initial={{ scale: 0.5, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -339,8 +330,6 @@ function PageLoader({ onDone }) {
           <span className="text-xs text-white/50 tracking-[.2em] uppercase">Learn Build Inspire</span>
         </div>
       </motion.div>
-
-      {/* Progress */}
       <div className="relative z-10 w-64">
         <div className="h-[2px] bg-white/8 rounded-full overflow-hidden mb-3">
           <motion.div
@@ -365,8 +354,6 @@ function PageLoader({ onDone }) {
   );
 }
 
-
-
 /* ════════════════════════════════════════════════════════════
    SCROLL PROGRESS BAR
 ════════════════════════════════════════════════════════════ */
@@ -386,7 +373,7 @@ function ScrollProgressBar() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   SECTION NAV DOTS  (with labels)
+   SECTION NAV DOTS
 ════════════════════════════════════════════════════════════ */
 function SectionNavDots() {
   const [active, setActive] = useState(0);
@@ -412,7 +399,6 @@ function SectionNavDots() {
           className="relative flex items-center gap-2"
           title={labels[i]}
         >
-          {/* 🔹 DOT */}
           <motion.div
             animate={{
               scale: active === i ? 1.4 : 1,
@@ -421,8 +407,6 @@ function SectionNavDots() {
             transition={{ type: "spring", stiffness: 300, damping: 22 }}
             className="w-2.5 h-2.5 rounded-full"
           />
-
-
         </motion.button>
       ))}
     </div>
@@ -622,7 +606,7 @@ export function SLabel({ text }) {
 }
 
 /* ════════════════════════════════════════════════════════════
-   WORD-BY-WORD HEADING  (bidirectional)
+   WORD-BY-WORD HEADING
 ════════════════════════════════════════════════════════════ */
 export function AHeading({ children, className = "", delay = 0 }) {
   const ref = useRef(null);
@@ -648,8 +632,6 @@ export function AHeading({ children, className = "", delay = 0 }) {
     </h2>
   );
 }
-
-
 
 /* ════════════════════════════════════════════════════════════
    HERO SECTION
@@ -691,16 +673,13 @@ function HeroSection({ apiPrograms, loading }) {
       <NoiseCanvas color1="#FFD5B8" color2="#FFF0E6" opacity={0.42} />
       <div className="absolute inset-0"><ParticleCanvas count={26} color="rgba(230,107,38,0.09)" /></div>
 
-      {/* Kinetic bg text */}
       <motion.div style={{ y: bigY }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
         <span className="text-[22vw] font-black leading-none tracking-tighter uppercase whitespace-nowrap"
           style={{ color: "rgba(230,107,38,0.022)" }}>STACKENZO</span>
       </motion.div>
 
-      {/* Dot grid */}
       <div className="absolute inset-0 opacity-[.03]" style={{ backgroundImage: "radial-gradient(circle,#F04A06 1px,transparent 1px)", backgroundSize: "30px 30px" }} />
 
-      {/* Blobs */}
       <motion.div style={{ x: b1x, y: b1y }} className="absolute top-10 left-[4%] w-[420px] h-[420px] pointer-events-none">
         <div className="w-full h-full rounded-full blur-[110px] opacity-[.38]" style={{ background: "radial-gradient(circle,#FFD5B8,transparent)" }} />
       </motion.div>
@@ -708,20 +687,16 @@ function HeroSection({ apiPrograms, loading }) {
         <div className="w-full h-full rounded-full blur-[120px] opacity-[.22]" style={{ background: "radial-gradient(circle,#D4AF37,transparent)" }} />
       </motion.div>
 
-      {/* Floating decorative orbs */}
       <Float className="absolute top-1/4 left-[8%] w-3 h-3 rounded-full bg-[#D4AF37]/30" duration={5} delay={0} />
       <Float className="absolute top-1/3 right-[10%] w-2 h-2 rounded-full bg-[#F04A06]/25" duration={4} delay={1} />
       <Float className="absolute bottom-1/4 left-[15%] w-4 h-4 rounded-full bg-[#F04A06]/20" duration={6} delay={2} />
       <Float className="absolute bottom-1/3 right-[18%] w-2.5 h-2.5 rounded-full bg-[#D4AF37]/25" duration={5.5} delay={0.5} />
 
-      {/* Ticker */}
       {!loading && apiPrograms.length > 0 && (
         <div className="absolute top-16 left-0 right-0 z-10 overflow-hidden border-y border-black/[.055] bg-white/70 backdrop-blur-md py-2.5">
-          {/* Ticker content */}
         </div>
       )}
 
-      {/* Main content */}
       <motion.div style={{ y: hY, opacity: hO, scale: hS }} className="relative z-10 text-center px-6 max-w-6xl mx-auto mt-24 pb-24">
         <motion.div initial={{ scale: .7, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} transition={{ duration: .65, ease: EASE_BACK }}
           className="inline-flex items-center gap-2 border border-[#F04A06]/14 rounded-full px-5 py-2.5 mb-8 bg-white/80 backdrop-blur-sm shadow-sm">
@@ -749,10 +724,8 @@ function HeroSection({ apiPrograms, loading }) {
           A technology-driven organization specializing in IT services, pioneering R&D, and transformative EdTech solutions—shaping the future of innovation.
         </motion.p>
 
-        {/* BUTTON GROUP WITH SUMMER CAMP BUTTON */}
         <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .72, delay: .62 }}
           className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
-
           <MagBtn onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
             className="group relative px-9 py-4 bg-[#F04A06] text-white rounded-full font-bold text-sm overflow-hidden shadow-xl shadow-[#F04A06]/30">
             <span className="relative z-10 flex items-center justify-center gap-2">
@@ -779,7 +752,6 @@ function HeroSection({ apiPrograms, loading }) {
             </motion.button>
           </Link>
 
-          {/* SUMMER CAMP BUTTON - MOVED FROM CTA TO HERO */}
           <Link to="/Bootcamp2026">
             <MagBtn className="group relative px-9 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F04A06] text-white rounded-full font-bold text-sm overflow-hidden shadow-xl shadow-[#D4AF37]/30">
               <span className="relative z-10 flex items-center justify-center gap-2">
@@ -792,7 +764,6 @@ function HeroSection({ apiPrograms, loading }) {
         </motion.div>
       </motion.div>
 
-      {/* Scroll cue */}
       <motion.div
         style={{ opacity: scrollOpacity }}
         initial={{ opacity: 0 }}
@@ -814,9 +785,8 @@ function HeroSection({ apiPrograms, loading }) {
   );
 }
 
-
 /* ════════════════════════════════════════════════════════════
-   OrbitalCard — place ABOVE ServicesSection
+   OrbitalCard
 ════════════════════════════════════════════════════════════ */
 function OrbitalCard({ index, total, active, angleRef, svc, Icon, onClick }) {
   const cardRef = useRef(null);
@@ -921,7 +891,6 @@ function ServicesSection() {
       data-dots-anchor
       className="py-28 px-4 sm:px-6 overflow-hidden relative bg-gradient-to-b from-white to-[#FFF4ED]"
     >
-      {/* LIGHT PARTICLES */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 6 }).map((_, i) => (
           <Float
@@ -938,7 +907,6 @@ function ServicesSection() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* HEADER */}
         <div className="text-center mb-16">
           <span className="text-lg sm:text-xl font-bold tracking-wide text-[#D4AF37]">
             What We Do
@@ -952,7 +920,6 @@ function ServicesSection() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-14 items-center">
-          {/* LEFT PANEL */}
           <Reveal from="left" className="w-full lg:w-[42%]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -1021,7 +988,6 @@ function ServicesSection() {
                   </Link>
                 </TiltCard>
 
-                {/* PROGRESS BAR */}
                 <div className="mt-6 pt-5 border-t border-gray-200">
                   <div className="h-0.5 bg-gray-200 rounded-full overflow-hidden">
                     <motion.div
@@ -1035,7 +1001,6 @@ function ServicesSection() {
                   </div>
                 </div>
 
-                {/* DOT NAV */}
                 <div className="mt-4 flex items-center justify-between">
                   <span className="text-gray-400 text-xs">
                     {active + 1} / {SERVICES.length}
@@ -1064,14 +1029,12 @@ function ServicesSection() {
             </AnimatePresence>
           </Reveal>
 
-          {/* RIGHT ORBITAL */}
           <Reveal from="right" className="w-full lg:w-[58%]">
             <div
               className="relative h-[440px] md:h-[520px] flex items-center justify-center"
               onMouseEnter={() => setPaused(true)}
               onMouseLeave={() => setPaused(false)}
             >
-              {/* Slow rotating rings */}
               {[218, 160, 102].map((r, i) => (
                 <motion.div
                   key={i}
@@ -1090,7 +1053,6 @@ function ServicesSection() {
                 />
               ))}
 
-              {/* Orbital cards */}
               {SERVICES.map((svc, i) => {
                 const Icon = svc.icon;
                 return (
@@ -1116,8 +1078,9 @@ function ServicesSection() {
     </section>
   );
 }
+
 /* ════════════════════════════════════════════════════════════
-   STATS
+   STATS SECTION
 ════════════════════════════════════════════════════════════ */
 function StatsSection() {
   return (
@@ -1149,7 +1112,6 @@ function StatsSection() {
                       className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 text-center hover:border-[#D4AF37] transition-all shadow-sm h-full">
                       <motion.div whileHover={{ rotate: 18, scale: 1.18 }} className="inline-flex justify-center mb-5">
                         <div
-                          data-tbi={s.icon === Users ? "stat-users" : s.icon === Package ? "stat-package" : s.icon === Globe ? "stat-globe" : undefined}
                           className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/22"><Icon className="w-6 h-6 text-white" /></div>
                       </motion.div>
                       <h3 className="text-3xl md:text-4xl font-black text-[#1A1A1A] mb-1"><Counter value={s.value} /></h3>
@@ -1169,10 +1131,9 @@ function StatsSection() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   PROGRAMS  (clip-path staggered wipe)
+   PROGRAMS SECTION
 ════════════════════════════════════════════════════════════ */
 function ProgramsSection() {
-  const dir = useScrollDir();
   return (
     <section id="programs" data-dots-anchor className="py-24 px-4 sm:px-6 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -1191,7 +1152,6 @@ function ProgramsSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {PROGRAMS.map((p, i) => {
             const Icon = p.icon;
-            // Alternate: even from bottom, odd from scale; left column from left, right from right
             const col = i % 3;
             const fromDir = col === 0 ? "left" : col === 2 ? "right" : "bottom";
             return (
@@ -1207,11 +1167,8 @@ function ProgramsSection() {
                           <div className="absolute inset-0" style={{ background: "linear-gradient(to top,rgba(0,0,0,.84) 0%,rgba(0,0,0,.3) 55%,transparent 100%)" }} />
                           <div className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500" style={{ background: p.accent }} />
                         </div>
-                        {/* Floating icon */}
                         <Float duration={4} delay={i * 0.4} className="absolute top-4 right-4">
                           <motion.div
-
-                            data-tbi={p.icon === CpuIcon ? "prog-cpu" : p.icon === Users ? "prog-users" : p.icon === Globe ? "prog-globe" : undefined}
                             className="p-2.5 rounded-xl border" style={{ background: `${p.accent}20`, borderColor: `${p.accent}3c` }} whileHover={{ rotate: 14, scale: 1.18 }}>
                             <Icon className="w-5 h-5" style={{ color: p.accent }} />
                           </motion.div>
@@ -1240,70 +1197,56 @@ function ProgramsSection() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   WHY US
+   WHY US SECTION
 ════════════════════════════════════════════════════════════ */
 function WhyUsSection() {
   return (
-    <>
-
-      <section data-dots-anchor className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{ background: "#F7F4EF" }}>
-        <div className="absolute inset-0 opacity-[.03]" style={{ backgroundImage: "radial-gradient(circle,#F04A06 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
-        {/* Big floating background text */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none">
-          <motion.span className="text-[18vw] font-black leading-none tracking-tighter uppercase"
-            style={{ color: "rgba(230,107,38,0.018)" }}
-            animate={{ y: [0, -10, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}>
-            WHY US
-          </motion.span>
+    <section data-dots-anchor className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{ background: "#F7F4EF" }}>
+      <div className="absolute inset-0 opacity-[.03]" style={{ backgroundImage: "radial-gradient(circle,#F04A06 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none">
+        <motion.span className="text-[18vw] font-black leading-none tracking-tighter uppercase"
+          style={{ color: "rgba(230,107,38,0.018)" }}
+          animate={{ y: [0, -10, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}>
+          WHY US
+        </motion.span>
+      </div>
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-16">
+          <SLabel text="Why Stackenzo" />
+          <AHeading className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06] leading-tight pt-1" delay={.05}>
+            Why Choose Stackenzo
+          </AHeading>
         </div>
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <SLabel text="Why Stackenzo" />
-            <AHeading className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06] leading-tight pt-1" delay={.05}>
-              Why Choose Stackenzo
-            </AHeading>
-          </div>
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" stagger={0.12} from="bottom">
-            {WHY.map((f, i) => {
-              const Icon = f.icon; return (
-                <GlowCard key={i} accent="#D4AF37">
-                  <TiltCard className="h-full">
-                    <motion.div whileHover={{ y: -10, boxShadow: "0 32px 65px rgba(230,107,38,0.12)" }}
-                      className="bg-white border border-gray-100 rounded-2xl p-8 text-center hover:border-[#D4AF37] transition-all shadow-sm h-full">
-                      <Float duration={4 + i * 0.5} delay={i * 0.4}>
-                        <motion.div className="inline-flex justify-center mb-6" whileHover={{ scale: 1.22, rotate: 12 }}>
-                          <div
-                            data-tbi={i === 0 ? "why-zap" : i === 1 ? "why-target" : i === 2 ? "why-heart" : undefined}
-                            className="p-4 rounded-2xl bg-[#FFF4ED]"><Icon className="w-7 h-7 text-[#F04A06]" /></div>
-                        </motion.div>
-                      </Float>
-                      <h3 className="text-lg font-black text-[#1A1A1A] mb-3">{f.title}</h3>
-                      <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
-                    </motion.div>
-                  </TiltCard>
-                </GlowCard>
-              );
-            })}
-          </StaggerContainer>
-        </div>
-      </section>
-
-    </>
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" stagger={0.12} from="bottom">
+          {WHY.map((f, i) => {
+            const Icon = f.icon; return (
+              <GlowCard key={i} accent="#D4AF37">
+                <TiltCard className="h-full">
+                  <motion.div whileHover={{ y: -10, boxShadow: "0 32px 65px rgba(230,107,38,0.12)" }}
+                    className="bg-white border border-gray-100 rounded-2xl p-8 text-center hover:border-[#D4AF37] transition-all shadow-sm h-full">
+                    <Float duration={4 + i * 0.5} delay={i * 0.4}>
+                      <motion.div className="inline-flex justify-center mb-6" whileHover={{ scale: 1.22, rotate: 12 }}>
+                        <div
+                          className="p-4 rounded-2xl bg-[#FFF4ED]"><Icon className="w-7 h-7 text-[#F04A06]" /></div>
+                      </motion.div>
+                    </Float>
+                    <h3 className="text-lg font-black text-[#1A1A1A] mb-3">{f.title}</h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
+                  </motion.div>
+                </TiltCard>
+              </GlowCard>
+            );
+          })}
+        </StaggerContainer>
+      </div>
+    </section>
   );
 }
 
 /* ════════════════════════════════════════════════════════════
-   ABOUT
+   ABOUT SECTION
 ════════════════════════════════════════════════════════════ */
 function AboutSection() {
-  const ITEMS = [
-    "Build scalable, secure, and future-ready digital solutions",
-    "Bridge academic knowledge with real-world implementation",
-    "Empower startups, institutions, and enterprises through innovation",
-    "Automate complex processes to enhance productivity",
-    "Strengthen research-driven engineering culture",
-    "Promote continuous learning and technological excellence",
-  ];
   return (
     <section id="about" data-dots-anchor className="py-24 px-4 sm:px-6 bg-white overflow-hidden">
       <div className="max-w-6xl mx-auto">
@@ -1322,7 +1265,6 @@ function AboutSection() {
                   <div className="flex items-center gap-4 mb-7">
                     <Float duration={4} yRange={6}>
                       <motion.div whileHover={{ rotate: 16, scale: 1.12 }}
-                        data-tbi="about-target"
                         className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/18">
                         <Target className="w-6 h-6 text-white" />
                       </motion.div>
@@ -1330,7 +1272,6 @@ function AboutSection() {
                     <h3 className="text-2xl font-black text-[#F04A06]">Our Mission</h3>
                   </div>
                   <p className="text-sm text-gray-500 leading-relaxed mb-7">Our mission is to design, develop, and deliver intelligent technology solutions that solve real-world challenges with precision, scalability, and long-term impact—across IT services, R&D, and EdTech. We focus on building scalable, secure, and future-ready digital solutions while seamlessly bridging academic knowledge with real-world implementation. By empowering startups, institutions, and enterprises through innovation, we enable sustainable growth and digital transformation. We automate complex processes to enhance productivity and efficiency, foster a strong research-driven engineering culture, and continuously promote learning, skill development, and technological excellence to prepare individuals and organizations for the future.</p>
-
                 </motion.div>
               </TiltCard>
             </GlowCard>
@@ -1344,7 +1285,6 @@ function AboutSection() {
                   <div className="flex items-center gap-4 mb-7">
                     <Float duration={4.5} yRange={6}>
                       <motion.div whileHover={{ rotate: 16, scale: 1.12 }}
-                        data-tbi="about-eye"
                         className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/18">
                         <Eye className="w-6 h-6 text-white" />
                       </motion.div>
@@ -1368,6 +1308,9 @@ function AboutSection() {
   );
 }
 
+/* ════════════════════════════════════════════════════════════
+   TESTIMONIALS SECTION
+════════════════════════════════════════════════════════════ */
 function TestimonialsSection() {
   const [idx, setIdx] = useState(0);
 
@@ -1391,7 +1334,6 @@ function TestimonialsSection() {
         <ParticleCanvas count={16} color="rgba(240,74,6,0.08)" />
       </div>
 
-      {/* Floating orbs */}
       {[{ x: "10%", y: "20%", s: 80, d: 5 }, { x: "85%", y: "15%", s: 60, d: 7 }, { x: "70%", y: "75%", s: 100, d: 6 }].map((o, i) => (
         <Float key={i} duration={o.d} yRange={15} className="absolute pointer-events-none" style={{ left: o.x, top: o.y }}>
           <div className="rounded-full bg-[#F04A06]/[0.08]" style={{ width: o.s, height: o.s }} />
@@ -1399,8 +1341,6 @@ function TestimonialsSection() {
       ))}
 
       <div className="max-w-4xl mx-auto relative z-10">
-
-        {/* Heading */}
         <div className="text-center mb-14">
           <SLabel text="Testimonials" />
           <AHeading
@@ -1411,7 +1351,6 @@ function TestimonialsSection() {
           </AHeading>
         </div>
 
-        {/* Card */}
         <Reveal from="bottom">
           <AnimatePresence mode="wait">
             <motion.div
@@ -1470,7 +1409,6 @@ function TestimonialsSection() {
           </AnimatePresence>
         </Reveal>
 
-        {/* Dots */}
         <Reveal from="bottom" delay={.2}>
           <div className="flex justify-center gap-2.5 mt-7 items-center">
             {TESTIMONIALS.map((_, i) => (
@@ -1492,14 +1430,13 @@ function TestimonialsSection() {
             Drag or click to navigate
           </p>
         </Reveal>
-
       </div>
     </section>
   );
 }
 
 /* ════════════════════════════════════════════════════════════
-   CTA
+   CTA SECTION
 ════════════════════════════════════════════════════════════ */
 function CTASection() {
   const ref = useRef(null);
@@ -1521,7 +1458,6 @@ function CTASection() {
         </motion.div>
         <Spotlight color="rgba(212,175,55,0.06)" />
         <div className="absolute inset-0"><ParticleCanvas count={20} color="rgba(212,175,55,0.09)" /></div>
-        {/* Floating rings */}
         {[120, 200, 300].map((s, i) => (
           <Float key={i} duration={6 + i * 2} yRange={12} delay={i}
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none rounded-full border border-[#D4AF37]/10"
@@ -1546,9 +1482,8 @@ function CTASection() {
             </p>
           </Reveal>
 
-          {/* CTA Section - Updated without the Summer Camp button */}
           <Reveal from="bottom" delay={.35}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
               <MagBtn onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
                 className="group relative px-10 py-4 bg-white text-[#F04A06] rounded-full font-black overflow-hidden shadow-2xl shadow-white/18">
                 <span className="relative z-10 flex items-center justify-center gap-2">
@@ -1564,14 +1499,15 @@ function CTASection() {
                 </motion.button>
               </Link>
               <Link to="/joinCommunity">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-9 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F04A06] text-white rounded-full font-bold text-sm shadow-xl"
-            >
-              Join Our Community
-            </motion.button>
-          </Link>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-9 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F04A06] text-white rounded-full font-bold text-sm shadow-xl"
+                >
+                  Join Our Community
+                </motion.button>
+              </Link>
+              
             </div>
           </Reveal>
         </motion.div>
@@ -1580,33 +1516,52 @@ function CTASection() {
   );
 }
 
-
 /* ════════════════════════════════════════════════════════════
-   HOME ROOT
+   HOME ROOT (with Welcome Dialog)
 ════════════════════════════════════════════════════════════ */
+// In your Home.jsx, update the useEffect:
+
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [toast, setToast] = useState({ show: false, message: "" });
   const [apiPrograms, setApiPrograms] = useState([]);
   const [programsLoading, setProgramsLoading] = useState(true);
   const [showEventsModal, setShowEventsModal] = useState(false);
+  const [showWelcomeDialog, setShowWelcomeDialog] = useState(false);
 
+  // Show welcome dialog on every page load
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch("/api/programs");
-        const data = await res.json();
-        if (data.success) {
-          const sorted = data.programs.sort((a, b) => new Date(b.date) - new Date(a.date));
-          setApiPrograms(sorted);
-          const active = sorted.filter(p => p.status === "registration-open" || p.status === "upcoming");
-          if (active.length > 0 && !localStorage.getItem("eventsModalShown")) {
-            setShowEventsModal(true); localStorage.setItem("eventsModalShown", "true");
-          }
-        }
-      } catch { /* silent */ } finally { setProgramsLoading(false); }
-    })();
+    const timer = setTimeout(() => {
+      setShowWelcomeDialog(true);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
+
+  const handleCloseWelcome = () => {
+    setShowWelcomeDialog(false);
+  };
+
+   const handleRegisterFromWelcome = () => {
+   window.location.href = '/joinCommunity';
+ };
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const res = await fetch("/api/programs");
+  //       const data = await res.json();
+  //       if (data.success) {
+  //         const sorted = data.programs.sort((a, b) => new Date(b.date) - new Date(a.date));
+  //         setApiPrograms(sorted);
+  //         const active = sorted.filter(p => p.status === "registration-open" || p.status === "upcoming");
+  //         if (active.length > 0 && !localStorage.getItem("eventsModalShown")) {
+  //           setShowEventsModal(true);
+  //           localStorage.setItem("eventsModalShown", "true");
+  //         }
+  //       }
+  //     } catch { /* silent */ } finally { setProgramsLoading(false); }
+  //   })();
+  // }, []);
 
   useEffect(() => {
     document.body.style.overflow = (showEventsModal || !loaded) ? "hidden" : "unset";
@@ -1620,10 +1575,8 @@ export default function Home() {
       <motion.div className="bg-white text-[#1A1A1A] font-sans overflow-x-hidden relative"
         initial={{ opacity: 0 }} animate={{ opacity: loaded ? 1 : 0 }} transition={{ duration: .55 }}>
 
-
         <ScrollProgressBar />
         <SectionNavDots />
-
 
         <Toast message={toast.message} isVisible={toast.show} onClose={() => setToast({ show: false, message: "" })} />
         <Navbar />
@@ -1654,6 +1607,16 @@ export default function Home() {
         </motion.div>
 
         <ScrollToTop />
+
+        {/* Welcome Dialog */}
+        <AnimatePresence>
+          {showWelcomeDialog && (
+            <WelcomeDialog 
+              onClose={handleCloseWelcome}
+              onRegister={handleRegisterFromWelcome}
+            />
+          )}
+        </AnimatePresence>
 
         {/* Events Modal */}
         <AnimatePresence>
