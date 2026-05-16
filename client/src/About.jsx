@@ -593,7 +593,7 @@ function StorySection() {
                 <p className="text-lg text-[#1A1A1A] leading-relaxed">
                   Founded with a vision to bridge the gap between academic learning and industry excellence
                   <span className="text-[#F04A06] font-semibold mx-1">Stackenzo</span>
-                  is a technology-driven organization focused on three core pillars: advanced IT services, innovative R&D, and transformative EdTech solutions.
+                  is a technology-driven organization focused on three core pillars: advanced IT services, innovative R&D and transformative EdTech solutions.
                 </p>
               </Reveal>
 
@@ -703,7 +703,7 @@ function MissionSection() {
                     </Float>
                     <h3 className="text-3xl font-bold mb-5 text-[#1A1A1A]">Our Mission</h3>
                     <p className="text-[#1A1A1A] leading-relaxed text-lg mb-6">
-                    Our mission is to design, develop, and deliver intelligent technology solutions that solve real-world challenges with precision, scalability, and long-term impact—across IT services, R&D, and EdTech. We build scalable, secure, and future-ready digital solutions while bridging academic knowledge with real-world implementation, empowering startups, institutions, and enterprises through innovation, automating complex processes to enhance productivity, strengthening a research-driven engineering culture, and promoting continuous learning and technological excellence.
+                    Our mission is to design, develop and deliver intelligent technology solutions that solve real-world challenges with precision, scalability and long-term impact—across IT services, R&D and EdTech. We build scalable, secure and future-ready digital solutions while bridging academic knowledge with real-world implementation, empowering startups, institutions and enterprises through innovation, automating complex processes to enhance productivity, strengthening a research-driven engineering culture and promoting continuous learning and technological excellence.
                     </p>
                     
                   </div>
@@ -726,11 +726,11 @@ function MissionSection() {
                     </Float>
                     <h3 className="text-3xl font-bold mb-6 text-[#1A1A1A]">Our Vision</h3>
                     <p className="text-[#1A1A1A] leading-relaxed text-lg mb-3">
-                      To become a leading innovation-driven technology ecosystem where IT services, R&D, and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions, and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future."</p>
+                      To become a leading innovation-driven technology ecosystem where IT services, R&D and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future.</p>
                     <Reveal from="bottom" delay={.35}>
                       <div className="relative overflow-hidden rounded-2xl p-5" style={{ background:"linear-gradient(135deg,#FFF4ED,#FFF4ED)" }}>
                         <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl bg-[#D4AF37]" />
-                        <p className="text-sm text-[#1A1A1A] italic leading-relaxed pl-3">"Through this innovation backbone, we strive to redefine education by integrating practical learning, industry exposure, and technology-enabled experiences — empowering the next generation to learn, build and inspire."</p>
+                        <p className="text-sm text-[#1A1A1A] italic leading-relaxed pl-3">"Through this innovation backbone, we strive to redefine education by integrating practical learning, industry exposure and technology-enabled experiences — empowering the next generation to learn, build and inspire."</p>
                       </div>
                     </Reveal>
                   </div>
