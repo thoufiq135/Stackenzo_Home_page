@@ -31,7 +31,7 @@ import WorkshopAlreadyRegistered from "./WorkshopAlreadyRegistered";
 import IntermediateResults from "./IntermediateResults";
 import JoinCommunity from "./Joincommunity";
 import SummerCampGallery from "./SummerCampGallery";
-import WelcomeDialog from "./WelcomeDialog";
+// import WelcomeDialog from "./WelcomeDialog";
 
 function App() {
   const [showWelcome, setShowWelcome] = useState(false);
@@ -104,14 +104,14 @@ function App() {
         <Route path="/schoolCamp" element={<SummerCampGallery />} />
       </Routes>
       
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {showWelcome && (
           <WelcomeDialog 
             onClose={handleCloseWelcome} 
             onRegister={handleRegister}
           />
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </>
   );
 }

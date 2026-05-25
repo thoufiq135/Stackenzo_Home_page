@@ -9,7 +9,7 @@ import Navbar from "./Navbar";
 import Toast from "./Toast";
 import ScrollToTop from "./ScrollToTop";
 import Footer from "./Footer";
-import WelcomeDialog from "./WelcomeDialog";
+// import WelcomeDialog from "./WelcomeDialog";
 import {
   Bot, Code2, Globe, Users, Briefcase, Zap, TrendingUp, MessageCircle,
   X, ArrowRight, ChevronRight, Sparkles, Target, Eye, Clock, MapPin,
@@ -1527,15 +1527,15 @@ export default function Home() {
   const [apiPrograms, setApiPrograms] = useState([]);
   const [programsLoading, setProgramsLoading] = useState(true);
   const [showEventsModal, setShowEventsModal] = useState(false);
-  const [showWelcomeDialog, setShowWelcomeDialog] = useState(false);
+  // const [showWelcomeDialog, setShowWelcomeDialog] = useState(false);
 
   // Show welcome dialog on every page load
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowWelcomeDialog(true);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowWelcomeDialog(true);
+  //   }, 1000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   const handleCloseWelcome = () => {
     setShowWelcomeDialog(false);
@@ -1609,14 +1609,14 @@ export default function Home() {
         <ScrollToTop />
 
         {/* Welcome Dialog */}
-        <AnimatePresence>
+        {/* <AnimatePresence>
           {showWelcomeDialog && (
             <WelcomeDialog 
               onClose={handleCloseWelcome}
               onRegister={handleRegisterFromWelcome}
             />
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
 
         {/* Events Modal */}
         <AnimatePresence>

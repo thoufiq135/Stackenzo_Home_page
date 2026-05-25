@@ -28,7 +28,7 @@
   position: relative;
   width: 90%;
   max-width: 500px;
-  background: linear-gradient(135deg, #1a1f2e 0%, #131826 100%);
+  /* background: linear-gradient(135deg, #1a1f2e 0%, #131826 100%); */
   border-radius: 32px;
   overflow: hidden;
   box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);

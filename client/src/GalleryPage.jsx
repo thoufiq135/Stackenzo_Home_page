@@ -5,13 +5,13 @@ import Footer from "./Footer";
 
 // ── Static gallery data ──────────────────────────────────────────────────────
 const GALLERY_DATA = [
-  { id: 1,  category: "Education",         image: "/images/generated-image.png"    },
-  { id: 2,  category: "Events",            image: "/images/light house.jpg"  },
-  { id: 3,  category: "Digital Marketing", image: "/images/website1.png"     },
+  { id: 1,  category: "Education",         image: "/images/IMG_0165.JPG"    },
+  { id: 2,  category: "Events",            image: "/images/IMG_0096.jpeg"  },
+  { id: 3,  category: "Digital Marketing", image: "/images/IMG_5680.JPG"     },
   { id: 4,  category: "Robotics",          image: "/images/robotics workshop.jpg"  },
-  { id: 5,  category: "Education",         image: "/images/edu2.jpg"    },
-  { id: 6,  category: "Digital Marketing", image: "/images/stackenzo logo image.jpeg"},
-  { id: 7,  category: "Digital Marketing", image: "/images/Stackenzo small Logo.jpeg"},
+  { id: 5,  category: "Education",         image: "/images/IMG_5846.JPG"    },
+  { id: 6,  category: "Digital Marketing", image: "/images/IMG_5787.JPG"     },
+  { id: 7,  category: "Digital Marketing", image: "/images/IMG_5797.JPG"     },
 ];
 
 const CATEGORIES = ["All", "Education", "Events", "Digital Marketing", "Robotics"];
