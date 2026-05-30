@@ -1271,7 +1271,7 @@ function AboutSection() {
                     </Float>
                     <h3 className="text-2xl font-black text-[#F04A06]">Our Mission</h3>
                   </div>
-                  <p className="text-sm text-gray-500 leading-relaxed mb-7">Our mission is to design, develop and deliver intelligent technology solutions that solve real-world challenges with precision, scalability and long-term impact—across IT services, R&D and EdTech. We focus on building scalable, secure and future-ready digital solutions while seamlessly bridging academic knowledge with real-world implementation. By empowering startups, institutions and enterprises through innovation, we enable sustainable growth and digital transformation. We automate complex processes to enhance productivity and efficiency, foster a strong research-driven engineering culture and continuously promote learning, skill development and technological excellence to prepare individuals and organizations for the future.</p>
+                  <p className="text-sm text-gray-600 leading-[1.5] text-justify">Our mission is to design, develop and deliver intelligent technology solutions that solve real-world challenges with precision, scalability and long-term impact—across IT services, R&D and EdTech. We focus on building scalable, secure and future-ready digital solutions while seamlessly bridging academic knowledge with real-world implementation. By empowering startups, institutions and enterprises through innovation, we enable sustainable growth and digital transformation. We automate complex processes to enhance productivity and efficiency, foster a strong research-driven engineering culture and continuously promote learning, skill development and technological excellence to prepare individuals and organizations for the future.</p>
                 </motion.div>
               </TiltCard>
             </GlowCard>
@@ -1291,7 +1291,7 @@ function AboutSection() {
                     </Float>
                     <h3 className="text-2xl font-black text-[#F04A06]">Our Vision</h3>
                   </div>
-                  <p className="text-sm text-gray-500 leading-relaxed mb-7">To become a leading innovation-driven technology ecosystem where IT services, R&D and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future.</p>
+                  <p className="text-sm text-gray-600 leading-[1.5] text-justify">To become a leading innovation-driven technology ecosystem where IT services, R&D and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future.</p>
                   <Reveal from="bottom" delay={.35}>
                     <div className="relative overflow-hidden rounded-2xl p-5" style={{ background: "linear-gradient(135deg,#FFF4ED,#FFF4ED)" }}>
                       <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl bg-[#D4AF37]" />
