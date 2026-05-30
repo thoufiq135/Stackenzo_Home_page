@@ -752,10 +752,10 @@ function HeroSection({ apiPrograms, loading }) {
             </motion.button>
           </Link>
 
-          <Link to="/Bootcamp2026">
+          <Link to="/sundayRobotics">
             <MagBtn className="group relative px-9 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F04A06] text-white rounded-full font-bold text-sm overflow-hidden shadow-xl shadow-[#D4AF37]/30">
               <span className="relative z-10 flex items-center justify-center gap-2">
-                AI & Robotics BootCamp for Students
+                Sunday AI & Robotics 
                 <motion.span animate={{ x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}><ArrowRight className="w-4 h-4" /></motion.span>
               </span>
               <motion.div className="absolute inset-0 bg-gradient-to-r from-[#F04A06] to-[#D4AF37] rounded-full origin-center" initial={{ scale: 0 }} whileHover={{ scale: 3 }} transition={{ duration: .5 }} />

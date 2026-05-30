@@ -31,6 +31,7 @@ import WorkshopAlreadyRegistered from "./WorkshopAlreadyRegistered";
 import IntermediateResults from "./IntermediateResults";
 import JoinCommunity from "./Joincommunity";
 import SummerCampGallery from "./SummerCampGallery";
+import SundayRobotics from "./SundayRobotics";
 // import WelcomeDialog from "./WelcomeDialog";
 
 function App() {
@@ -102,6 +103,7 @@ function App() {
         <Route path="/Bootcamp2026" element={<IntermediateResults />}/>
         <Route path="/joinCommunity" element={<JoinCommunity />} />
         <Route path="/schoolCamp" element={<SummerCampGallery />} />
+        <Route path="/sundayRobotics" element={<SundayRobotics />} />
       </Routes>
       
       {/* <AnimatePresence>
