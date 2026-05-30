@@ -1,4 +1,4 @@
-// SundayRobotics.jsx - Completely isolated component with Back Button
+//  SundayRobotics.jsx - Completely isolated component with Back Button
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SundayRobotics.css';
@@ -6,18 +6,18 @@ import './SundayRobotics.css';
 const SundayRobotics = () => {
   const navigate = useNavigate();
   
-  // State Management
+  //  State Management
   const [showModal, setShowModal] = useState(true);
   const [scrollWidth, setScrollWidth] = useState(0);
   const [formData, setFormData] = useState({
     studentName: '',
     parentName: '',
     phone: '',
-    email: '',
+     email: '',
     school: '',
     grade: '',
-    city: '',
-    interestedLevel: '',
+     city: '',
+     interestedLevel: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,10 +26,10 @@ const SundayRobotics = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [countersStarted, setCountersStarted] = useState(false);
 
-  // Refs for scroll reveal
+  //  Refs for scroll reveal
   const revealRefs = useRef([]);
   
-  // Stats data
+  //  Stats data
   const stats = [
     { target: 1580, label: 'Student Projects' },
     { target: 320, label: 'Robotics Kits' },
@@ -37,7 +37,7 @@ const SundayRobotics = () => {
     { target: 12, label: 'Expert Mentors' }
   ];
 
-  // Scroll Progress
+  //  Scroll Progress
   useEffect(() => {
     const handleScroll = () => {
       const winScroll = document.documentElement.scrollTop;
@@ -49,7 +49,7 @@ const SundayRobotics = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Auto close modal after 5 seconds
+  //  Auto close modal after 5 seconds
   useEffect(() => {
     if (showModal) {
       const timer = setTimeout(() => setShowModal(false), 5000);
@@ -57,7 +57,7 @@ const SundayRobotics = () => {
     }
   }, [showModal]);
 
-  // Scroll Reveal Observer
+  //  Scroll Reveal Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -78,7 +78,7 @@ const SundayRobotics = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Counter Animation
+  //  Counter Animation
   useEffect(() => {
     const counterObserver = new IntersectionObserver(
       (entries) => {
@@ -114,7 +114,7 @@ const SundayRobotics = () => {
     return () => counterObserver.disconnect();
   }, [countersStarted]);
 
-  // Form Handlers
+  //  Form Handlers
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -126,67 +126,74 @@ const SundayRobotics = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!formData.studentName || !formData.parentName || !formData.phone || !formData.email) {
-      showErrorMsg('Please fill all required fields.');
-      return;
-    }
+  if (!formData.studentName || !formData.parentName || !formData.phone) {
+    showErrorMsg("Please fill all required fields.");
+    return;
+  }
 
-    if (!/^\d{10}$/.test(formData.phone)) {
-      showErrorMsg('Please enter a valid 10-digit mobile number.');
-      return;
-    }
+  if (!/^\d{10}$/.test(formData.phone)) {
+    showErrorMsg("Please enter a valid 10-digit mobile number.");
+    return;
+  }
 
-    setIsSubmitting(true);
+  setIsSubmitting(true);
 
-    const payload = {
-      Name: formData.studentName,
-      ParentName: formData.parentName,
-      mobile_no: formData.phone,
-      School: formData.school || 'Not specified',
-      Class: formData.grade || 'Not specified',
-      des: formData.message || 'No message',
-      q_A: 'Yes'
-    };
-
-    try {
-      const response = await fetch(
-        'https://innovation-club-delta.vercel.app/api/addData/innovationClub',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        setShowSuccess(true);
-        setFormData({
-          studentName: '',
-          parentName: '',
-          phone: '',
-          email: '',
-          school: '',
-          grade: '',
-          city: '',
-          interestedLevel: '',
-          message: ''
-        });
-        setTimeout(() => setShowSuccess(false), 5000);
-      } else {
-        throw new Error(data.message || 'Registration failed. Please try again.');
-      }
-    } catch (error) {
-      showErrorMsg(error.message || 'Something went wrong. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
-    }
+  const payload = {
+    Name: formData.studentName,
+    ParentName: formData.parentName,
+    mobile_no: formData.phone,
+    School: formData.school || "",
+    Class: formData.grade || "",
+    des: formData.message || "",
+    q_A: "Yes",
   };
 
-  // Navigate back to home
+  try {
+    const response = await fetch(
+      "https:innovation-club-delta.vercel.app/api/addData/innovationClub",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("Response:", data);
+
+    //  Success for 200 or 201
+    if (response.ok) {
+      setShowSuccess(true);
+
+      setFormData({
+        studentName: "",
+        parentName: "",
+        phone: "",
+        school: "",
+        grade: "",
+        message: "",
+      });
+
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
+    } else {
+      throw new Error(data.message || "Registration failed");
+    }
+  } catch (error) {
+    console.error(error);
+    showErrorMsg(error.message || "Something went wrong");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+  //  Navigate back to home
   const goToHome = () => {
     navigate('/');
   };
@@ -206,11 +213,11 @@ const SundayRobotics = () => {
       <div className="sr-robot-walker">
         <div className="sr-robot-speech">
           🤖 Welcome to Sunday Robotics & AI Academy!<br />
-          🚀 Let's Learn, Build &amp; Innovate Together!
+          🚀 Let's Learn, Build, Inspire Together!
         </div>
         <img 
           className="sr-robot-img" 
-          src="https://media.tenor.com/ke1anE0mW-kAAAAj/robot.gif" 
+          src="https:media.tenor.com/ke1anE0mW-kAAAAj/robot.gif" 
           alt="Robot"
         />
       </div>
@@ -262,7 +269,7 @@ const SundayRobotics = () => {
       {/* Hero Section */}
       <section id="sr-hero" className="sr-hero">
         <div className="sr-hero-content">
-          <div className="sr-hero-eyebrow">// Robotics · AI · Innovation · 2025</div>
+          <div className="sr-hero-eyebrow"> Robotics · AI · Innovation · 2025</div>
           <h1 className="sr-hero-title">
             SUNDAY<br />
             <span className="sr-grad">ROBOTICS</span><br />
@@ -291,7 +298,7 @@ const SundayRobotics = () => {
       <section id="sr-why" className="sr-why">
         <div className="sr-why-grid sr-reveal" ref={(el) => revealRefs.current[0] = el}>
           <div className="sr-why-text">
-            <span className="sr-section-tag">// Why Choose Us</span>
+            <span className="sr-section-tag"> Why Choose Us</span>
             <h2 className="sr-section-title">WHERE STUDENTS <span className="sr-grad">BUILD,</span> NOT JUST LEARN</h2>
             <p>
               Technology is shaping every industry. Robotics, AI, IoT and Automation are becoming essential skills. 
@@ -328,7 +335,7 @@ const SundayRobotics = () => {
       <section id="sr-compare" className="sr-compare">
         <div className="sr-compare-inner">
           <div className="sr-reveal" ref={(el) => revealRefs.current[1] = el}>
-            <span className="sr-section-tag">// The Difference</span>
+            <span className="sr-section-tag"> The Difference</span>
             <h2 className="sr-section-title">SCHOOL <span className="sr-grad">VS</span> SUNDAY ACADEMY</h2>
           </div>
           <div className="sr-compare-grid sr-reveal" ref={(el) => revealRefs.current[2] = el}>
@@ -361,7 +368,7 @@ const SundayRobotics = () => {
       {/* Roadmap Section */}
       <section id="sr-roadmap" className="sr-roadmap">
         <div className="sr-reveal" ref={(el) => revealRefs.current[4] = el}>
-          <span className="sr-section-tag">// Curriculum Roadmap</span>
+          <span className="sr-section-tag"> Curriculum Roadmap</span>
           <h2 className="sr-section-title">WHAT STUDENTS <span className="sr-grad">MASTER</span></h2>
         </div>
         <div className="sr-roadmap-list sr-reveal" ref={(el) => revealRefs.current[5] = el}>
@@ -399,7 +406,7 @@ const SundayRobotics = () => {
       {/* Skills Section */}
       <section id="sr-skills" className="sr-skills">
         <div className="sr-reveal" ref={(el) => revealRefs.current[6] = el}>
-          <span className="sr-section-tag">// Skills You Gain</span>
+          <span className="sr-section-tag"> Skills You Gain</span>
           <h2 className="sr-section-title">WHY ROBOTICS <span className="sr-grad">MATTERS</span></h2>
         </div>
         <div className="sr-skills-grid sr-reveal" ref={(el) => revealRefs.current[7] = el}>
@@ -407,7 +414,7 @@ const SundayRobotics = () => {
           <div className="sr-skill-tile"><i className="fas fa-paintbrush"></i><span>Creativity</span></div>
           <div className="sr-skill-tile"><i className="fas fa-puzzle-piece"></i><span>Problem Solving</span></div>
           <div className="sr-skill-tile"><i className="fas fa-smile"></i><span>Confidence</span></div>
-          <div className="sr-skill-tile"><i className="fas fa-users"></i><span>Teamwork</span></div>
+          {/* <div className="sr-skill-tile"><i className="fas fa-users"></i><span>Teamwork</span></div> */}
           <div className="sr-skill-tile"><i className="fas fa-lightbulb"></i><span>Innovation Mindset</span></div>
         </div>
       </section>
@@ -415,7 +422,7 @@ const SundayRobotics = () => {
       {/* Promise Section */}
       <section id="sr-promise" className="sr-promise">
         <div className="sr-reveal" ref={(el) => revealRefs.current[8] = el}>
-          <span className="sr-section-tag">// Our Commitment</span>
+          <span className="sr-section-tag">Our Commitment</span>
           <h2 className="sr-section-title">OUR <span className="sr-grad">PROMISE</span></h2>
         </div>
         <div className="sr-promise-card sr-reveal" ref={(el) => revealRefs.current[9] = el}>
@@ -432,38 +439,102 @@ const SundayRobotics = () => {
 
       {/* Gallery Section */}
       <section id="sr-gallery" className="sr-gallery">
-        <div className="sr-reveal" ref={(el) => revealRefs.current[10] = el}>
-          <span className="sr-section-tag">// Student Projects</span>
-          <h2 className="sr-section-title">INNOVATION <span className="sr-grad">GALLERY</span></h2>
-        </div>
-        <div className="sr-gallery-grid sr-reveal" ref={(el) => revealRefs.current[11] = el}>
-          <div className="sr-gallery-tile">
-            <i className="fas fa-robot"></i>
-            <h3>AI Rover</h3>
-            <p>Autonomous navigation using ultrasonic & IR sensors</p>
-          </div>
-          <div className="sr-gallery-tile">
-            <i className="fas fa-cloud-sun"></i>
-            <h3>IoT Weather Station</h3>
-            <p>Real-time cloud monitoring with ESP32 & Blynk</p>
-          </div>
-          <div className="sr-gallery-tile">
-            <i className="fas fa-brain"></i>
-            <h3>Smart Mirror</h3>
-            <p>Face recognition & display dashboard with Raspberry Pi</p>
-          </div>
-          <div className="sr-gallery-tile">
-            <i className="fas fa-cogs"></i>
-            <h3>Robotic Arm</h3>
-            <p>Servo-controlled arm with Bluetooth remote operation</p>
-          </div>
-        </div>
-      </section>
+  <div
+    className="sr-reveal"
+    ref={(el) => (revealRefs.current[10] = el)}
+  >
+    <span className="sr-section-tag">Student Projects</span>
+    <h2 className="sr-section-title">
+      INNOVATION <span className="sr-grad">GALLERY</span>
+    </h2>
+  </div>
+
+  <div
+    className="sr-gallery-grid sr-reveal"
+    ref={(el) => (revealRefs.current[11] = el)}
+  >
+    {/* AI Rover */}
+    <div className="sr-gallery-tile">
+      <img
+        src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=800"
+        alt="AI Rover"
+        className="sr-gallery-img"
+         style={{
+    width: "100%",
+    height: "250px",
+    objectFit: "cover",
+    objectPosition: "center"
+  }}
+      />
+      <div className="sr-gallery-content">
+        <h3>AI Rover</h3>
+        <p>Autonomous navigation using ultrasonic & IR sensors</p>
+      </div>
+    </div>
+
+    {/* IoT Weather Station */}
+    <div className="sr-gallery-tile">
+      <img
+        src="https://iotdesignpro.com/sites/default/files/2019-06/IoT-Wireless-Weather-Station-using-Arduino-ESP8266-and-ThingSpeak.jpg"
+        alt="IoT Weather Station"
+        className="sr-gallery-img"
+         style={{
+    width: "100%",
+    height: "250px",
+    objectFit: "cover",
+    objectPosition: "center"
+  }}
+      />
+      <div className="sr-gallery-content">
+        <h3>IoT Weather Station</h3>
+        <p>Real-time cloud monitoring with ESP32 & Blynk</p>
+      </div>
+    </div>
+
+    {/* Smart Mirror */}
+    <div className="sr-gallery-tile">
+      <img
+        src="https://rpi-magazines.s3-eu-west-1.amazonaws.com/magpi/legacy-assets/2016/01/step3.jpg"
+        alt="Smart Mirror"
+        className="sr-gallery-img"
+         style={{
+    width: "100%",
+    height: "250px",
+    objectFit: "cover",
+    objectPosition: "center"
+  }}
+      />
+      <div className="sr-gallery-content">
+        <h3>Smart Mirror</h3>
+        <p>Face recognition & display dashboard with Raspberry Pi</p>
+      </div>
+    </div>
+
+    {/* Robotic Arm */}
+    <div className="sr-gallery-tile">
+      <img
+        src="https://m.media-amazon.com/images/I/71XlrnunuyL.jpg"
+        alt="Robotic Arm"
+        className="sr-gallery-img"
+         style={{
+    width: "100%",
+    height: "250px",
+    objectFit: "cover",
+    objectPosition: "center"
+  }}
+      />
+      <div className="sr-gallery-content">
+        <h3>Robotic Arm</h3>
+        <p>Servo-controlled arm with Bluetooth remote operation</p>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Testimonials Section */}
       <section id="sr-testimonials" className="sr-testimonials">
         <div className="sr-reveal" ref={(el) => revealRefs.current[12] = el}>
-          <span className="sr-section-tag">// Reviews</span>
+          <span className="sr-section-tag"> Reviews</span>
           <h2 className="sr-section-title">WHAT THEY <span className="sr-grad">SAY</span></h2>
         </div>
         <div className="sr-testi-grid sr-reveal" ref={(el) => revealRefs.current[13] = el}>
@@ -492,7 +563,7 @@ const SundayRobotics = () => {
       <section id="sr-register" className="sr-register">
         <div className="sr-form-card sr-reveal" ref={(el) => revealRefs.current[14] = el}>
           <div className="sr-form-header">
-            <span className="sr-section-tag">// Admissions Open</span>
+            <span className="sr-section-tag"> Admissions Open</span>
             <h2 className="sr-section-title">RESERVE YOUR <span className="sr-grad">SEAT</span></h2>
             <div className="sr-form-badge sr-animate-pulse">⚠ Limited Seats — Early Registration Benefit</div>
           </div>
@@ -501,7 +572,7 @@ const SundayRobotics = () => {
             <div className="sr-flash sr-flash-success">✅ Registration successful! Our team will contact you shortly.</div>
           )}
           {showError && (
-            <div className="sr-flash sr-flash-error">❌ {errorMessage}</div>
+            <div className="sr-flash sr-flash-error">❌ Registration failed</div>
           )}
 
           <form onSubmit={handleSubmit}>
@@ -533,7 +604,7 @@ const SundayRobotics = () => {
                 value={formData.phone}
                 onChange={handleChange}
               />
-              <input
+              {/* <input
                 className="sr-input"
                 name="email"
                 placeholder="Email Address *"
@@ -541,7 +612,7 @@ const SundayRobotics = () => {
                 required
                 value={formData.email}
                 onChange={handleChange}
-              />
+              /> */}
               <input
                 className="sr-input"
                 name="school"
@@ -558,15 +629,15 @@ const SundayRobotics = () => {
                 value={formData.grade}
                 onChange={handleChange}
               />
-              <input
+              {/* <input
                 className="sr-input"
                 name="city"
                 placeholder="City"
                 type="text"
                 value={formData.city}
                 onChange={handleChange}
-              />
-              <select
+              /> */}
+              {/* <select
                 className="sr-input"
                 name="interestedLevel"
                 value={formData.interestedLevel}
@@ -576,11 +647,12 @@ const SundayRobotics = () => {
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
                 <option value="advanced">Advanced</option>
-              </select>
+              </select> */}
+              
               <textarea
                 className="sr-input"
                 name="message"
-                placeholder="Message (optional)"
+                placeholder="Message any queries (optional)"
                 rows="3"
                 value={formData.message}
                 onChange={handleChange}
@@ -592,7 +664,7 @@ const SundayRobotics = () => {
                     Submitting...
                   </span>
                 ) : (
-                  '🚀 Register Now →'
+                  ' Register Now →'
                 )}
               </button>
             </div>

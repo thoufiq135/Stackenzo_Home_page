@@ -1544,4 +1544,29 @@ select.sr-input option {
   .sr-hero-actions {
     gap: 0.75rem;
   }
+  
+  .sr-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.sr-gallery-tile {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 100%;
+}
+
+.sr-gallery-img {
+  width: 100%;
+  height: 250px; /* Same height for all images */
+  object-fit: cover; /* Crop image to fit uniformly */
+  display: block;
+}
+
+.sr-gallery-content {
+  padding: 18px;
+}
 }
