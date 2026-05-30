@@ -215,11 +215,17 @@ const SundayRobotics = () => {
           🤖 Welcome to Sunday Robotics & AI Academy!<br />
           🚀 Let's Learn, Build, Inspire Together!
         </div>
-        <img 
-          className="sr-robot-img" 
-          src="https://media.tenor.com/ke1anE0mW-kAAAAj/robot.gif" 
-          alt="Robot"
-        />
+       <img
+  className="sr-robot-img"
+  src="/images/robot.gif"
+  alt="Robot"
+  style={{
+    width: "200px",
+    height: "200px",
+    display: "block",
+    zIndex: 9999
+  }}
+/>
       </div>
 
       {/* Ad Modal */}
