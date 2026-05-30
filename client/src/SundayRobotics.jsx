@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SundayRobotics.css';
+import robotGif from "./assets/robot.gif";
 
 const SundayRobotics = () => {
   const navigate = useNavigate();
@@ -217,7 +218,7 @@ const SundayRobotics = () => {
         </div>
        <img
   className="sr-robot-img"
-  src="/images/robot.gif"
+  src={robotGif}
   alt="Robot"
   style={{
     width: "200px",
