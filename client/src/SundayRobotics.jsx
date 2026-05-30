@@ -217,7 +217,7 @@ const SundayRobotics = () => {
         </div>
         <img 
           className="sr-robot-img" 
-          src="https:media.tenor.com/ke1anE0mW-kAAAAj/robot.gif" 
+          src="https://media.tenor.com/ke1anE0mW-kAAAAj/robot.gif" 
           alt="Robot"
         />
       </div>
