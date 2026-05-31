@@ -1260,20 +1260,74 @@ function AboutSection() {
           <Reveal from="left">
             <GlowCard accent="#F04A06" className="h-full">
               <TiltCard>
-                <motion.div whileHover={{ boxShadow: "0 28px 65px rgba(0,0,0,0.09)" }}
-                  className="bg-white border border-gray-100 rounded-2xl p-8 md:p-10 hover:border-[#D4AF37] transition-all shadow-sm h-full">
-                  <div className="flex items-center gap-4 mb-7">
-                    <Float duration={4} yRange={6}>
-                      <motion.div whileHover={{ rotate: 16, scale: 1.12 }}
-                        className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/18">
-                        <Target className="w-6 h-6 text-white" />
-                      </motion.div>
-                    </Float>
-                    <h3 className="text-2xl font-black text-[#F04A06]">Our Mission</h3>
-                  </div>
-                  <p className="text-sm text-gray-600 leading-[1.5] text-justify mb-12">Our mission is to design, develop and deliver intelligent technology solutions that solve real-world challenges with precision, scalability and long-term impact—across IT services, R&D and EdTech. We focus on building scalable, secure and future-ready digital solutions while seamlessly bridging academic knowledge with real-world implementation. By empowering startups, institutions and enterprises through innovation, we enable sustainable growth and digital transformation. We automate complex processes to enhance productivity and efficiency, foster a strong research-driven engineering culture and continuously promote learning, skill development and technological excellence to prepare individuals and organizations for the future.</p>
-                </motion.div>
-              </TiltCard>
+  <motion.div
+    whileHover={{ boxShadow: "0 28px 65px rgba(0,0,0,0.09)" }}
+    className="bg-white border border-gray-100 rounded-2xl p-8 md:p-10 hover:border-[#D4AF37] transition-all shadow-sm h-full"
+  >
+    <div className="flex items-center gap-4 mb-7">
+      <Float duration={4} yRange={6}>
+        <motion.div
+          whileHover={{ rotate: 16, scale: 1.12 }}
+          className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/18"
+        >
+          <Target className="w-6 h-6 text-white" />
+        </motion.div>
+      </Float>
+      <h3 className="text-2xl font-black text-[#F04A06]">Our Mission</h3>
+    </div>
+
+   <ul className="space-y-4 text-gray-700 text-sm leading-relaxed">
+  <li className="flex gap-3">
+    <span className="text-[#F04A06] font-bold">•</span>
+    <span>
+      Deliver innovative, scalable and future-ready technology solutions that address real-world business challenges.
+    </span>
+  </li>
+
+  <li className="flex gap-3">
+    <span className="text-[#F04A06] font-bold">•</span>
+    <span>
+      Drive digital transformation through advanced IT services, research-driven development and emerging technologies.
+    </span>
+  </li>
+
+  <li className="flex gap-3">
+    <span className="text-[#F04A06] font-bold">•</span>
+    <span>
+      Bridge the gap between academic learning and industry requirements through practical innovation and implementation.
+    </span>
+  </li>
+
+  <li className="flex gap-3">
+    <span className="text-[#F04A06] font-bold">•</span>
+    <span>
+      Empower businesses, institutions and startups with intelligent, secure and efficient digital solutions.
+    </span>
+  </li>
+
+  <li className="flex gap-3">
+    <span className="text-[#F04A06] font-bold">•</span>
+    <span>
+      Foster a culture of continuous innovation, research excellence and technological advancement.
+    </span>
+  </li>
+
+  <li className="flex gap-3">
+    <span className="text-[#F04A06] font-bold">•</span>
+    <span>
+      Promote skill development and future-focused learning to prepare individuals and organizations for a technology-driven world.
+    </span>
+  </li>
+
+  <li className="flex gap-3">
+    <span className="text-[#F04A06] font-bold">•</span>
+    <span>
+      Create sustainable value through quality, integrity, customer-centricity and long-term partnerships.
+    </span>
+  </li>
+</ul>
+  </motion.div>
+</TiltCard>
             </GlowCard>
           </Reveal>
 
@@ -1291,7 +1345,7 @@ function AboutSection() {
                     </Float>
                     <h3 className="text-2xl font-black text-[#F04A06]">Our Vision</h3>
                   </div>
-                  <p className="text-sm text-gray-600 leading-[1.5] text-justify mb-7">To become a leading innovation-driven technology ecosystem where IT services, R&D and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future.</p>
+                  <p className="text-sm text-gray-600 leading-[1.5] text-justify mb-30">To become a leading innovation-driven technology ecosystem where IT services, R&D and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future.</p>
                   <Reveal from="bottom" delay={.35}>
                     <div className="relative overflow-hidden rounded-2xl p-5" style={{ background: "linear-gradient(135deg,#FFF4ED,#FFF4ED)" }}>
                       <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl bg-[#D4AF37]" />

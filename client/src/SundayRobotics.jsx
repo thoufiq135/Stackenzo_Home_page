@@ -211,7 +211,7 @@ const SundayRobotics = () => {
       <div className="sr-orb sr-orb-3"></div>
 
       {/* Walking Robot */}
-      {/* <div className="sr-robot-walker">
+      <div className="sr-robot-walker">
         <div className="sr-robot-speech">
           🤖 Welcome to Sunday Robotics & AI Academy!<br />
           🚀 Let's Learn, Build, Inspire Together!
@@ -227,7 +227,7 @@ const SundayRobotics = () => {
     zIndex: 9999
   }}
 />
-      </div> */}
+      </div>
 
       {/* Ad Modal */}
       {showModal && (
@@ -463,7 +463,7 @@ const SundayRobotics = () => {
     {/* AI Rover */}
     <div className="sr-gallery-tile">
       <img
-        src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=800"
+        src="/images/ai-1.jpg"
         alt="AI Rover"
         className="sr-gallery-img"
          style={{
