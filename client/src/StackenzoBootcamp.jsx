@@ -17,6 +17,7 @@ import {
     FaPhoneAlt,
     FaGlobe,
     FaArrowLeft,
+     FaEnvelope,
 } from "react-icons/fa";
 
 import {
@@ -659,7 +660,7 @@ export default function StackenzoLanding() {
                 
                 <div className="hero-actions" style={{ justifyContent: 'center' }}>
                     <a href="tel:9247577907" className="btn-primary">Get in Touch</a>
-                    <a href="https://www.stackenzo.com" target="_blank" rel="noreferrer" className="btn-ghost">Visit stackenzo.com</a>
+                    <a href="https://www.stackenzo.com" target="_blank" rel="noreferrer" className="btn-ghost">Visit stackenzo</a>
                 </div>
 
                 <div className="cta-contacts">
@@ -672,8 +673,8 @@ export default function StackenzoLanding() {
                         <span>6300591267</span>
                     </div>
                     <div className="contact-item">
-                        <FaGlobe size={16} style={{ color: 'var(--cyan)' }} />
-                        <span>www.stackenzo.com</span>
+                        <FaEnvelope size={16} style={{ color: 'var(--cyan)' }} />
+                        <span>edtech@stackenzo.com</span>
                     </div>
                 </div>
 
