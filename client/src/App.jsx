@@ -32,6 +32,7 @@ import IntermediateResults from "./IntermediateResults";
 import JoinCommunity from "./Joincommunity";
 import SummerCampGallery from "./SummerCampGallery";
 import SundayRobotics from "./SundayRobotics";
+import StackenzoBootcamp from "./StackenzoBootcamp";
 // import WelcomeDialog from "./WelcomeDialog";
 
 function App() {
@@ -104,6 +105,7 @@ function App() {
         <Route path="/joinCommunity" element={<JoinCommunity />} />
         <Route path="/schoolCamp" element={<SummerCampGallery />} />
         <Route path="/sundayRobotics" element={<SundayRobotics />} />
+        <Route path="/StackenzoBootcamp" element={<StackenzoBootcamp /> }/>
       </Routes>
       
       {/* <AnimatePresence>

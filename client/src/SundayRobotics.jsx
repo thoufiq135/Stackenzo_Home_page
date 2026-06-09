@@ -1,4 +1,4 @@
-//  SundayRobotics.jsx - Completely isolated component with Back Button
+// SundayRobotics.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SundayRobotics.css';
@@ -7,19 +7,18 @@ import robotGif from "./assets/robot.gif";
 const SundayRobotics = () => {
   const navigate = useNavigate();
   
-  //  State Management
+  // State Management
   const [showModal, setShowModal] = useState(true);
   const [scrollWidth, setScrollWidth] = useState(0);
   const [formData, setFormData] = useState({
-    studentName: '',
-    parentName: '',
-    phone: '',
-     email: '',
-    school: '',
-    grade: '',
-     city: '',
-     interestedLevel: '',
-    message: ''
+    Name: '',        // Changed from studentName to match backend
+    ParentName: '',  // Changed from parentName to match backend
+    mobile_no: '',   // Changed from phone to match backend
+    email: '',
+    School: '',      // Changed from school to match backend
+    Class: '',       // Changed from grade to match backend
+    des: '',         // Changed from message to match backend
+    q_A: ''          // Added missing field that backend requires
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -27,10 +26,10 @@ const SundayRobotics = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [countersStarted, setCountersStarted] = useState(false);
 
-  //  Refs for scroll reveal
+  // Refs for scroll reveal
   const revealRefs = useRef([]);
   
-  //  Stats data
+  // Stats data
   const stats = [
     { target: 1580, label: 'Student Projects' },
     { target: 320, label: 'Robotics Kits' },
@@ -38,7 +37,7 @@ const SundayRobotics = () => {
     { target: 12, label: 'Expert Mentors' }
   ];
 
-  //  Scroll Progress
+  // Scroll Progress
   useEffect(() => {
     const handleScroll = () => {
       const winScroll = document.documentElement.scrollTop;
@@ -50,7 +49,7 @@ const SundayRobotics = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  //  Auto close modal after 5 seconds
+  // Auto close modal after 5 seconds
   useEffect(() => {
     if (showModal) {
       const timer = setTimeout(() => setShowModal(false), 5000);
@@ -58,7 +57,7 @@ const SundayRobotics = () => {
     }
   }, [showModal]);
 
-  //  Scroll Reveal Observer
+  // Scroll Reveal Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -79,7 +78,7 @@ const SundayRobotics = () => {
     return () => observer.disconnect();
   }, []);
 
-  //  Counter Animation
+  // Counter Animation
   useEffect(() => {
     const counterObserver = new IntersectionObserver(
       (entries) => {
@@ -115,7 +114,7 @@ const SundayRobotics = () => {
     return () => counterObserver.disconnect();
   }, [countersStarted]);
 
-  //  Form Handlers
+  // Form Handlers
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -126,75 +125,73 @@ const SundayRobotics = () => {
     setTimeout(() => setShowError(false), 5000);
   };
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (!formData.studentName || !formData.parentName || !formData.phone) {
-    showErrorMsg("Please fill all required fields.");
-    return;
-  }
-
-  if (!/^\d{10}$/.test(formData.phone)) {
-    showErrorMsg("Please enter a valid 10-digit mobile number.");
-    return;
-  }
-
-  setIsSubmitting(true);
-
-  const payload = {
-    Name: formData.studentName,
-    ParentName: formData.parentName,
-    mobile_no: formData.phone,
-    School: formData.school || "",
-    Class: formData.grade || "",
-    des: formData.message || "",
-    q_A: "Yes",
+  const showSuccessMsg = (msg) => {
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 5000);
   };
 
-  try {
-    const response = await fetch(
-      "https:innovation-club-delta.vercel.app/api/addData/innovationClub",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+  // Submit Registration
+  const handleRegistrationSubmit = async (e) => {
+    e.preventDefault();
 
-    const data = await response.json();
-
-    console.log("Response:", data);
-
-    //  Success for 200 or 201
-    if (response.ok) {
-      setShowSuccess(true);
-
-      setFormData({
-        studentName: "",
-        parentName: "",
-        phone: "",
-        school: "",
-        grade: "",
-        message: "",
-      });
-
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
-    } else {
-      throw new Error(data.message || "Registration failed");
+    // Validate required fields
+    if (!formData.Name || !formData.ParentName || !formData.mobile_no) {
+      showErrorMsg("Please fill all required fields");
+      return;
     }
-  } catch (error) {
-    console.error(error);
-    showErrorMsg(error.message || "Something went wrong");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
 
-  //  Navigate back to home
+    if (!/^\d{10}$/.test(formData.mobile_no)) {
+      showErrorMsg("Enter a valid 10 digit mobile number");
+      return;
+    }
+
+    // Add a default value for q_A if not provided
+    const submissionData = {
+      ...formData,
+      q_A: formData.q_A || "No specific query"
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(
+        "https://innovation-club-delta.vercel.app/api/addData/innovationClub",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submissionData)
+        }
+      );
+      
+      const data = await response.json();
+      
+      if (response.ok && data.message === "Form submitted successfully") {
+        setFormData({
+          Name: '',
+          ParentName: '',
+          mobile_no: '',
+          email: '',
+          School: '',
+          Class: '',
+          des: '',
+          q_A: ''
+        });
+        
+        showSuccessMsg("✅ Registration submitted successfully! Our team will contact you shortly.");
+      } else {
+        throw new Error(data.message || "Registration failed");
+      }
+    } catch (error) {
+      console.error(error);
+      showErrorMsg(error.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Navigate back to home
   const goToHome = () => {
     navigate('/');
   };
@@ -213,20 +210,20 @@ const SundayRobotics = () => {
       {/* Walking Robot */}
       <div className="sr-robot-walker">
         <div className="sr-robot-speech">
-          🤖 Welcome to Sunday Robotics & AI Academy!<br />
+          🤖 Welcome to Stackenzo Innovation & AI Academy!<br />
           🚀 Let's Learn, Build, Inspire Together!
         </div>
-       <img
-  className="sr-robot-img"
-  src={robotGif}
-  alt="Robot"
-  style={{
-    width: "200px",
-    height: "200px",
-    display: "block",
-    zIndex: 9999
-  }}
-/>
+        <img
+          className="sr-robot-img"
+          src={robotGif}
+          alt="Robot"
+          style={{
+            width: "200px",
+            height: "200px",
+            display: "block",
+            zIndex: 9999
+          }}
+        />
       </div>
 
       {/* Ad Modal */}
@@ -236,7 +233,7 @@ const SundayRobotics = () => {
             <button className="sr-modal-close" onClick={() => setShowModal(false)}>✕</button>
             <i className="fas fa-microchip sr-modal-icon"></i>
             <h2 className="sr-modal-title">BUILD THE <span className="sr-grad">FUTURE</span></h2>
-            <p className="sr-modal-sub">Admissions Open — Sunday Robotics & AI Academy</p>
+            <p className="sr-modal-sub">Admissions Open — Stackenzo Innovation & AI Academy</p>
             <div className="sr-modal-badge sr-animate-pulse">⚠ Limited Seats Available</div>
             <div className="sr-modal-actions">
               <a href="#sr-register" className="sr-btn-primary" onClick={() => setShowModal(false)}>Register Now →</a>
@@ -250,7 +247,6 @@ const SundayRobotics = () => {
       {/* Navbar with Back Button */}
       <nav className="sr-navbar">
         <div className="sr-nav-left">
-          {/* Back Button */}
           <button onClick={goToHome} className="sr-back-btn" aria-label="Back to Home">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -258,7 +254,6 @@ const SundayRobotics = () => {
             <span>Back to Home</span>
           </button>
         </div>
-        {/* <div className="sr-nav-logo">SUNDAY ROBOTICS</div> */}
         <ul className="sr-nav-links">
           <li><a href="#sr-why">Why Us</a></li>
           <li><a href="#sr-roadmap">Curriculum</a></li>
@@ -276,10 +271,10 @@ const SundayRobotics = () => {
       {/* Hero Section */}
       <section id="sr-hero" className="sr-hero">
         <div className="sr-hero-content">
-          <div className="sr-hero-eyebrow"> Robotics · AI · Innovation · 2025</div>
+          <div className="sr-hero-eyebrow"> Robotics · AI · Innovation · 2026</div>
           <h1 className="sr-hero-title">
-            SUNDAY<br />
-            <span className="sr-grad">ROBOTICS</span><br />
+            STACKENZO<br />
+            <span className="sr-grad">INNOVATION</span><br />
             &amp; AI ACADEMY
           </h1>
           <p className="sr-hero-sub">
@@ -301,6 +296,29 @@ const SundayRobotics = () => {
         </div>
       </section>
 
+      {/* Innovation Club Section */}
+      <section className="innovation-section">
+        <div className="sr-container">
+          <span className="sr-section-tag">Stackenzo Programs</span>
+          <h2 className="sr-section-title">
+            STACKENZO
+            <span className="sr-grad"> INNOVATION CLUB</span>
+          </h2>
+          <p className="innovation-description">
+            Stackenzo Innovation Club is a flagship learning initiative under Stackenzo.
+            Students gain practical exposure in:
+          </p>
+          <ul className="innovation-list">
+            <li><i className="fas fa-robot"></i> Robotics</li>
+            <li><i className="fas fa-brain"></i> Artificial Intelligence</li>
+            <li><i className="fas fa-wifi"></i> IoT</li>
+            <li><i className="fas fa-microchip"></i> Arduino Programming</li>
+            <li><i className="fas fa-microchip"></i> ESP32 Development</li>
+            <li><i className="fas fa-lightbulb"></i> Innovation Projects</li>
+          </ul>
+        </div>
+      </section>
+
       {/* Why Section */}
       <section id="sr-why" className="sr-why">
         <div className="sr-why-grid sr-reveal" ref={(el) => revealRefs.current[0] = el}>
@@ -309,7 +327,7 @@ const SundayRobotics = () => {
             <h2 className="sr-section-title">WHERE STUDENTS <span className="sr-grad">BUILD,</span> NOT JUST LEARN</h2>
             <p>
               Technology is shaping every industry. Robotics, AI, IoT and Automation are becoming essential skills. 
-              Sunday Robotics helps students move beyond screens — they build real electronics, write real code, 
+              STACKENZO Robotics helps students move beyond screens — they build real electronics, write real code, 
               and create real solutions.
             </p>
           </div>
@@ -343,7 +361,7 @@ const SundayRobotics = () => {
         <div className="sr-compare-inner">
           <div className="sr-reveal" ref={(el) => revealRefs.current[1] = el}>
             <span className="sr-section-tag"> The Difference</span>
-            <h2 className="sr-section-title">SCHOOL <span className="sr-grad">VS</span> SUNDAY ACADEMY</h2>
+            <h3 className="sr-section-title">SCHOOL <span className="sr-grad">VS</span> STACKENZO INNOVATION ACADEMY</h3>
           </div>
           <div className="sr-compare-grid sr-reveal" ref={(el) => revealRefs.current[2] = el}>
             <div className="sr-comp-card sr-comp-plain">
@@ -421,7 +439,6 @@ const SundayRobotics = () => {
           <div className="sr-skill-tile"><i className="fas fa-paintbrush"></i><span>Creativity</span></div>
           <div className="sr-skill-tile"><i className="fas fa-puzzle-piece"></i><span>Problem Solving</span></div>
           <div className="sr-skill-tile"><i className="fas fa-smile"></i><span>Confidence</span></div>
-          {/* <div className="sr-skill-tile"><i className="fas fa-users"></i><span>Teamwork</span></div> */}
           <div className="sr-skill-tile"><i className="fas fa-lightbulb"></i><span>Innovation Mindset</span></div>
         </div>
       </section>
@@ -446,97 +463,87 @@ const SundayRobotics = () => {
 
       {/* Gallery Section */}
       <section id="sr-gallery" className="sr-gallery">
-  <div
-    className="sr-reveal"
-    ref={(el) => (revealRefs.current[10] = el)}
-  >
-    <span className="sr-section-tag">Student Projects</span>
-    <h2 className="sr-section-title">
-      INNOVATION <span className="sr-grad">GALLERY</span>
-    </h2>
-  </div>
+        <div className="sr-reveal" ref={(el) => (revealRefs.current[10] = el)}>
+          <span className="sr-section-tag">Student Projects</span>
+          <h2 className="sr-section-title">
+            INNOVATION <span className="sr-grad">GALLERY</span>
+          </h2>
+        </div>
 
-  <div
-    className="sr-gallery-grid sr-reveal"
-    ref={(el) => (revealRefs.current[11] = el)}
-  >
-    {/* AI Rover */}
-    <div className="sr-gallery-tile">
-      <img
-        src="/images/ai-1.jpg"
-        alt="AI Rover"
-        className="sr-gallery-img"
-         style={{
-    width: "100%",
-    height: "250px",
-    objectFit: "cover",
-    objectPosition: "center"
-  }}
-      />
-      <div className="sr-gallery-content">
-        <h3>AI Rover</h3>
-        <p>Autonomous navigation using ultrasonic & IR sensors</p>
-      </div>
-    </div>
+        <div className="sr-gallery-grid sr-reveal" ref={(el) => (revealRefs.current[11] = el)}>
+          <div className="sr-gallery-tile">
+            <img
+              src="/images/ai-1.jpg"
+              alt="AI Rover"
+              className="sr-gallery-img"
+              style={{
+                width: "100%",
+                height: "250px",
+                objectFit: "cover",
+                objectPosition: "center"
+              }}
+            />
+            <div className="sr-gallery-content">
+              <h3>AI Rover</h3>
+              <p>Autonomous navigation using ultrasonic & IR sensors</p>
+            </div>
+          </div>
 
-    {/* IoT Weather Station */}
-    <div className="sr-gallery-tile">
-      <img
-        src="https://iotdesignpro.com/sites/default/files/2019-06/IoT-Wireless-Weather-Station-using-Arduino-ESP8266-and-ThingSpeak.jpg"
-        alt="IoT Weather Station"
-        className="sr-gallery-img"
-         style={{
-    width: "100%",
-    height: "250px",
-    objectFit: "cover",
-    objectPosition: "center"
-  }}
-      />
-      <div className="sr-gallery-content">
-        <h3>IoT Weather Station</h3>
-        <p>Real-time cloud monitoring with ESP32 & Blynk</p>
-      </div>
-    </div>
+          <div className="sr-gallery-tile">
+            <img
+              src="https://iotdesignpro.com/sites/default/files/2019-06/IoT-Wireless-Weather-Station-using-Arduino-ESP8266-and-ThingSpeak.jpg"
+              alt="IoT Weather Station"
+              className="sr-gallery-img"
+              style={{
+                width: "100%",
+                height: "250px",
+                objectFit: "cover",
+                objectPosition: "center"
+              }}
+            />
+            <div className="sr-gallery-content">
+              <h3>IoT Weather Station</h3>
+              <p>Real-time cloud monitoring with ESP32 & Blynk</p>
+            </div>
+          </div>
 
-    {/* Smart Mirror */}
-    <div className="sr-gallery-tile">
-      <img
-        src="https://rpi-magazines.s3-eu-west-1.amazonaws.com/magpi/legacy-assets/2016/01/step3.jpg"
-        alt="Smart Mirror"
-        className="sr-gallery-img"
-         style={{
-    width: "100%",
-    height: "250px",
-    objectFit: "cover",
-    objectPosition: "center"
-  }}
-      />
-      <div className="sr-gallery-content">
-        <h3>Smart Mirror</h3>
-        <p>Face recognition & display dashboard with Raspberry Pi</p>
-      </div>
-    </div>
+          <div className="sr-gallery-tile">
+            <img
+              src="https://rpi-magazines.s3-eu-west-1.amazonaws.com/magpi/legacy-assets/2016/01/step3.jpg"
+              alt="Smart Mirror"
+              className="sr-gallery-img"
+              style={{
+                width: "100%",
+                height: "250px",
+                objectFit: "cover",
+                objectPosition: "center"
+              }}
+            />
+            <div className="sr-gallery-content">
+              <h3>Smart Mirror</h3>
+              <p>Face recognition & display dashboard with Raspberry Pi</p>
+            </div>
+          </div>
 
-    {/* Robotic Arm */}
-    <div className="sr-gallery-tile">
-      <img
-        src="https://m.media-amazon.com/images/I/71XlrnunuyL.jpg"
-        alt="Robotic Arm"
-        className="sr-gallery-img"
-         style={{
-    width: "100%",
-    height: "250px",
-    objectFit: "cover",
-    objectPosition: "center"
-  }}
-      />
-      <div className="sr-gallery-content">
-        <h3>Robotic Arm</h3>
-        <p>Servo-controlled arm with Bluetooth remote operation</p>
-      </div>
-    </div>
-  </div>
-</section>
+          <div className="sr-gallery-tile">
+            <img
+              src="https://m.media-amazon.com/images/I/71XlrnunuyL.jpg"
+              alt="Robotic Arm"
+              className="sr-gallery-img"
+              style={{
+                width: "100%",
+                height: "250px",
+                objectFit: "cover",
+                objectPosition: "center"
+              }}
+            />
+            <div className="sr-gallery-content">
+              <h3>Robotic Arm</h3>
+              <p>Servo-controlled arm with Bluetooth remote operation</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Testimonials Section */}
       <section id="sr-testimonials" className="sr-testimonials">
@@ -572,145 +579,100 @@ const SundayRobotics = () => {
           <div className="sr-form-header">
             <span className="sr-section-tag"> Admissions Open</span>
             <h2 className="sr-section-title">RESERVE YOUR <span className="sr-grad">SEAT</span></h2>
-            <div className="sr-form-badge sr-animate-pulse">⚠ Limited Seats — Early Registration Benefit</div>
+            <div className="sr-form-badge sr-animate-pulse">⚠ Limited Seats — Register Now</div>
           </div>
 
           {showSuccess && (
-            <div className="sr-flash sr-flash-success">✅ Registration successful! Our team will contact you shortly.</div>
+            <div className="sr-flash sr-flash-success">✅ Registration submitted successfully! Our team will contact you shortly.</div>
           )}
           {showError && (
-            <div className="sr-flash sr-flash-error">❌ Registration failed</div>
+            <div className="sr-flash sr-flash-error">❌ {errorMessage}</div>
           )}
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleRegistrationSubmit}>
             <div className="sr-form-grid">
               <input
                 className="sr-input"
-                name="studentName"
+                name="Name"
                 placeholder="Student Name *"
                 type="text"
                 required
-                value={formData.studentName}
+                value={formData.Name}
                 onChange={handleChange}
               />
               <input
                 className="sr-input"
-                name="parentName"
+                name="ParentName"
                 placeholder="Parent Name *"
                 type="text"
                 required
-                value={formData.parentName}
+                value={formData.ParentName}
                 onChange={handleChange}
               />
               <input
                 className="sr-input"
-                name="phone"
+                name="mobile_no"
                 placeholder="Phone Number *"
                 type="tel"
                 required
-                value={formData.phone}
+                value={formData.mobile_no}
                 onChange={handleChange}
               />
-              {/* <input
+              <input
                 className="sr-input"
                 name="email"
-                placeholder="Email Address *"
+                placeholder="Email Address"
                 type="email"
-                required
                 value={formData.email}
                 onChange={handleChange}
-              /> */}
+              />
               <input
                 className="sr-input"
-                name="school"
+                name="School"
                 placeholder="School Name"
                 type="text"
-                value={formData.school}
+                value={formData.School}
                 onChange={handleChange}
               />
               <input
                 className="sr-input"
-                name="grade"
+                name="Class"
                 placeholder="Grade / Class"
                 type="text"
-                value={formData.grade}
+                value={formData.Class}
                 onChange={handleChange}
               />
-              {/* <input
-                className="sr-input"
-                name="city"
-                placeholder="City"
-                type="text"
-                value={formData.city}
-                onChange={handleChange}
-              /> */}
-              {/* <select
-                className="sr-input"
-                name="interestedLevel"
-                value={formData.interestedLevel}
-                onChange={handleChange}
-              >
-                <option value="">Select Interested Level</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-              </select> */}
-              
               <textarea
                 className="sr-input"
-                name="message"
-                placeholder="Message any queries (optional)"
+                name="des"
+                placeholder="Message / Query (optional)"
                 rows="3"
-                value={formData.message}
+                value={formData.des}
                 onChange={handleChange}
               ></textarea>
+              <input
+                className="sr-input"
+                name="q_A"
+                placeholder="Any specific question? (optional)"
+                type="text"
+                value={formData.q_A}
+                onChange={handleChange}
+              />
               <button type="submit" className="sr-form-submit" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <span className="sr-loading-spinner">
-                    <span className="sr-spinner"></span>
-                    Submitting...
-                  </span>
-                ) : (
-                  ' Register Now →'
-                )}
+                {isSubmitting ? "Submitting..." : "Register Now →"}
               </button>
             </div>
           </form>
         </div>
       </section>
 
-      {/* Footer */}
-      {/* <footer className="sr-footer">
-        <div className="sr-footer-inner">
-          <div className="sr-footer-brand">
-            <div className="sr-nav-logo">SUNDAY ROBOTICS</div>
-            <p>Shaping the innovators, builders, and technology leaders of tomorrow — one robot at a time.</p>
-          </div>
-          <div className="sr-footer-col">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="#sr-why">Why Us</a></li>
-              <li><a href="#sr-roadmap">Curriculum</a></li>
-              <li><a href="#sr-gallery">Projects</a></li>
-              <li><a href="#sr-register">Register</a></li>
-            </ul>
-          </div>
-          <div className="sr-footer-col">
-            <h4>Contact</h4>
-            <ul>
-              <li><a href="tel:+919876543210">+91 98765 43210</a></li>
-              <li><a href="mailto:hello@sundayrobotics.com">hello@sundayrobotics.com</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="sr-footer-bottom">
-          <p>© 2025 Sunday Robotics &amp; AI Academy — All rights reserved.</p>
-        </div>
-      </footer> */}
-
       <style>{`
         @keyframes srSpin {
           to { transform: rotate(360deg); }
+        }
+        .sr-form-submit:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
       `}</style>
     </div>
