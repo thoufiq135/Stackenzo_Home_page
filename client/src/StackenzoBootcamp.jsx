@@ -17,7 +17,7 @@ import {
     FaPhoneAlt,
     FaGlobe,
     FaArrowLeft,
-     FaEnvelope,
+    FaEnvelope,
 } from "react-icons/fa";
 
 import {
@@ -37,18 +37,24 @@ import { BiNetworkChart } from "react-icons/bi";
 
 export default function StackenzoLanding() {
     const navigate = useNavigate();
+    
+    // Backend API URL
+    const API_URL = "https://boot-camp-red.vercel.app/api/addData/innovationClub";
+    
+    // Form state with field names matching backend schema
     const [formData, setFormData] = useState({
-        schoolName: '',
-        address: '',
-        email: '',
-        phone: '',
-        area: '',
-        district: '',
-        description: '',
+        school_name: '',      // matches backend: school_name
+        emai_id: '',          // matches backend: emai_id
+        phone_number: '',     // matches backend: phone_number
+        school_address: '',   // matches backend: school_address
+        area: '',             // matches backend: area
+        district: '',         // matches backend: district
+        description: '',      // matches backend: description
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitMessage, setSubmitMessage] = useState('');
+    const [messageType, setMessageType] = useState(''); // 'success' or 'error'
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -61,33 +67,89 @@ export default function StackenzoLanding() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setSubmitMessage('');
+        setMessageType('');
+
+        // Validate required fields
+        if (!formData.school_name || !formData.emai_id || !formData.phone_number || 
+            !formData.school_address || !formData.area || !formData.description) {
+            setSubmitMessage('❌ Please fill all required fields');
+            setMessageType('error');
+            setIsSubmitting(false);
+            setTimeout(() => setSubmitMessage(''), 5000);
+            return;
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.emai_id)) {
+            setSubmitMessage('❌ Please enter a valid email address');
+            setMessageType('error');
+            setIsSubmitting(false);
+            setTimeout(() => setSubmitMessage(''), 5000);
+            return;
+        }
+
+        // Validate phone number (10 digits)
+        const phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(formData.phone_number)) {
+            setSubmitMessage('❌ Please enter a valid 10-digit phone number');
+            setMessageType('error');
+            setIsSubmitting(false);
+            setTimeout(() => setSubmitMessage(''), 5000);
+            return;
+        }
 
         try {
-            const response = await fetch('/api/register', {
+            const requestBody = {
+                school_name: formData.school_name,
+                emai_id: formData.emai_id,
+                phone_number: formData.phone_number,
+                school_address: formData.school_address,
+                area: formData.area,
+                district: formData.district || "pending",
+                description: formData.description,
+            };
+
+            // console.log("Sending data to backend:", requestBody);
+
+            const response = await fetch(API_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
             });
 
-            if (response.ok) {
-                setSubmitMessage('✓ Registration submitted successfully!');
+            const data = await response.json();
+            // console.log("Response from backend:", data);
+            
+            if (response.ok && data.message === "Form submitted successfully") {
+                setSubmitMessage('✅ Registration submitted successfully! Our team will contact you shortly.');
+                setMessageType('success');
+                // Reset form
                 setFormData({
-                    schoolName: '',
-                    address: '',
-                    email: '',
-                    phone: '',
+                    school_name: '',
+                    emai_id: '',
+                    phone_number: '',
+                    school_address: '',
                     area: '',
                     district: '',
                     description: '',
                 });
                 setTimeout(() => setSubmitMessage(''), 5000);
             } else {
-                setSubmitMessage('✗ Failed to submit. Please try again.');
-                setTimeout(() => setSubmitMessage(''), 5000);
+                throw new Error(data.message || "Registration failed");
             }
         } catch (error) {
-            setSubmitMessage('✗ Error submitting form. Please try again.');
             console.error('Form submission error:', error);
+            
+            if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
+                setSubmitMessage('❌ Unable to connect to server. Please try again later.');
+            } else {
+                setSubmitMessage(`❌ ${error.message || 'Something went wrong. Please try again.'}`);
+            }
+            setMessageType('error');
             setTimeout(() => setSubmitMessage(''), 5000);
         } finally {
             setIsSubmitting(false);
@@ -106,15 +168,10 @@ export default function StackenzoLanding() {
                     >
                         <FaArrowLeft />
                     </button>
-                    {/* <a href="#" className="nav-logo">Stack<span>enzo</span></a> */}
                 </div>
                 <ul className="nav-links">
                     <li><a href="#about">About</a></li>
-                    {/* <li><a href="#problem">Problem</a></li> */}
-                    {/* <li><a href="#approach">Approach</a></li> */}
-                    {/* <li><a href="#bootcamp">Bootcamp</a></li> */}
                     <li><a href="#programs">Programs</a></li>
-                    {/* <li><a href="#impact">Impact</a></li> */}
                     <li><a href="#register">Register</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -127,7 +184,6 @@ export default function StackenzoLanding() {
 
                 <h1>
                     Stackenzo <span className="accent">Bootcamp</span><br />
-                    
                 </h1>
                 <p className="hero-sub">At Stackenzo, we believe every student has the potential to become an innovator.</p>
                 <p className="hero-body">
@@ -170,64 +226,64 @@ export default function StackenzoLanding() {
 
             {/* ── About Stackenzo Section ── */}
             <section className="section section-mid" id="about">
-    <div className="about-grid">
-        <div className="about-text">
-            <p className="section-eyebrow">About Stackenzo</p>
-            <h2 className="section-title">
-                More Than Learning.<br />
-                Building Future <span className="accent">Innovators</span>
-            </h2>
-            <p className="section-body">
-                Stackenzo equips students with the knowledge, mindset, and practical skills 
-                to thrive in a world shaped by AI, Robotics, Automation, IoT, and emerging technologies.
-            </p>
-            <p className="section-body" style={{ marginTop: '1rem' }}>
-                Traditional learning focuses on theory, leaving students with limited real-world exposure. 
-                <strong style={{ color: '#fb9434c9' }}> Stackenzo bridges this gap</strong> through hands-on experiences in 
-                workshops, bootcamps, and innovation programs.
-            </p>
-            <p className="section-body" style={{ marginTop: '1rem' }}>
-                Every program cultivates curiosity, critical thinking, creativity, and problem-solving — 
-                empowering young minds to become confident innovators and future-ready leaders.
-            </p>
-            <p className="section-body" style={{ marginTop: '1rem', fontStyle: 'italic', color: 'var(--cyan)' }}>
-                Technology is our medium. Innovation is our goal. Impact is our purpose.
-            </p>
-        </div>
-        <div className="about-highlights">
-            {[
-                {
-                    icon: <FaRobot size={24} />,
-                    title: 'Hands-On Technology',
-                    body: 'Direct interaction with AI, Robotics, and Electronics — not just slides.',
-                },
-                {
-                    icon: <TbBulb size={24} />,
-                    title: 'Curiosity-First Learning',
-                    body: 'Igniting wonder before teaching concepts for intrinsic motivation.',
-                },
-                {
-                    icon: <FaUsers size={24} />,
-                    title: 'Real-World Skills',
-                    body: 'Building creativity, teamwork, and problem-solving abilities.',
-                },
-                {
-                    icon: <IoSchoolOutline size={24} />,
-                    title: 'School Partnership Model',
-                    body: 'Future-tech education delivered directly to schools, accessible everywhere.',
-                },
-            ].map((h) => (
-                <div key={h.title} className="highlight-card">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                        <span style={{ color: 'var(--cyan)' }}>{h.icon}</span>
-                        <h4 style={{ marginBottom: 0 }}>{h.title}</h4>
+                <div className="about-grid">
+                    <div className="about-text">
+                        <p className="section-eyebrow">About Stackenzo</p>
+                        <h2 className="section-title">
+                            More Than Learning.<br />
+                            Building Future <span className="accent">Innovators</span>
+                        </h2>
+                        <p className="section-body">
+                            Stackenzo equips students with the knowledge, mindset, and practical skills 
+                            to thrive in a world shaped by AI, Robotics, Automation, IoT, and emerging technologies.
+                        </p>
+                        <p className="section-body" style={{ marginTop: '1rem' }}>
+                            Traditional learning focuses on theory, leaving students with limited real-world exposure. 
+                            <strong style={{ color: '#fb9434c9' }}> Stackenzo bridges this gap</strong> through hands-on experiences in 
+                            workshops, bootcamps, and innovation programs.
+                        </p>
+                        <p className="section-body" style={{ marginTop: '1rem' }}>
+                            Every program cultivates curiosity, critical thinking, creativity, and problem-solving — 
+                            empowering young minds to become confident innovators and future-ready leaders.
+                        </p>
+                        <p className="section-body" style={{ marginTop: '1rem', fontStyle: 'italic', color: 'var(--cyan)' }}>
+                            Technology is our medium. Innovation is our goal. Impact is our purpose.
+                        </p>
                     </div>
-                    <p>{h.body}</p>
+                    <div className="about-highlights">
+                        {[
+                            {
+                                icon: <FaRobot size={24} />,
+                                title: 'Hands-On Technology',
+                                body: 'Direct interaction with AI, Robotics, and Electronics — not just slides.',
+                            },
+                            {
+                                icon: <TbBulb size={24} />,
+                                title: 'Curiosity-First Learning',
+                                body: 'Igniting wonder before teaching concepts for intrinsic motivation.',
+                            },
+                            {
+                                icon: <FaUsers size={24} />,
+                                title: 'Real-World Skills',
+                                body: 'Building creativity, teamwork, and problem-solving abilities.',
+                            },
+                            {
+                                icon: <IoSchoolOutline size={24} />,
+                                title: 'School Partnership Model',
+                                body: 'Future-tech education delivered directly to schools, accessible everywhere.',
+                            },
+                        ].map((h) => (
+                            <div key={h.title} className="highlight-card">
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                                    <span style={{ color: 'var(--cyan)' }}>{h.icon}</span>
+                                    <h4 style={{ marginBottom: 0 }}>{h.title}</h4>
+                                </div>
+                                <p>{h.body}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            ))}
-        </div>
-    </div>
-</section>
+            </section>
 
             {/* ── The Problem We Are Solving ── */}
             <section className="section" id="problem">
@@ -517,7 +573,7 @@ export default function StackenzoLanding() {
                 </div>
             </section>
 
-            {/* ── Registration Form ── */}
+            {/* ── Registration Form (CORRECTED - Matching Backend Field Names) ── */}
             <section className="section section-mid" id="register">
                 <div className="register-section">
                     <p className="section-eyebrow">Get Started</p>
@@ -529,72 +585,80 @@ export default function StackenzoLanding() {
                     <div className="form-card">
                         <form onSubmit={handleSubmit} className="register-form">
                             <div className="form-grid">
+                                {/* School Name - matches backend: school_name */}
                                 <div className="form-group">
-                                    <label htmlFor="schoolName">
+                                    <label htmlFor="school_name">
                                         <IoSchoolOutline size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                                         School Name *
                                     </label>
                                     <input
                                         type="text"
-                                        id="schoolName"
-                                        name="schoolName"
-                                        value={formData.schoolName}
+                                        id="school_name"
+                                        name="school_name"
+                                        value={formData.school_name}
                                         onChange={handleChange}
                                         placeholder="Your school name"
                                         required
                                     />
                                 </div>
 
+                                {/* Email - matches backend: emai_id */}
                                 <div className="form-group">
-                                    <label htmlFor="email">
+                                    <label htmlFor="emai_id">
                                         <MdEmail size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                                         Email Address *
                                     </label>
                                     <input
                                         type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
+                                        id="emai_id"
+                                        name="emai_id"
+                                        value={formData.emai_id}
                                         onChange={handleChange}
                                         placeholder="school@example.com"
                                         required
                                     />
                                 </div>
 
+                                {/* Phone Number - matches backend: phone_number */}
                                 <div className="form-group">
-                                    <label htmlFor="phone">
+                                    <label htmlFor="phone_number">
                                         <FaPhoneAlt size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                                         Phone Number *
                                     </label>
                                     <input
                                         type="tel"
-                                        id="phone"
-                                        name="phone"
-                                        value={formData.phone}
+                                        id="phone_number"
+                                        name="phone_number"
+                                        value={formData.phone_number}
                                         onChange={handleChange}
                                         placeholder="10-digit phone number"
                                         required
                                     />
                                 </div>
 
+                                {/* School Address - matches backend: school_address */}
                                 <div className="form-group">
-                                    <label htmlFor="address">
+                                    <label htmlFor="school_address">
                                         <MdLocationOn size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                                         School Address *
                                     </label>
                                     <input
                                         type="text"
-                                        id="address"
-                                        name="address"
-                                        value={formData.address}
+                                        id="school_address"
+                                        name="school_address"
+                                        value={formData.school_address}
                                         onChange={handleChange}
                                         placeholder="Street address"
                                         required
                                     />
                                 </div>
 
+                                {/* Area - matches backend: area */}
                                 <div className="form-group">
-                                    <label htmlFor="area">Area / Locality *</label>
+                                    <label htmlFor="area">
+                                        <MdLocationOn size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                                        Area / Locality *
+                                    </label>
                                     <input
                                         type="text"
                                         id="area"
@@ -606,22 +670,29 @@ export default function StackenzoLanding() {
                                     />
                                 </div>
 
+                                {/* District - matches backend: district */}
                                 <div className="form-group">
-                                    <label htmlFor="district">District *</label>
+                                    <label htmlFor="district">
+                                        <MdLocationOn size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                                        District *
+                                    </label>
                                     <input
                                         type="text"
                                         id="district"
                                         name="district"
                                         value={formData.district}
                                         onChange={handleChange}
-                                        placeholder="District name"
-                                        required
+                                        placeholder="District name (optional)"
                                     />
                                 </div>
                             </div>
 
+                            {/* Description - matches backend: description */}
                             <div className="form-group">
-                                <label htmlFor="description">Any Queries or Additional Information</label>
+                                <label htmlFor="description">
+                                    <FaEnvelope size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                                    Any Queries or Additional Information *
+                                </label>
                                 <textarea
                                     id="description"
                                     name="description"
@@ -629,15 +700,21 @@ export default function StackenzoLanding() {
                                     onChange={handleChange}
                                     placeholder="Tell us about your school, student strength, or any specific requirements..."
                                     rows="5"
+                                    required
+                                    
                                 />
                             </div>
 
-                            <button type="submit" className="form-submit" disabled={isSubmitting}>
+                            <button 
+                                type="submit" 
+                                className="form-submit" 
+                                disabled={isSubmitting}
+                            >
                                 {isSubmitting ? 'Submitting...' : 'Submit Registration'}
                             </button>
 
                             {submitMessage && (
-                                <div className={`form-message ${submitMessage.includes('successfully') ? 'success' : 'error'}`}>
+                                <div className={`form-message ${messageType === 'success' ? 'success' : 'error'}`}>
                                     {submitMessage}
                                 </div>
                             )}
