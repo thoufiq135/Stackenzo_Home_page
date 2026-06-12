@@ -187,6 +187,7 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  font-family: 'Inter', sans-serif;
 }
 
 @keyframes partners-fadeInUp {
@@ -288,6 +289,7 @@
   line-height: 1.4;
   position: relative;
   padding: 1rem;
+  font-family: 'Inter', sans-serif;
 }
 
 .partners-page .trust-text::before,
@@ -364,12 +366,14 @@
   background-clip: text;
   color: transparent;
   margin-bottom: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .partners-page .stat-label {
   font-size: 1rem;
   color: var(--gray);
   font-weight: 500;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Partner Logos Section */
@@ -386,7 +390,7 @@
 }
 
 .partners-page .partner-logo-card {
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--white);
   backdrop-filter: blur(10px);
   border-radius: var(--border-radius-sm);
   padding: 2rem;
@@ -430,6 +434,7 @@
   color: var(--gray);
   font-weight: 500;
   transition: var(--transition);
+  font-family: 'Inter', sans-serif;
 }
 
 .partners-page .partner-logo-card:hover .partner-logo-name {
@@ -497,6 +502,7 @@
   line-height: 1.6;
   margin-bottom: 2rem;
   font-size: 1rem;
+  font-family: 'Inter', sans-serif;
 }
 
 .partners-page .impact-chips-grid {
@@ -516,6 +522,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
+  font-family: 'Inter', sans-serif;
 }
 
 .partners-page .impact-chip-icon {
@@ -574,17 +581,20 @@
   color: var(--dark);
   margin-bottom: 1.5rem;
   font-style: italic;
+  font-family: 'Inter', sans-serif;
 }
 
 .partners-page .testimonial-author {
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 0.25rem;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .partners-page .testimonial-role {
   font-size: 0.875rem;
   color: var(--gray);
+  font-family: 'Inter', sans-serif;
 }
 
 /* CTA Section */
@@ -621,6 +631,7 @@
   font-weight: 800;
   color: var(--white);
   margin-bottom: 1.5rem;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .partners-page .cta-description {
@@ -628,6 +639,7 @@
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 2rem;
   line-height: 1.6;
+  font-family: 'Inter', sans-serif;
 }
 
 .partners-page .cta-buttons {
@@ -657,6 +669,29 @@
   color: var(--primary);
 }
 
+/* Partner Hero Label */
+.partners-page .partner-hero-label {
+  display: inline-block;
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+}
+
+.partners-page .partner-hero-label::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 0.6rem auto 0;
+  background: var(--gradient-primary);
+  border-radius: 10px;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .partners-page .impact-container {
@@ -669,6 +704,10 @@
 }
 
 @media (max-width: 768px) {
+  .partners-page {
+    padding-top: 70px;
+  }
+  
   .partners-page .container {
     padding: 0 1.5rem;
   }
@@ -718,6 +757,10 @@
 }
 
 @media (max-width: 480px) {
+  .partners-page {
+    padding-top: 60px;
+  }
+  
   .partners-page .stats-grid {
     grid-template-columns: 1fr;
   }
@@ -744,49 +787,5 @@
   
   .partners-page .impact-chips-grid {
     justify-content: center;
-  }
-}
-
-.partners-page .partner-hero-label {
-  display: inline-block;
-  color: var(--primary);
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  position: relative;
-}
-
-.partners-page .partner-hero-label::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 3px;
-  margin: 0.6rem auto 0;
-  background: var(--gradient-primary);
-  border-radius: 10px;
-}
-
-/* Dark mode support if needed */
-@media (prefers-color-scheme: dark) {
-  .partners-page {
-    --gray-light: #333232;
-    --white: #1A1A1A;
-    --dark: #ffffff;
-    --gray: #a0a0a0;
-  }
-  
-  .partners-page .hero-section {
-    background: linear-gradient(135deg, #1A1A1A 0%, #333232 100%);
-  }
-  
-  .partners-page .partner-logo-card {
-    background: rgba(26, 26, 46, 0.7);
-  }
-  
-  .partners-page .impact-chip {
-    background: #1A1A1A;
-    color: var(--white);
   }
 }
