@@ -104,6 +104,12 @@ function Navbar() {
     closeAll();
   };
 
+  // About dropdown items
+  const aboutItems = [
+    { name: "About Us", path: "/About" },
+    { name: "Partners", path: "/Partners" }
+  ];
+
   // Programs dropdown items with nested children
   const programItems = [
     { name: "All Programs", path: "/StackenzoPrograms" },
@@ -113,9 +119,6 @@ function Navbar() {
       name: "School Programs",
       path: "/Robotics",
       children: [
-        // { name: "Robotics Program", path: "/Robotics" },
-        // { name: "AI & Coding Program", path: "/AICoding" },
-        // { name: "STEM Innovation Program", path: "/StemProgram" },
         { name: "Bootcamp", path: "/StackenzoBootcamp" }
       ]
     }
@@ -131,6 +134,11 @@ function Navbar() {
   ];
 
   const dropdowns = [
+    {
+      id: "about",
+      label: "About",
+      items: aboutItems,
+    },
     {
       id: "programs",
       label: "Programs",
@@ -169,7 +177,7 @@ function Navbar() {
             }`} />
           </div>
           
-          {/* Inline Submenu */}
+          {/* Inline Submenu with bullet points */}
           {activeSubmenu === itemId && (
             <div className={`${isMobile ? 'pl-6' : 'pl-4'} mt-1 mb-2 space-y-1 ml-4 border-l-2 border-[#F04A06]/20 animate-in slide-in-from-top-1 duration-200`}>
               {item.children.map((child) => (
@@ -194,19 +202,22 @@ function Navbar() {
       );
     }
     
-    // Regular menu item (no children)
+    // Regular menu item (no children) - WITH SELECTION STYLING
     return (
       <Link
         key={item.name}
         to={item.path}
-        className={`block ${
+        className={`group/item flex items-center ${
           isMobile ? 'py-2.5 px-4' : 'px-4 py-2.5'
         } text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition-all duration-200 rounded ${
           isMobile ? 'border-l-2 border-transparent' : ''
-        } ${isActivePage(item.path) ? 'bg-[#F04A06] text-white' : ''}`}
+        } ${isActivePage(item.path) ? 'bg-[#F04A06] text-white font-medium shadow-sm' : ''}`}
         onClick={closeAll}
         onMouseEnter={!isMobile ? () => setActiveSubmenu(null) : undefined}
       >
+        <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+          isActivePage(item.path) ? 'bg-white' : 'bg-[#F04A06]/30 group-hover/item:bg-white'
+        }`} />
         {item.name}
       </Link>
     );
@@ -232,32 +243,59 @@ function Navbar() {
         <Link
           to="/"
           onClick={closeAll}
-          className={`px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
-            isActivePage('/') ? 'bg-[#F04A06] text-white' : ''
+          className={`group flex items-center px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
+            isActivePage('/') ? 'bg-[#F04A06] text-white shadow-sm' : ''
           }`}
         >
+          <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+            isActivePage('/') ? 'bg-white' : 'bg-[#F04A06]/30 group-hover:bg-white'
+          }`} />
           Home
         </Link>
 
-        {/* About Link */}
-        <Link
-          to="/About"
-          onClick={closeAll}
-          className={`px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
-            isActivePage('/About') ? 'bg-[#F04A06] text-white' : ''
-          }`}
+        {/* About Dropdown - Placed after Home */}
+        <div 
+          className="relative"
+          onMouseEnter={() => handleMouseEnter('about')}
+          onMouseLeave={() => handleMouseLeave('dropdown')}
         >
-          About
-        </Link>
+          <button
+            className={`flex items-center space-x-1 px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
+              activeDropdown === 'about' ? 'text-white bg-[#F04A06]' : ''
+            } ${
+              isActiveDropdown(aboutItems) ? 'bg-[#F04A06] text-white shadow-sm' : ''
+            }`}
+          >
+            <span>About</span>
+            {activeDropdown === 'about' ? 
+              <ChevronUp className="w-4 h-4 ml-1" /> : 
+              <ChevronDown className="w-4 h-4 ml-1" />
+            }
+          </button>
+          
+          {activeDropdown === 'about' && (
+            <div 
+              className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl py-2 z-[60]
+                animate-in fade-in slide-in-from-top-2 duration-200"
+            >
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#F04A06] to-[#2E7D32]" />
+              
+              {aboutItems.map((item) => renderMenuItem(item, false, 'about'))}
+            </div>
+          )}
+        </div>
 
         {/* Careers Link */}
         <Link
           to="/Career"
           onClick={closeAll}
-          className={`px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
-            isActivePage('/Career') ? 'bg-[#F04A06] text-white' : ''
+          className={`group flex items-center px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
+            isActivePage('/Career') ? 'bg-[#F04A06] text-white shadow-sm' : ''
           }`}
         >
+          <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+            isActivePage('/Career') ? 'bg-white' : 'bg-[#F04A06]/30 group-hover:bg-white'
+          }`} />
           Careers
         </Link>
 
@@ -265,56 +303,91 @@ function Navbar() {
         <Link
           to="/Gallerypage"
           onClick={closeAll}
-          className={`px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
-            isActivePage('/Gallerypage') ? 'bg-[#F04A06] text-white' : ''
+          className={`group flex items-center px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
+            isActivePage('/Gallerypage') ? 'bg-[#F04A06] text-white shadow-sm' : ''
           }`}
         >
+          <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+            isActivePage('/Gallerypage') ? 'bg-white' : 'bg-[#F04A06]/30 group-hover:bg-white'
+          }`} />
           Gallery
         </Link>
 
-        {/* Dynamic Dropdowns - Hover based for desktop */}
-        {dropdowns.map((dropdown) => (
-          <div 
-            key={dropdown.id} 
-            className="relative"
-            onMouseEnter={() => handleMouseEnter(dropdown.id)}
-            onMouseLeave={() => handleMouseLeave('dropdown')}
+        {/* Programs Dropdown */}
+        <div 
+          className="relative"
+          onMouseEnter={() => handleMouseEnter('programs')}
+          onMouseLeave={() => handleMouseLeave('dropdown')}
+        >
+          <button
+            className={`flex items-center space-x-1 px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
+              activeDropdown === 'programs' ? 'text-white bg-[#F04A06]' : ''
+            } ${
+              isActiveDropdown(programItems) ? 'bg-[#F04A06] text-white shadow-sm' : ''
+            }`}
           >
-            <button
-              className={`flex items-center space-x-1 px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
-                activeDropdown === dropdown.id ? 'text-white bg-[#F04A06]' : ''
-              } ${
-                isActiveDropdown(dropdown.items) ? 'bg-[#F04A06] text-white' : ''
-              }`}
+            <span>Programs</span>
+            {activeDropdown === 'programs' ? 
+              <ChevronUp className="w-4 h-4 ml-1" /> : 
+              <ChevronDown className="w-4 h-4 ml-1" />
+            }
+          </button>
+          
+          {activeDropdown === 'programs' && (
+            <div 
+              className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl py-2 z-[60]
+                animate-in fade-in slide-in-from-top-2 duration-200"
             >
-              <span>{dropdown.label}</span>
-              {activeDropdown === dropdown.id ? 
-                <ChevronUp className="w-4 h-4 ml-1" /> : 
-                <ChevronDown className="w-4 h-4 ml-1" />
-              }
-            </button>
-            
-            {activeDropdown === dropdown.id && (
-              <div 
-                className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl py-2 z-[60]
-                  animate-in fade-in slide-in-from-top-2 duration-200"
-              >
-                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#F04A06] to-[#2E7D32]" />
-                
-                {dropdown.items.map((item) => renderMenuItem(item, false, dropdown.id))}
-              </div>
-            )}
-          </div>
-        ))}
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#F04A06] to-[#2E7D32]" />
+              
+              {programItems.map((item) => renderMenuItem(item, false, 'programs'))}
+            </div>
+          )}
+        </div>
+
+        {/* Services Dropdown */}
+        <div 
+          className="relative"
+          onMouseEnter={() => handleMouseEnter('services')}
+          onMouseLeave={() => handleMouseLeave('dropdown')}
+        >
+          <button
+            className={`flex items-center space-x-1 px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
+              activeDropdown === 'services' ? 'text-white bg-[#F04A06]' : ''
+            } ${
+              isActiveDropdown(serviceItems) ? 'bg-[#F04A06] text-white shadow-sm' : ''
+            }`}
+          >
+            <span>Services</span>
+            {activeDropdown === 'services' ? 
+              <ChevronUp className="w-4 h-4 ml-1" /> : 
+              <ChevronDown className="w-4 h-4 ml-1" />
+            }
+          </button>
+          
+          {activeDropdown === 'services' && (
+            <div 
+              className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl py-2 z-[60]
+                animate-in fade-in slide-in-from-top-2 duration-200"
+            >
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#F04A06] to-[#2E7D32]" />
+              
+              {serviceItems.map((item) => renderMenuItem(item, false, 'services'))}
+            </div>
+          )}
+        </div>
 
         {/* Contact Link */}
         <Link
           to="/Contact"
           onClick={closeAll}
-          className={`px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
-            isActivePage('/Contact') ? 'bg-[#F04A06] text-white' : ''
+          className={`group flex items-center px-3 py-2 text-[#F04A06] hover:text-white transition font-medium rounded-lg hover:bg-[#F04A06] ${
+            isActivePage('/Contact') ? 'bg-[#F04A06] text-white shadow-sm' : ''
           }`}
         >
+          <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+            isActivePage('/Contact') ? 'bg-white' : 'bg-[#F04A06]/30 group-hover:bg-white'
+          }`} />
           Contact
         </Link>
       </div>
@@ -342,23 +415,41 @@ function Navbar() {
               onClick={closeAll}
               className={`py-3 px-4 text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium
                 border-b border-gray-100 text-base flex items-center ${
-                isActivePage('/') ? 'bg-[#F04A06] text-white' : ''
+                isActivePage('/') ? 'bg-[#F04A06] text-white shadow-sm' : ''
               }`}
             >
+              <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+                isActivePage('/') ? 'bg-white' : 'bg-[#F04A06]/30'
+              }`} />
               Home
             </Link>
 
-            {/* About Link */}
-            <Link
-              to="/About"
-              onClick={closeAll}
-              className={`py-3 px-4 text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium
-                border-b border-gray-100 text-base flex items-center ${
-                isActivePage('/About') ? 'bg-[#F04A06] text-white' : ''
-              }`}
-            >
-              About
-            </Link>
+            {/* About Dropdown for Mobile */}
+            <div className="border-b border-gray-100">
+              <button
+                onClick={() => toggleDropdown('about')}
+                className={`flex justify-between items-center w-full py-3 px-4 
+                  text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium text-base ${
+                  activeDropdown === 'about' ? 'text-white bg-[#F04A06]' : ''
+                } ${
+                  isActiveDropdown(aboutItems) ? 'bg-[#F04A06] text-white shadow-sm' : ''
+                }`}
+              >
+                <span className="flex items-center">
+                  About
+                </span>
+                {activeDropdown === 'about' ? 
+                  <ChevronUp className="w-5 h-5" /> : 
+                  <ChevronDown className="w-5 h-5" />
+                }
+              </button>
+              
+              {activeDropdown === 'about' && (
+                <div className="pl-4 pb-2 space-y-1 animate-in slide-in-from-top-1 duration-200">
+                  {aboutItems.map((item) => renderMenuItem(item, true, 'about'))}
+                </div>
+              )}
+            </div>
 
             {/* Careers Link */}
             <Link
@@ -366,9 +457,12 @@ function Navbar() {
               onClick={closeAll}
               className={`py-3 px-4 text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium
                 border-b border-gray-100 text-base flex items-center ${
-                isActivePage('/Career') ? 'bg-[#F04A06] text-white' : ''
+                isActivePage('/Career') ? 'bg-[#F04A06] text-white shadow-sm' : ''
               }`}
             >
+              <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+                isActivePage('/Career') ? 'bg-white' : 'bg-[#F04A06]/30'
+              }`} />
               Careers
             </Link>
 
@@ -378,40 +472,68 @@ function Navbar() {
               onClick={closeAll}
               className={`py-3 px-4 text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium
                 border-b border-gray-100 text-base flex items-center ${
-                isActivePage('/Gallerypage') ? 'bg-[#F04A06] text-white' : ''
+                isActivePage('/Gallerypage') ? 'bg-[#F04A06] text-white shadow-sm' : ''
               }`}
             >
+              <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+                isActivePage('/Gallerypage') ? 'bg-white' : 'bg-[#F04A06]/30'
+              }`} />
               Gallery
             </Link>
 
-            {/* Mobile Dropdowns - Click based for mobile */}
-            {dropdowns.map((dropdown) => (
-              <div key={dropdown.id} className="border-b border-gray-100">
-                <button
-                  onClick={() => toggleDropdown(dropdown.id)}
-                  className={`flex justify-between items-center w-full py-3 px-4 
-                    text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium text-base ${
-                    activeDropdown === dropdown.id ? 'text-white bg-[#F04A06]' : ''
-                  } ${
-                    isActiveDropdown(dropdown.items) ? 'bg-[#F04A06] text-white' : ''
-                  }`}
-                >
-                  <span className="flex items-center">
-                    {dropdown.label}
-                  </span>
-                  {activeDropdown === dropdown.id ? 
-                    <ChevronUp className="w-5 h-5" /> : 
-                    <ChevronDown className="w-5 h-5" />
-                  }
-                </button>
-                
-                {activeDropdown === dropdown.id && (
-                  <div className="pl-4 pb-2 space-y-1 animate-in slide-in-from-top-1 duration-200">
-                    {dropdown.items.map((item) => renderMenuItem(item, true, dropdown.id))}
-                  </div>
-                )}
-              </div>
-            ))}
+            {/* Programs Dropdown for Mobile */}
+            <div className="border-b border-gray-100">
+              <button
+                onClick={() => toggleDropdown('programs')}
+                className={`flex justify-between items-center w-full py-3 px-4 
+                  text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium text-base ${
+                  activeDropdown === 'programs' ? 'text-white bg-[#F04A06]' : ''
+                } ${
+                  isActiveDropdown(programItems) ? 'bg-[#F04A06] text-white shadow-sm' : ''
+                }`}
+              >
+                <span className="flex items-center">
+                  Programs
+                </span>
+                {activeDropdown === 'programs' ? 
+                  <ChevronUp className="w-5 h-5" /> : 
+                  <ChevronDown className="w-5 h-5" />
+                }
+              </button>
+              
+              {activeDropdown === 'programs' && (
+                <div className="pl-4 pb-2 space-y-1 animate-in slide-in-from-top-1 duration-200">
+                  {programItems.map((item) => renderMenuItem(item, true, 'programs'))}
+                </div>
+              )}
+            </div>
+
+            {/* Services Dropdown for Mobile */}
+            <div className="border-b border-gray-100">
+              <button
+                onClick={() => toggleDropdown('services')}
+                className={`flex justify-between items-center w-full py-3 px-4 
+                  text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium text-base ${
+                  activeDropdown === 'services' ? 'text-white bg-[#F04A06]' : ''
+                } ${
+                  isActiveDropdown(serviceItems) ? 'bg-[#F04A06] text-white shadow-sm' : ''
+                }`}
+              >
+                <span className="flex items-center">
+                  Services
+                </span>
+                {activeDropdown === 'services' ? 
+                  <ChevronUp className="w-5 h-5" /> : 
+                  <ChevronDown className="w-5 h-5" />
+                }
+              </button>
+              
+              {activeDropdown === 'services' && (
+                <div className="pl-4 pb-2 space-y-1 animate-in slide-in-from-top-1 duration-200">
+                  {serviceItems.map((item) => renderMenuItem(item, true, 'services'))}
+                </div>
+              )}
+            </div>
 
             {/* Contact Link */}
             <Link
@@ -419,9 +541,12 @@ function Navbar() {
               onClick={closeAll}
               className={`py-3 px-4 text-[#F04A06] hover:text-white hover:bg-[#F04A06] transition font-medium
                 border-b border-gray-100 text-base flex items-center ${
-                isActivePage('/Contact') ? 'bg-[#F04A06] text-white' : ''
+                isActivePage('/Contact') ? 'bg-[#F04A06] text-white shadow-sm' : ''
               }`}
             >
+              <span className={`w-1.5 h-1.5 rounded-full mr-2 transition-colors ${
+                isActivePage('/Contact') ? 'bg-white' : 'bg-[#F04A06]/30'
+              }`} />
               Contact
             </Link>
           </div>
