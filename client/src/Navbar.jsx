@@ -114,7 +114,9 @@ function Navbar() {
   const programItems = [
     { name: "All Programs", path: "/StackenzoPrograms" },
     { name: "Events", path: "/Programs" },
-    { name: "College Programs", path: "/WorkShops" },
+    { name: "College Programs", path: "#" ,
+      children: [{ name: "Workshops", path: "/WorkShops" }]
+    },
     {
       name: "School Programs",
       path: "/Robotics",

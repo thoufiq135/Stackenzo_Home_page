@@ -31,25 +31,8 @@
       ],
       "outcomes": ["Build IoT systems", "Implement cloud connectivity", "Create smart applications"],
       "registrationOpen": false
-    },
-    {
-
-      "id": "robotics ",
-      "title": "AI + ROBOTICS SUMMER CAMP",
-      "duration": "6 Days",
-      "suitedFor": ["ECE", "EEE","CSE","Diploma", "Mechanical", "Robotics clubs","Intermediate","10th"],
-      "description": "Hands-on robot building with sensors and controllers",
-      "topics": [
-        "Introduction to robotics systems",
-        "Motors, sensors, and controllers",
-        "Robot movement and control logic",
-        "Line follower / obstacle avoidance concepts",
-        "Hands-on robot building sessions"
-      ],
-      "outcomes": ["Build functional robots", "Implement control systems", "Design autonomous robots"],
-      "registrationOpen": true,
-      "seats": 100
     }
+    
   ],
   "featuredWorkshop": {
     "workshopId": "robotics",
