@@ -380,7 +380,7 @@ export default function StackenzoLanding() {
                     </p>
                     <p className="section-body" style={{ margin: '0 auto 2rem', textAlign: 'center', maxWidth: '700px' }}>
                         Our AI + Robotics Bootcamp is a 3-day immersive experience designed for students 
-                        from Classes 6th to 9th.
+                        from Classes 3rd to 9th.
                     </p>
 
                     <div className="bootcamp-header">
@@ -400,7 +400,7 @@ export default function StackenzoLanding() {
                         <div className="bootcamp-badge">
                             <div className="big-num">3</div>
                             <div className="big-label">Day Immersive Experience</div>
-                            <div className="grade-info">Designed for Classes 6th – 9th</div>
+                            <div className="grade-info">Designed for Classes 3rd – 9th</div>
                             <div style={{ marginTop: '1.5rem', borderTop: '1px solid rgba(232, 69, 10, 0.15)', paddingTop: '1.25rem' }}>
                                 <p style={{ fontSize: '0.8rem', color: '#94A3B8' }}>Delivered directly at your school</p>
                             </div>
