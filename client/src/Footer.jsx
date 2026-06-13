@@ -46,7 +46,7 @@ function Footer() {
 
           {/* Logo + Contact */}
           <div className="text-center mb-10">
-            <img src="/images/logo for footer.png" className="h-10 mx-auto mb-2" />
+            <img src="/images/final-logo.png" className="h-10 mx-auto mb-2" />
             <p className="font-semibold mb-4">Learn Build Inspire</p>
 
             <div className="flex flex-col gap-2 text-sm items-center mb-4">
@@ -118,8 +118,8 @@ function Footer() {
         <div className="hidden md:grid md:grid-cols-5 gap-10 mb-12">
 
           <div>
-            <img src="/images/logo for footer.png" className="h-10 mb-3" />
-            <p className="font-semibold mb-4">Learn Build Inspire</p>
+            <img src="/images/final-logo.png" className="h-10 mb-3" />
+            {/* <p className="font-semibold mb-4">Learn Build Inspire</p> */}
 
             <div className="space-y-3 text-sm">
               <div className="flex gap-2"><Mail size={16}/> hello@stackenzo.com</div>

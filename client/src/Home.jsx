@@ -280,77 +280,134 @@ function PageLoader({ onDone }) {
 
   return (
     <motion.div
-      exit={{ clipPath: "inset(0 0 100% 0)", transition: { duration: 0.7, ease: EASE_EXPO } }}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#1A0800] overflow-hidden"
+  exit={{
+    clipPath: "inset(0 0 100% 0)",
+    transition: { duration: 0.7, ease: EASE_EXPO }
+  }}
+  className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0D0D0D] overflow-hidden"
+>
+  {/* Grid Background */}
+  <div
+    className="absolute inset-0 opacity-[0.05]"
+    style={{
+      backgroundImage:
+        "linear-gradient(#F04A06 1px,transparent 1px),linear-gradient(90deg,#F04A06 1px,transparent 1px)",
+      backgroundSize: "40px 40px",
+    }}
+  />
+
+  {/* Main Ambient Glow */}
+  <motion.div
+    className="absolute inset-0"
+    style={{
+      background:
+        "radial-gradient(circle at center, rgba(255,183,77,0.35) 0%, rgba(240,74,6,0.45) 35%, rgba(20,20,20,0.75) 70%, transparent 90%)",
+    }}
+    animate={{
+      scale: 0.3 + (prog / 100) * 2.4,
+      opacity: 0.4 + (prog / 100) * 0.6,
+    }}
+    transition={{
+      duration: 0.3,
+      ease: "easeOut",
+    }}
+  />
+
+  {/* Pulse Glow */}
+  <motion.div
+    className="absolute w-[320px] h-[320px] rounded-full"
+    style={{
+      background:
+        "radial-gradient(circle, rgba(240,74,6,0.45), rgba(212,175,55,0.20), transparent 75%)",
+      filter: "blur(10px)",
+    }}
+    animate={{
+      scale: [1, 1.6, 1],
+      opacity: [0.5, 0.15, 0.5],
+    }}
+    transition={{
+      duration: 2.8,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
+
+  {/* Logo Section */}
+  <motion.div
+    initial={{ scale: 0.5, opacity: 0, y: 20 }}
+    animate={{ scale: 1, opacity: 1, y: 0 }}
+    transition={{
+      duration: 0.7,
+      ease: EASE_BACK,
+    }}
+    className="flex items-center gap-3 mb-10 relative z-10"
+  >
+    <motion.div
+      initial={{ scale: 0.8 }}
+      animate={{
+        scale: [1, 1.03, 1],
+        y: [0, -4, 0],
+      }}
+      transition={{
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="w-100 h-40 flex items-center justify-center"
     >
-      <div
-        className="absolute inset-0 opacity-[0.06]"
-        style={{
-          backgroundImage: "linear-gradient(#F04A06 1px,transparent 1px),linear-gradient(90deg,#F04A06 1px,transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
+      <img
+        src="/images/final-logo.png"
+        alt="Stackenzo"
+        className="
+          w-[1000px]
+          h-[120px]
+          object-contain
+          drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]
+        "
       />
+    </motion.div>
+  </motion.div>
+
+  {/* Progress Section */}
+  <div className="relative z-10 w-72">
+    <div className="h-[3px] bg-white/15 rounded-full overflow-hidden mb-4">
       <motion.div
-        className="absolute inset-0"
+        className="h-full rounded-full"
         style={{
-          background: "radial-gradient(circle at center, rgba(230,107,38,0.55) 0%, rgba(180,60,10,0.25) 40%, transparent 70%)",
+          background:
+            "linear-gradient(90deg,#FF6B1A,#FFD700,#FF6B1A)",
+          boxShadow:
+            "0 0 12px rgba(255,107,26,0.7), 0 0 20px rgba(255,215,0,0.5)",
         }}
         animate={{
-          scale: 0.3 + (prog / 100) * 2.4,
-          opacity: 0.4 + (prog / 100) * 0.6,
+          width: `${prog}%`,
         }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        transition={{
+          duration: 0.18,
+        }}
       />
-      <motion.div
-        className="absolute w-[300px] h-[300px] rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(240,74,6,0.35), transparent 70%)" }}
-        animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0.15, 0.5] }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        initial={{ scale: 0.5, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: EASE_BACK }}
-        className="flex items-center gap-3 mb-10 relative z-10"
+    </div>
+
+    <div className="flex justify-between items-center">
+      <motion.p
+        className="text-xs text-white/50 tracking-[0.18em] uppercase"
+        animate={{
+          opacity: [0.4, 1, 0.4],
+        }}
+        transition={{
+          duration: 1.4,
+          repeat: Infinity,
+        }}
       >
-        <motion.div
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="w-14 h-14 flex items-center justify-center"
-        >
-          <img
-            src="/images/Stackenzo small Logo.jpeg"
-            alt="Stackenzo"
-            className="w-10 h-10 object-contain"
-          />
-        </motion.div>
-        <div>
-          <span className="text-3xl font-black text-white tracking-tight block">Stackenzo</span>
-          <span className="text-xs text-white/50 tracking-[.2em] uppercase">Learn Build Inspire</span>
-        </div>
-      </motion.div>
-      <div className="relative z-10 w-64">
-        <div className="h-[2px] bg-white/8 rounded-full overflow-hidden mb-3">
-          <motion.div
-            className="h-full rounded-full"
-            style={{ background: "linear-gradient(90deg,#F04A06,#D4AF37,#F04A06)" }}
-            animate={{ width: `${prog}%` }}
-            transition={{ duration: 0.18 }}
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <motion.p
-            className="text-xs text-white/30 tracking-[.18em] uppercase"
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
-            transition={{ duration: 1.4, repeat: Infinity }}
-          >
-            {phase === "done" ? "Ready" : "Loading"}
-          </motion.p>
-          <span className="text-xs text-[#D4AF37] font-bold">{Math.round(prog)}%</span>
-        </div>
-      </div>
-    </motion.div>
+        {phase === "done" ? "Ready" : "Loading"}
+      </motion.p>
+
+      <span className="text-sm text-[#FFD700] font-bold">
+        {Math.round(prog)}%
+      </span>
+    </div>
+  </div>
+</motion.div>
   );
 }
 

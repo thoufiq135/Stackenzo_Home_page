@@ -229,11 +229,16 @@ function Navbar() {
       bg-[#FFF4ED] border-b border-gray-200 z-50">
       
       {/* Logo */}
-      <Link to="/" onClick={handleLogoClick}>
+     <Link to="/" onClick={handleLogoClick} className="flex-shrink-0">
         <img 
-          src="/images/logo for footer.png" 
+          src="/images/final-logo.png" 
           alt="Stackenzo" 
-          className="h-8 sm:h-10 md:h-12 w-auto hover:opacity-100 transition-opacity"
+          className="logo-image"
+          style={{ 
+            height: '55px', 
+            width: '195px',
+            maxWidth: '180px'
+          }}
         />
       </Link>
 
