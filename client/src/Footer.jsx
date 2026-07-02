@@ -167,7 +167,7 @@ function Footer() {
         {isHomePage && (
           <div className="mb-12">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d509.89248860616243!2d79.94935334632429!3d14.407470899203648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1776082020199!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15455.394021869784!2d79.99096211694324!3d14.43589273584212!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf348db124e65%3A0xd5cf8f1dc2dc4153!2s16-13-228%2C%20Muthukur%20Rd%2C%20Lic%20Colony%2C%20Harinathpuram%2C%20Nellore%2C%20Andhra%20Pradesh%20524003!5e0!3m2!1sen!2sin!4v1782968544826!5m2!1sen!2sin"
               className="w-full h-[300px] rounded-xl border"
               loading="lazy"
             />
