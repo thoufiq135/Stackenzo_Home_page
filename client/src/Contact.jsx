@@ -851,7 +851,7 @@ function Contact() {
                   className="relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl"
                   style={{ height: "clamp(260px,40vw,420px)" }}>
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1462.208654815225!2d79.94902621077726!3d14.40748826002402!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTTCsDI0JzI2LjkiTiA3OcKwNTYnNTcuMCJF!5e1!3m2!1sen!2sin!4v1775304227880!5m2!1sen!2sin"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15455.394021869784!2d79.99096211694324!3d14.43589273584212!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf348db124e65%3A0xd5cf8f1dc2dc4153!2s16-13-228%2C%20Muthukur%20Rd%2C%20Lic%20Colony%2C%20Harinathpuram%2C%20Nellore%2C%20Andhra%20Pradesh%20524003!5e0!3m2!1sen!2sin!4v1782968544826!5m2!1sen!2sin"
                     width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade" title="Stackenzo Location" />
                   <Motion.div className="absolute inset-0 pointer-events-none rounded-2xl"
