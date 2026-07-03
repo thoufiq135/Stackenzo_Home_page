@@ -184,344 +184,400 @@ function PageLoader({ onDone }) {
 
   return (
     <motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  exit={{ opacity: 0 }}
-  className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0D0D0D] overflow-hidden"
->
-  {/* Animated Background Elements */}
-  <div className="absolute inset-0">
-    {/* Grid Pattern */}
-    <div 
-      className="absolute inset-0 opacity-[0.05]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
       style={{
-        backgroundImage: 'radial-gradient(circle, #F04A06 1px, transparent 1px)',
-        backgroundSize: '40px 40px',
+        background: 'linear-gradient(135deg, #ffffff 0%, #FFF4ED 30%, #FCE4D6 60%, #FFF8E7 100%)',
       }}
-    />
-    
-    {/* Animated Gradient Orbs */}
-    <motion.div
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-      animate={{
-        scale: [1, 1.2, 1],
-        opacity: [0.3, 0.5, 0.3],
-      }}
-      transition={{
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      style={{
-        background: 'radial-gradient(circle, rgba(240,74,6,0.15) 0%, rgba(212,175,55,0.05) 50%, transparent 70%)',
-        filter: 'blur(60px)',
-      }}
-    />
-    
-    <motion.div
-      className="absolute top-1/4 right-1/4 w-[300px] h-[300px] rounded-full"
-      animate={{
-        scale: [1, 1.3, 1],
-        opacity: [0.2, 0.4, 0.2],
-        x: [0, 30, 0],
-        y: [0, -20, 0],
-      }}
-      transition={{
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 1,
-      }}
-      style={{
-        background: 'radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 60%)',
-        filter: 'blur(50px)',
-      }}
-    />
-    
-    <motion.div
-      className="absolute bottom-1/4 left-1/4 w-[250px] h-[250px] rounded-full"
-      animate={{
-        scale: [1, 1.4, 1],
-        opacity: [0.15, 0.35, 0.15],
-        x: [0, -30, 0],
-        y: [0, 20, 0],
-      }}
-      transition={{
-        duration: 5,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 2,
-      }}
-      style={{
-        background: 'radial-gradient(circle, rgba(240,74,6,0.1) 0%, transparent 60%)',
-        filter: 'blur(40px)',
-      }}
-    />
+    >
+      {/* Blur Overlay - Solid Background */}
+      <div className="absolute inset-0 backdrop-blur-xl bg-white/30" />
 
-    {/* Floating Particles */}
-    {[...Array(12)].map((_, i) => (
+      {/* Animated Gradient Overlay */}
       <motion.div
-        key={i}
-        className="absolute rounded-full"
-        style={{
-          width: Math.random() * 3 + 1 + "px",
-          height: Math.random() * 3 + 1 + "px",
-          background: i % 2 === 0 ? 'rgba(240,74,6,0.3)' : 'rgba(212,175,55,0.3)',
-          left: Math.random() * 100 + "%",
-          top: Math.random() * 100 + "%",
-        }}
+        className="absolute inset-0"
         animate={{
-          y: [0, -30 - Math.random() * 50, 0],
-          x: [0, Math.random() * 20 - 10, 0],
-          opacity: [0, 0.8, 0],
-          scale: [0.5, 1.5, 0.5],
+          background: [
+            'radial-gradient(ellipse at 0% 50%, rgba(240,74,6,0.06) 0%, transparent 50%), radial-gradient(ellipse at 100% 50%, rgba(212,175,55,0.06) 0%, transparent 50%)',
+            'radial-gradient(ellipse at 50% 0%, rgba(240,74,6,0.04) 0%, transparent 50%), radial-gradient(ellipse at 50% 100%, rgba(212,175,55,0.04) 0%, transparent 50%)',
+            'radial-gradient(ellipse at 0% 50%, rgba(240,74,6,0.06) 0%, transparent 50%), radial-gradient(ellipse at 100% 50%, rgba(212,175,55,0.06) 0%, transparent 50%)',
+          ],
         }}
         transition={{
-          duration: 4 + Math.random() * 4,
+          duration: 6,
           repeat: Infinity,
           ease: "easeInOut",
-          delay: Math.random() * 3,
         }}
       />
-    ))}
 
-    {/* Decorative Rings */}
-    <motion.div
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/5"
-      style={{ width: 400, height: 400 }}
-      animate={{
-        rotate: [0, 360],
-        scale: [1, 1.05, 1],
-      }}
-      transition={{
-        duration: 20,
-        repeat: Infinity,
-        ease: "linear",
-      }}
-    />
-    <motion.div
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/3"
-      style={{ width: 300, height: 300 }}
-      animate={{
-        rotate: [360, 0],
-        scale: [1, 1.08, 1],
-      }}
-      transition={{
-        duration: 15,
-        repeat: Infinity,
-        ease: "linear",
-        delay: 2,
-      }}
-    />
-  </div>
-
-  {/* Logo Section */}
-  <motion.div
-    initial={{ scale: 0.8, opacity: 0, y: 30 }}
-    animate={{ scale: 1, opacity: 1, y: 0 }}
-    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-    className="relative z-10 flex items-center gap-3 mb-12"
-  >
-    <motion.img
-      src="/images/final-logo.png"
-      alt="Stackenzo"
-      className="w-[120px] sm:w-[200px] md:w-[300px] lg:w-[400px] h-auto object-contain"
-      animate={{
-        filter: [
-          'drop-shadow(0 0 25px rgba(255,255,255,0.25))',
-          'drop-shadow(0 0 50px rgba(240,74,6,0.3))',
-          'drop-shadow(0 0 25px rgba(255,255,255,0.25))',
-        ],
-      }}
-      transition={{
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-    />
-    
-    {/* Logo Glow */}
-    <motion.div
-      className="absolute inset-0 -z-10"
-      animate={{
-        opacity: [0.3, 0.6, 0.3],
-        scale: [1, 1.1, 1],
-      }}
-      transition={{
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      style={{
-        background: 'radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%)',
-        filter: 'blur(30px)',
-      }}
-    />
-  </motion.div>
-
-  {/* Loading Indicator */}
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.4 }}
-    className="relative z-10 w-full max-w-[320px] sm:max-w-[400px] px-4"
-  >
-    {/* Battery Points */}
-    <div className="flex items-center justify-between gap-1 sm:gap-1.5 mb-4">
-      {[...Array(10)].map((_, i) => {
-        const isFilled = i < Math.ceil(prog / 10);
-        const isActive = i === Math.floor(prog / 10) && prog < 100;
-        const isComplete = prog >= 100;
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        {/* Grid Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #F04A06 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
         
-        return (
-          <motion.div
-            key={i}
-            className="relative flex-1 h-[6px] rounded-full overflow-hidden"
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ 
-              scaleX: 1,
-              opacity: 1
-            }}
-            transition={{ 
-              duration: 0.3,
-              delay: i * 0.03,
-              ease: "easeOut"
-            }}
-          >
-            <motion.div
-              className={`h-full rounded-full transition-all duration-300 ${
-                isFilled || isComplete
-                  ? 'bg-gradient-to-r from-[#FF6B1A] via-[#FFD700] to-[#FF6B1A]'
-                  : 'bg-white/10'
-              } ${isActive ? 'animate-pulse' : ''}`}
-              initial={{ width: 0 }}
-              animate={{ width: isFilled || isComplete ? '100%' : '30%' }}
-              transition={{ duration: 0.3, delay: i * 0.03 }}
-              style={{
-                boxShadow: isFilled || isComplete 
-                  ? `0 0 ${isActive ? '15px' : '8px'} rgba(255,215,0,${isActive ? '0.5' : '0.2'})` 
-                  : 'none'
-              }}
-            />
-            
-            {/* Active Glow */}
-            {isActive && (
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                animate={{
-                  opacity: [0.3, 0.8, 0.3],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  background: 'radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%)',
-                  filter: 'blur(4px)',
-                }}
-              />
-            )}
-          </motion.div>
-        );
-      })}
-    </div>
-
-    {/* Progress Info */}
-    <div className="flex justify-between items-center">
-      <div className="flex items-center gap-3">
+        {/* Animated Gradient Orbs - Orange */}
         <motion.div
-          className="w-2 h-2 rounded-full"
+          className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full"
           animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.3, 1, 0.3],
+            scale: [1, 1.3, 1],
+            opacity: [0.12, 0.2, 0.12],
+            x: [0, 30, 0],
+            y: [0, -20, 0],
           }}
           transition={{
-            duration: 1.5,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
           style={{
-            background: prog >= 100 ? '#22c55e' : '#FFD700',
+            background: 'radial-gradient(circle, rgba(240,74,6,0.1) 0%, rgba(212,175,55,0.04) 50%, transparent 70%)',
+            filter: 'blur(60px)',
           }}
         />
-        <p className="text-xs text-white/50 tracking-[0.18em] uppercase font-medium">
-          {phase === "done" ? "Ready" : "Loading"}
-        </p>
-      </div>
-      <motion.span 
-        key={prog}
-        initial={{ scale: 1.2, opacity: 0.5 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="text-sm font-bold"
-        style={{
-          color: prog >= 100 ? '#22c55e' : '#FFD700',
-        }}
-      >
-        {Math.round(prog)}%
-      </motion.span>
-    </div>
-  </motion.div>
-
-  {/* Footer Text */}
-  <motion.p
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 0.3 }}
-    transition={{ duration: 0.8, delay: 0.8 }}
-    className="absolute bottom-8 text-xs text-white/20 tracking-widest uppercase font-light"
-  >
-    Building the Future
-  </motion.p>
-
-  {/* Loading Complete Animation */}
-  {phase === "done" && (
-    <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ 
-        type: "spring",
-        stiffness: 300,
-        damping: 20,
-        delay: 0.2
-      }}
-      className="absolute inset-0 pointer-events-none"
-    >
-      {/* Success Flash Effect */}
-      <motion.div
-        className="absolute inset-0 bg-white/5"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 0.1, 0] }}
-        transition={{ duration: 0.8 }}
-      />
-      
-      {/* Success Particles */}
-      {[...Array(20)].map((_, i) => (
+        
+        {/* Animated Gradient Orbs - Gold */}
         <motion.div
-          key={i}
-          className="absolute w-1 h-1 rounded-full bg-[#FFD700]"
-          initial={{
-            x: '50%',
-            y: '50%',
-            scale: 0,
-            opacity: 0,
-          }}
+          className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] rounded-full"
           animate={{
-            x: `${50 + (Math.random() - 0.5) * 100}%`,
-            y: `${50 + (Math.random() - 0.5) * 100}%`,
-            scale: Math.random() * 3 + 1,
-            opacity: [1, 0],
+            scale: [1, 1.4, 1],
+            opacity: [0.08, 0.16, 0.08],
+            x: [0, -30, 0],
+            y: [0, 20, 0],
           }}
           transition={{
-            duration: 1.2,
-            delay: i * 0.03,
-            ease: "easeOut",
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+          style={{
+            background: 'radial-gradient(circle, rgba(212,175,55,0.12) 0%, rgba(240,74,6,0.04) 50%, transparent 70%)',
+            filter: 'blur(70px)',
           }}
         />
-      ))}
+
+        {/* White Glow Center */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,244,237,0.4) 50%, transparent 70%)',
+            filter: 'blur(50px)',
+          }}
+        />
+
+        {/* Floating Particles - Orange/Gold */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: Math.random() * 3 + 1 + "px",
+              height: Math.random() * 3 + 1 + "px",
+              background: i % 3 === 0 ? 'rgba(240,74,6,0.2)' : i % 3 === 1 ? 'rgba(212,175,55,0.2)' : 'rgba(255,255,255,0.3)',
+              left: Math.random() * 100 + "%",
+              top: Math.random() * 100 + "%",
+            }}
+            animate={{
+              y: [0, -30 - Math.random() * 40, 0],
+              x: [0, Math.random() * 20 - 10, 0],
+              opacity: [0, 0.5, 0],
+              scale: [0.5, 1.5, 0.5],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: Math.random() * 3,
+            }}
+          />
+        ))}
+
+        {/* Decorative Rings - Orange/Gold */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border"
+          style={{ 
+            width: 380, 
+            height: 380,
+            borderColor: 'rgba(240,74,6,0.05)',
+          }}
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.03, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border"
+          style={{ 
+            width: 280, 
+            height: 280,
+            borderColor: 'rgba(212,175,55,0.06)',
+          }}
+          animate={{
+            rotate: [360, 0],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear",
+            delay: 2,
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border"
+          style={{ 
+            width: 180, 
+            height: 180,
+            borderColor: 'rgba(255,255,255,0.08)',
+          }}
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.08, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "linear",
+            delay: 4,
+          }}
+        />
+      </div>
+
+      {/* Logo Section - Made more visible */}
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0, y: 30 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        className="relative z-10 flex items-center gap-3 mb-12"
+      >
+        <motion.img
+          src="/images/final-logo.png"
+          alt="Stackenzo"
+          className="w-[120px] sm:w-[200px] md:w-[300px] lg:w-[400px] h-auto object-contain"
+          animate={{
+            filter: [
+              'drop-shadow(0 0 30px rgba(255,255,255,0.4)) drop-shadow(0 0 60px rgba(240,74,6,0.2))',
+              'drop-shadow(0 0 40px rgba(255,255,255,0.5)) drop-shadow(0 0 80px rgba(212,175,55,0.25))',
+              'drop-shadow(0 0 30px rgba(255,255,255,0.4)) drop-shadow(0 0 60px rgba(240,74,6,0.2))',
+            ],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        
+        {/* Logo Glow - Orange/Gold - Made more visible */}
+        <motion.div
+          className="absolute inset-0 -z-10"
+          animate={{
+            opacity: [0.3, 0.5, 0.3],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{
+            background: 'radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(240,74,6,0.1) 50%, transparent 70%)',
+            filter: 'blur(50px)',
+          }}
+        />
+      </motion.div>
+
+      {/* Loading Indicator - Made more visible */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="relative z-10 w-full max-w-[320px] sm:max-w-[400px] px-4"
+      >
+        {/* Battery Points - Orange/Gold Theme with better visibility */}
+        <div className="flex items-center justify-between gap-1 sm:gap-1.5 mb-4">
+          {[...Array(10)].map((_, i) => {
+            const isFilled = i < Math.ceil(prog / 10);
+            const isActive = i === Math.floor(prog / 10) && prog < 100;
+            const isComplete = prog >= 100;
+            
+            return (
+              <motion.div
+                key={i}
+                className="relative flex-1 h-[6px] rounded-full overflow-hidden bg-gray-200/50"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ 
+                  scaleX: 1,
+                  opacity: 1
+                }}
+                transition={{ 
+                  duration: 0.3,
+                  delay: i * 0.03,
+                  ease: "easeOut"
+                }}
+              >
+                <motion.div
+                  className={`h-full rounded-full transition-all duration-300 ${
+                    isFilled || isComplete
+                      ? 'bg-gradient-to-r from-[#F04A06] via-[#D4AF37] to-[#F04A06]'
+                      : 'bg-gray-300/30'
+                  } ${isActive ? 'animate-pulse' : ''}`}
+                  initial={{ width: 0 }}
+                  animate={{ width: isFilled || isComplete ? '100%' : '30%' }}
+                  transition={{ duration: 0.3, delay: i * 0.03 }}
+                  style={{
+                    boxShadow: isFilled || isComplete 
+                      ? `0 0 ${isActive ? '20px' : '10px'} rgba(255,215,0,${isActive ? '0.6' : '0.3'})` 
+                      : 'none'
+                  }}
+                />
+                
+                {/* Active Glow - Gold */}
+                {isActive && (
+                  <motion.div
+                    className="absolute inset-0 rounded-full"
+                    animate={{
+                      opacity: [0.3, 0.8, 0.3],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    style={{
+                      background: 'radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%)',
+                      filter: 'blur(6px)',
+                    }}
+                  />
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Progress Info - Made more visible */}
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <motion.div
+              className="w-2 h-2 rounded-full"
+              animate={{
+                scale: [1, 1.5, 1],
+                opacity: [0.3, 1, 0.3],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              style={{
+                background: prog >= 100 ? '#22c55e' : '#D4AF37',
+                boxShadow: prog >= 100 ? '0 0 12px rgba(34,197,94,0.5)' : '0 0 12px rgba(212,175,55,0.5)',
+              }}
+            />
+            <p className="text-xs font-medium text-gray-600 tracking-[0.18em] uppercase">
+              {phase === "done" ? "Ready" : "Loading"}
+            </p>
+          </div>
+          <motion.span 
+            key={prog}
+            initial={{ scale: 1.2, opacity: 0.5 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="text-sm font-bold"
+            style={{
+              color: prog >= 100 ? '#22c55e' : '#F04A06',
+            }}
+          >
+            {Math.round(prog)}%
+          </motion.span>
+        </div>
+      </motion.div>
+
+      {/* Footer Text */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ duration: 0.8, delay: 0.8 }}
+        className="absolute bottom-8 text-xs text-gray-400 tracking-widest uppercase font-light"
+      >
+        Building the Future
+      </motion.p>
+
+      {/* Loading Complete Animation */}
+      {phase === "done" && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ 
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+            delay: 0.2
+          }}
+          className="absolute inset-0 pointer-events-none"
+        >
+          {/* Success Flash Effect */}
+          <motion.div
+            className="absolute inset-0 bg-white/15"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0.2, 0] }}
+            transition={{ duration: 0.8 }}
+          />
+          
+          {/* Success Particles - Orange/Gold */}
+          {[...Array(25)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: Math.random() * 4 + 2 + "px",
+                height: Math.random() * 4 + 2 + "px",
+                background: i % 2 === 0 ? '#F04A06' : '#D4AF37',
+              }}
+              initial={{
+                x: '50%',
+                y: '50%',
+                scale: 0,
+                opacity: 0,
+              }}
+              animate={{
+                x: `${50 + (Math.random() - 0.5) * 120}%`,
+                y: `${50 + (Math.random() - 0.5) * 120}%`,
+                scale: Math.random() * 4 + 1,
+                opacity: [1, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                delay: i * 0.04,
+                ease: "easeOut",
+              }}
+            />
+          ))}
+        </motion.div>
+      )}
     </motion.div>
-  )}
-</motion.div>
   );
 }
 
