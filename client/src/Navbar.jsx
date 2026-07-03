@@ -237,9 +237,9 @@ function Navbar() {
           alt="Stackenzo" 
           className="logo-image"
           style={{ 
-            height: '55px', 
-            width: '195px',
-            maxWidth: '180px'
+            height: '57px', 
+            width: '200px',
+            maxWidth: '2000px'
           }}
         />
       </Link>
