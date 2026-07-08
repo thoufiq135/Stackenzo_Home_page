@@ -657,6 +657,69 @@ function CursorLight() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   ANNOUNCEMENT BANNER
+════════════════════════════════════════════════════════════ */
+function AnnouncementBanner({ onClose }) {
+  return (
+    <motion.div
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -60, opacity: 0, height: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="relative z-[60] w-full overflow-hidden"
+      style={{
+        background: "linear-gradient(90deg, #F04A06, #D4AF37, #F04A06)",
+        backgroundSize: "200% 100%",
+      }}
+    >
+      <motion.div
+        className="absolute inset-0"
+        animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        style={{
+          background: "linear-gradient(90deg, #F04A06, #D4AF37, #F04A06)",
+          backgroundSize: "200% 100%",
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 text-center">
+        <motion.div
+          animate={{ rotate: [0, 15, -15, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="hidden xs:block flex-shrink-0"
+        >
+          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+        </motion.div>
+
+        <p className="text-white text-[11px] sm:text-sm font-bold tracking-wide leading-tight">
+          <span className="hidden sm:inline">🚀 </span>
+          Sunday AI + Robotics registrations are filling up fast — reserve your slot now!
+        </p>
+
+        <Link to="/sundayRobotics">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex-shrink-0 bg-white text-[#F04A06] text-[10px] sm:text-xs font-black px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-md hover:shadow-lg transition-all flex items-center gap-1 whitespace-nowrap"
+          >
+            Register Now
+            <ArrowRight className="w-3 h-3" />
+          </motion.button>
+        </Link>
+
+        <button
+          onClick={onClose}
+          className="flex-shrink-0 ml-1 sm:ml-2 p-1 rounded-full hover:bg-white/20 transition-colors"
+          aria-label="Dismiss announcement"
+        >
+          <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════
    HERO SECTION
 ════════════════════════════════════════════════════════════ */
 function HeroSection({ apiPrograms, loading }) {
@@ -1644,6 +1707,7 @@ export default function Home() {
   const [apiPrograms] = useState([]);
   const [programsLoading] = useState(false);
   const [showEventsModal, setShowEventsModal] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
 
   useEffect(() => {
     document.body.style.overflow = showEventsModal ? "hidden" : "unset";
@@ -1661,6 +1725,10 @@ export default function Home() {
         <ScrollProgressBar />
         <Toast message={toast.message} isVisible={toast.show} onClose={() => setToast({ show: false, message: "" })} />
         <Navbar />
+
+        <AnimatePresence>
+          {showBanner && <AnnouncementBanner onClose={() => setShowBanner(false)} />}
+        </AnimatePresence>
 
         <HeroSection apiPrograms={apiPrograms} loading={programsLoading} />
         <ServicesSection />

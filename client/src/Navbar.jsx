@@ -115,7 +115,7 @@ function Navbar() {
     { name: "All Programs", path: "/StackenzoPrograms" },
     { name: "Events", path: "/Programs" },
     { name: "College Programs", path: "#" ,
-      children: [{ name: "Workshops & Internships", path: "/WorkShops" }]
+      children: [{ name: "Workshops", path: "/WorkShops" },{ name: "Internships", path: "/internships" }]
     },
     {
       name: "School Programs",

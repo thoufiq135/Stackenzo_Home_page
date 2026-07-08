@@ -1,4 +1,4 @@
-// Workshops.jsx
+// Internships.jsx
 import { useState, useEffect, useRef } from "react";
 import {
   motion, AnimatePresence, useScroll, useTransform,
@@ -16,8 +16,8 @@ import { Toaster, toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import WorkshopRegistrationModal from "./WorkshopRegistrationModal";
-import workshopsData from "./data/workshopsData.json";
+import InternshipRegistrationModal from "./InternshipRegistrationModal";
+import internshipsData from "./data/internshipsData.json";
 import {
   C, EASE_EXPO, EASE_BACK, useScrollDir, Reveal, StaggerContainer,
   Float, GlowCard, TiltCard, MagBtn, ScrollProgressBar,
@@ -25,11 +25,10 @@ import {
   SLabel, AHeading, Counter
 } from "./WorkshopComponents";
 
-function Workshops() {
-  const [selectedWorkshop, setSelectedWorkshop] = useState(null);
-  const [workshopForModal, setWorkshopForModal] = useState(null);
+function Internships() {
+  const [selectedInternship, setSelectedInternship] = useState(null);
   const [selectedDepartment, setSelectedDepartment] = useState("All");
-  const [showWorkshopRegModal, setShowWorkshopRegModal] = useState(false);
+  const [showInternshipRegModal, setShowInternshipRegModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showQueryForm, setShowQueryForm] = useState(false);
   const [queryForm, setQueryForm] = useState({
@@ -43,23 +42,28 @@ function Workshops() {
     preferredTime: "anytime"
   });
 
-  const departments = ["All", "ECE", "EEE", "CSE", "AI & ML", "IT", "Mechanical", "MCA"];
-  const hiddenIds = ["embedded-systems", "iot"];
-  
-  const filteredWorkshops =
-    selectedDepartment === "All"
-      ? workshopsData.workshops.filter(w => !hiddenIds.includes(w.id))
-      : workshopsData.workshops.filter(
-          w =>
-            w.suitedFor.includes(selectedDepartment) &&
-            !hiddenIds.includes(w.id)
-        );
+  const internshipDepartments = ["All", "Engineering", "Degree"];
 
-  const searchFilteredWorkshops = filteredWorkshops.filter(w =>
+  let filteredInternships;
+  if (selectedDepartment === "All") {
+    filteredInternships = internshipsData.internships;
+  } else if (selectedDepartment === "Engineering") {
+    filteredInternships = internshipsData.internships.filter(i =>
+      i.suitedFor.some(b => ["CSE", "IT", "ECE", "EEE", "Mechanical"].includes(b))
+    );
+  } else if (selectedDepartment === "Degree") {
+    filteredInternships = internshipsData.internships.filter(i =>
+      i.suitedFor.includes("MCA")
+    );
+  } else {
+    filteredInternships = internshipsData.internships;
+  }
+
+  const searchFilteredInternships = filteredInternships.filter(i =>
     searchQuery === "" ||
-    w.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    w.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    w.suitedFor.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()))
+    i.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    i.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    i.technologies.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const handleQuerySubmit = async (e) => {
@@ -145,9 +149,9 @@ function Workshops() {
   }, []);
 
   const heroStats = [
-    { icon: Clock, value: "3-5 Days", label: "Duration" },
-    { icon: Users, value: "500+", label: "Students Trained" },
-    { icon: Code, value: "20+", label: "Workshops" },
+    { icon: Briefcase, value: "3-6 Months", label: "Duration" },
+    { icon: Users, value: "50+", label: "Interns" },
+    { icon: TrendingUp, value: "20+", label: "Internships" },
     { icon: Award, value: "100%", label: "Hands-on" }
   ];
 
@@ -239,7 +243,7 @@ function Workshops() {
             className="font-black leading-none tracking-tighter uppercase whitespace-nowrap"
             style={{ fontSize: "20vw", color: "rgba(230,107,38,0.018)" }}
           >
-            LEARN
+            INTERN
           </span>
         </motion.div>
 
@@ -247,7 +251,8 @@ function Workshops() {
         <div
           className="absolute inset-0 z-[2] opacity-[.03] pointer-events-none"
           style={{
-            backgroundImage: "radial-gradient(circle,#F04A06 1px,transparent 1px)",
+            backgroundImage:
+              "radial-gradient(circle,#F04A06 1px,transparent 1px)",
             backgroundSize: "28px 28px"
           }}
         />
@@ -279,7 +284,7 @@ function Workshops() {
               >
                 ✦
               </motion.span>
-              Hands-on Technical Workshops
+              Professional Internship Program
               <motion.span
                 animate={{ opacity: [.7, 1, .7] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -298,10 +303,10 @@ function Workshops() {
             className="font-bold mb-6 leading-tight"
             style={{ fontSize: "clamp(2.2rem,7vw,4.5rem)" }}
           >
-            <span style={{ color: C.text }}>Transform Your Future</span>
+            <span style={{ color: C.text }}>Launch Your Career</span>
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]">
-              with Technology-Driven Workshops
+              with Professional Internships
             </span>
           </motion.h1>
 
@@ -317,8 +322,9 @@ function Workshops() {
               background: "rgba(255,255,255,0.35)"
             }}
           >
-            Learn cutting-edge technologies, build real-world projects, and gain
-            the confidence to enter the industry with practical expertise.
+            Engage in structured learning, hands-on project development, and
+            guided mentorship designed to prepare you for professional
+            excellence.
           </motion.p>
 
           {/* buttons */}
@@ -490,19 +496,20 @@ function Workshops() {
         )}
       </AnimatePresence>
 
-      {/* ══ WORKSHOPS VIEW ══ */}
+      {/* ══ INTERNSHIPS VIEW ══ */}
       <motion.div
-        key="workshops"
+        key="internships"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: .4 }}
       >
-        {/* Intro */}
         <section
           id="ws-intro"
-          className="py-16 sm:py-20 px-4 sm:px-6 bg-white relative overflow-hidden"
+          className="py-20 px-4 sm:px-6 relative overflow-hidden"
+          style={{ background: `linear-gradient(135deg,${C.light},#fff)` }}
         >
+          <NoiseCanvas opacity={0.18} />
           <Spotlight color="rgba(230,107,38,0.04)" />
           <div
             className="absolute inset-0 opacity-[.03]"
@@ -513,28 +520,48 @@ function Workshops() {
             }}
           />
           <div className="max-w-4xl mx-auto text-center relative z-10">
-            <SLabel text="About Our Workshops" />
+            <Reveal from="scale">
+              <Float duration={4} yRange={10}>
+                <div
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg"
+                  style={{
+                    background: `linear-gradient(135deg,${C.dark},${C.mid})`
+                  }}
+                >
+                  <Briefcase className="w-10 h-10 text-white" />
+                </div>
+              </Float>
+            </Reveal>
+            <SLabel text="Internship Program" />
             <AHeading
-              className="text-3xl md:text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
+              className="text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
               delay={.05}
             >
-              Bridging Knowledge & Industry
+              Internship Program at Stackenzo
             </AHeading>
             <Reveal from="bottom" delay={.1}>
+              <p
+                className="text-xl sm:text-2xl font-semibold mb-4"
+                style={{ color: C.dark }}
+              >
+                Learn From the Ground. Grow With Confidence. Enjoy the Work
+                Culture.
+              </p>
+            </Reveal>
+            <Reveal from="bottom" delay={.2}>
               <p
                 className="text-lg sm:text-xl leading-relaxed mb-8"
                 style={{ color: C.text }}
               >
-                We conduct short-term, high-impact technical workshops that
-                bridge the gap between academic learning and real-world
-                technology, focusing on hands-on experience, practical exposure,
-                and current industry trends.
+                At Stackenzo, our internship program is not just about
+                certificates or short-term training. It is about real exposure,
+                real learning, and real motivation.
               </p>
             </Reveal>
-            <Reveal from="bottom" delay={.2}>
+            <Reveal from="bottom" delay={.3}>
               <MagBtn
                 onClick={() => {
-                  setQueryForm({ ...queryForm, category: "workshop" });
+                  setQueryForm({ ...queryForm, category: "internship" });
                   setShowQueryForm(true);
                 }}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border font-semibold transition-all shadow-sm hover:shadow-md"
@@ -545,100 +572,13 @@ function Workshops() {
                 }}
               >
                 <HelpCircle className="w-5 h-5" style={{ color: C.gold }} />
-                Have Workshop Questions? Ask Us
+                Have Internship Questions? Ask Us
               </MagBtn>
             </Reveal>
           </div>
         </section>
 
-        {/* Approach */}
-        <WaveDivider color={C.gold} toBg={C.light} />
-        <section
-          id="ws-approach"
-          className="py-20 px-4 sm:px-6 relative overflow-hidden"
-          style={{ background: C.light }}
-        >
-          <NoiseCanvas color1="#FFD5B8" color2="#FFCBA4" opacity={0.22} />
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-            <motion.span
-              className="font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.02]"
-              style={{ fontSize: "15vw" }}
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-            >
-              APPROACH
-            </motion.span>
-          </div>
-          <div className="max-w-5xl mx-auto relative z-10">
-            <div className="text-center mb-14">
-              <SLabel text="How We Teach" />
-              <AHeading
-                className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
-                delay={.05}
-              >
-                Our Workshop Approach
-              </AHeading>
-              <Reveal from="bottom" delay={.15}>
-                <p
-                  className="text-lg text-center mt-4 max-w-3xl mx-auto"
-                  style={{ color: C.text }}
-                >
-                  Our technical workshops follow a hands-on, project-driven
-                  approach where participants learn by building real-world
-                  solutions.
-                </p>
-              </Reveal>
-            </div>
-            <StaggerContainer
-              className="grid sm:grid-cols-2 gap-4"
-              stagger={0.09}
-              from="bottom"
-            >
-              {[
-                "Concept explanation in simple language",
-                "Live demonstrations",
-                "Hands-on practical sessions",
-                "Mini projects",
-                "Real-world use cases",
-                "Interactive discussions"
-              ].map((item, i) => (
-                <GlowCard key={i} accent={C.gold}>
-                  <TiltCard intensity={7}>
-                    <motion.div
-                      whileHover={{
-                        y: -5,
-                        boxShadow: "0 18px 40px rgba(0,0,0,0.08)"
-                      }}
-                      className="flex items-center gap-3 bg-white p-4 rounded-xl border border-gray-200 hover:border-[#D4AF37] transition-all shadow-sm h-full"
-                    >
-                      <Float duration={3.5 + i * .3} delay={i * .2}>
-                        <CheckCircle
-                          className="w-6 h-6 flex-shrink-0"
-                          style={{ color: C.gold }}
-                        />
-                      </Float>
-                      <span
-                        className="text-sm sm:text-base font-medium"
-                        style={{ color: C.text }}
-                      >
-                        {item}
-                      </span>
-                    </motion.div>
-                  </TiltCard>
-                </GlowCard>
-              ))}
-            </StaggerContainer>
-            <Reveal from="bottom" delay={.2} className="text-center mt-10">
-              <p className="text-lg font-bold" style={{ color: C.dark }}>
-                Our goal is clarity, confidence, and practical exposure — not
-                just certificates.
-              </p>
-            </Reveal>
-          </div>
-        </section>
-        <WaveDivider color={C.gold} flip toBg="#fff" />
-
-        {/* Department filter */}
+        {/* Internship dept filter */}
         <section className="py-10 px-4 sm:px-6 bg-white border-y border-gray-100">
           <div className="max-w-6xl mx-auto">
             <Reveal from="top" className="text-center mb-6">
@@ -646,7 +586,7 @@ function Workshops() {
                 className="text-lg sm:text-xl font-semibold"
                 style={{ color: C.dark }}
               >
-                Filter Workshops by Department
+                Filter Internships by Department
               </h3>
             </Reveal>
             <StaggerContainer
@@ -654,7 +594,7 @@ function Workshops() {
               stagger={0.05}
               from="bottom"
             >
-              {departments.map(dept => (
+              {internshipDepartments.map(dept => (
                 <motion.button
                   key={dept}
                   onClick={() => setSelectedDepartment(dept)}
@@ -682,7 +622,7 @@ function Workshops() {
           </div>
         </section>
 
-        {/* Workshops Grid */}
+        {/* Internship grid */}
         <section
           id="ws-grid"
           className="py-20 px-4 sm:px-6 relative overflow-hidden"
@@ -691,29 +631,29 @@ function Workshops() {
           <NoiseCanvas opacity={0.18} />
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
             <motion.span
-              className="font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.018]"
+              className="font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.02]"
               style={{ fontSize: "14vw" }}
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
             >
-              WORKSHOPS
+              INTERN
             </motion.span>
           </div>
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-14">
-              <SLabel text="Our Programs" />
+              <SLabel text="Available Roles" />
               <AHeading
                 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
                 delay={.05}
               >
-                Core Workshop Domains We Offer
+                Available Internships
               </AHeading>
             </div>
-            {searchFilteredWorkshops.length === 0 ? (
+            {searchFilteredInternships.length === 0 ? (
               <Reveal from="scale" className="text-center py-12">
                 <div className="text-5xl mb-4">🔍</div>
                 <p className="text-xl" style={{ color: C.text }}>
-                  No workshops found
+                  No internships found
                 </p>
               </Reveal>
             ) : (
@@ -722,8 +662,8 @@ function Workshops() {
                 stagger={0.08}
                 from="bottom"
               >
-                {searchFilteredWorkshops.map(workshop => (
-                  <GlowCard key={workshop.id} accent={C.gold}>
+                {searchFilteredInternships.map(internship => (
+                  <GlowCard key={internship.id} accent={C.gold}>
                     <TiltCard intensity={7}>
                       <motion.div
                         whileHover={{
@@ -733,37 +673,84 @@ function Workshops() {
                         className="group bg-white rounded-xl sm:rounded-2xl border border-gray-200 hover:border-[#F04A06] transition-all overflow-hidden shadow-sm h-full"
                       >
                         <div className="p-4 sm:p-6">
-                          <h3
-                            className="text-lg sm:text-xl font-bold mb-3 group-hover:text-[#F04A06] transition-colors"
-                            style={{ color: C.text }}
-                          >
-                            {workshop.title}
-                          </h3>
+                          <div className="flex items-center gap-3 mb-4">
+                            <Float duration={4} yRange={6}>
+                              <div
+                                className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border flex-shrink-0"
+                                style={{
+                                  background: C.light,
+                                  borderColor: `${C.gold}55`
+                                }}
+                              >
+                                <Briefcase
+                                  className="w-5 h-5 sm:w-6 sm:h-6"
+                                  style={{ color: C.gold }}
+                                />
+                              </div>
+                            </Float>
+                            <div>
+                              <h3
+                                className="text-base sm:text-lg font-bold group-hover:text-[#F04A06] transition-colors"
+                                style={{ color: C.text }}
+                              >
+                                {internship.title}
+                              </h3>
+                              <p
+                                className="text-xs sm:text-sm"
+                                style={{ color: "rgba(26,26,26,0.55)" }}
+                              >
+                                {internship.duration} • {internship.type}
+                              </p>
+                            </div>
+                          </div>
                           <p
                             className="text-xs sm:text-sm mb-4 line-clamp-2"
                             style={{ color: "rgba(26,26,26,0.65)" }}
                           >
-                            {workshop.description}
+                            {internship.description}
                           </p>
-                          <div
-                            className="flex items-center gap-2 text-xs sm:text-sm mb-4"
-                            style={{ color: C.text }}
-                          >
-                            <Clock
-                              className="w-4 h-4 flex-shrink-0"
-                              style={{ color: C.gold }}
-                            />
-                            <span>{workshop.duration}</span>
+                          <div className="mb-3">
+                            <p
+                              className="text-xs mb-2"
+                              style={{ color: "rgba(26,26,26,0.5)" }}
+                            >
+                              Technologies:
+                            </p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {internship.technologies.slice(0, 3).map(
+                                (tech, j) => (
+                                  <span
+                                    key={j}
+                                    className="px-2 py-0.5 text-xs rounded-full"
+                                    style={{
+                                      background: C.light,
+                                      color: C.dark,
+                                      border: `1px solid ${C.gold}55`
+                                    }}
+                                  >
+                                    {tech}
+                                  </span>
+                                )
+                              )}
+                              {internship.technologies.length > 3 && (
+                                <span
+                                  className="px-2 py-0.5 bg-gray-100 text-xs rounded-full border border-gray-200"
+                                  style={{ color: C.text }}
+                                >
+                                  +{internship.technologies.length - 3}
+                                </span>
+                              )}
+                            </div>
                           </div>
                           <div className="mb-5">
                             <p
                               className="text-xs mb-2"
-                              style={{ color: "rgba(26,26,26,0.55)" }}
+                              style={{ color: "rgba(26,26,26,0.5)" }}
                             >
-                              Best suited for:
+                              Suited for:
                             </p>
                             <div className="flex flex-wrap gap-1.5">
-                              {workshop.suitedFor.slice(0, 3).map(
+                              {internship.suitedFor.slice(0, 3).map(
                                 (branch, j) => (
                                   <span
                                     key={j}
@@ -771,45 +758,54 @@ function Workshops() {
                                     style={{
                                       background: C.light,
                                       color: C.dark,
-                                      border: `1px solid rgba(212,175,55,0.3)`
+                                      border: `1px solid ${C.gold}55`
                                     }}
                                   >
                                     {branch}
                                   </span>
                                 )
                               )}
-                              {workshop.suitedFor.length > 3 && (
+                              {internship.suitedFor.length > 3 && (
                                 <span
                                   className="px-2 py-0.5 bg-gray-100 text-xs rounded-full border border-gray-200"
                                   style={{ color: C.text }}
                                 >
-                                  +{workshop.suitedFor.length - 3}
+                                  +{internship.suitedFor.length - 3}
                                 </span>
                               )}
                             </div>
                           </div>
                           <div className="flex flex-col gap-2">
-                            {workshop.registrationOpen && (
-                              <Link
-                                to={`/workshop/register?workshop=${workshop.id}`}
-                                className="w-full px-4 py-2.5 sm:py-3 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md text-white"
-                                style={{
-                                  background:
-                                    "linear-gradient(135deg,#16a34a,#15803d)"
+                            <motion.button
+                              onClick={() => {
+                                setSelectedInternship(internship);
+                                setShowInternshipRegModal(true);
+                              }}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: .98 }}
+                              className="w-full px-4 py-2.5 sm:py-3 text-white rounded-lg text-sm font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center gap-2"
+                              style={{
+                                background: `linear-gradient(135deg,${C.dark},${C.mid})`
+                              }}
+                            >
+                              <span>Apply Now</span>
+                              <motion.div
+                                animate={{ x: [0, 4, 0] }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Infinity
                                 }}
                               >
-                                <CheckCircle className="w-4 h-4" />
-                                Register Free →
-                              </Link>
-                            )}
-
+                                <ChevronRight className="w-4 h-4" />
+                              </motion.div>
+                            </motion.button>
                             <motion.button
                               onClick={() => {
                                 setQueryForm({
                                   ...queryForm,
-                                  category: "workshop",
-                                  subject: workshop.title,
-                                  message: `I'm interested in the ${workshop.title} workshop.`
+                                  category: "internship",
+                                  subject: internship.title,
+                                  message: `I'm interested in the ${internship.title} internship.`
                                 });
                                 setShowQueryForm(true);
                               }}
@@ -845,18 +841,18 @@ function Workshops() {
           </div>
         </section>
 
-        {/* What Students Gain */}
+        {/* What Interns Gain */}
         <WaveDivider color={C.gold} toBg="#fff" />
         <section className="py-20 px-4 sm:px-6 bg-white relative overflow-hidden">
           <Spotlight color="rgba(230,107,38,0.04)" />
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-14">
-              <SLabel text="Student Outcomes" />
+              <SLabel text="Intern Benefits" />
               <AHeading
                 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
                 delay={.05}
               >
-                What Students Gain
+                What Interns Gain at Stackenzo
               </AHeading>
             </div>
             <StaggerContainer
@@ -864,7 +860,14 @@ function Workshops() {
               stagger={0.09}
               from="bottom"
             >
-              {workshopsData.studentGains.map((gain, i) => (
+              {[
+                "Professional Experience",
+                "Industry-Ready Skills",
+                "Portfolio Development",
+                "Industry Connections",
+                "Stipend and Benefits",
+                "Experience Letter"
+              ].map((gain, i) => (
                 <GlowCard key={i} accent={C.gold}>
                   <TiltCard>
                     <motion.div
@@ -887,7 +890,7 @@ function Workshops() {
                         </motion.div>
                       </Float>
                       <p
-                        className="text-sm sm:text-base"
+                        className="text-sm sm:text-base font-semibold"
                         style={{ color: C.text }}
                       >
                         {gain}
@@ -900,7 +903,7 @@ function Workshops() {
           </div>
         </section>
 
-        {/* Why Choose Us */}
+        {/* Why Choose Stackenzo Internships */}
         <WaveDivider color={C.gold} toBg={C.light} />
         <section
           className="py-20 px-4 sm:px-6 relative overflow-hidden"
@@ -914,7 +917,7 @@ function Workshops() {
                 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]"
                 delay={.05}
               >
-                Why Choose Our Workshops
+                Why Choose Stackenzo Internships
               </AHeading>
             </div>
             <StaggerContainer
@@ -922,7 +925,14 @@ function Workshops() {
               stagger={0.09}
               from="bottom"
             >
-              {workshopsData.whyChoose.map((reason, i) => (
+              {[
+                "Real-world project experience with live deployments",
+                "Guidance from industry experts and mentors",
+                "Flexible working hours and remote options",
+                "Certificate and letter of recommendation",
+                "Opportunity to work on cutting-edge technologies",
+                "Career guidance and placement assistance"
+              ].map((reason, i) => (
                 <GlowCard key={i} accent={C.dark}>
                   <TiltCard intensity={7}>
                     <motion.div
@@ -953,7 +963,7 @@ function Workshops() {
         </section>
         <WaveDivider color={C.gold} flip toBg="#3D1A0A" />
 
-        {/* Philosophy Banner */}
+        {/* Internship Philosophy Banner */}
         <section
           className="py-20 px-4 sm:px-6 relative overflow-hidden"
           style={{ background: "linear-gradient(135deg,#F04A06,#C5531A)" }}
@@ -998,7 +1008,7 @@ function Workshops() {
             </Reveal>
             <Reveal from="bottom" delay={.1}>
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-                Our Workshop Philosophy
+                Our Internship Philosophy
               </h2>
             </Reveal>
             <Reveal from="bottom" delay={.2}>
@@ -1006,7 +1016,8 @@ function Workshops() {
                 className="text-xl sm:text-2xl font-semibold mb-8"
                 style={{ color: "rgba(255,255,255,0.88)" }}
               >
-                Workshops should not just teach — they should transform thinking.
+                Internships should not just train — they should transform
+                careers.
               </p>
             </Reveal>
             <StaggerContainer
@@ -1015,10 +1026,10 @@ function Workshops() {
               from="scale"
             >
               {[
-                "Build skills",
-                "Create awareness",
-                "Boost confidence",
-                "Prepare for future"
+                "Build expertise",
+                "Create opportunities",
+                "Boost employability",
+                "Prepare for success"
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -1042,238 +1053,12 @@ function Workshops() {
         </section>
       </motion.div>
 
-      {/* ══ WORKSHOP DETAIL MODAL ══ */}
-      <AnimatePresence>
-        {selectedWorkshop && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center z-50 p-4"
-            style={{
-              background: "rgba(0,0,0,0.55)",
-              backdropFilter: "blur(6px)"
-            }}
-            onClick={() => setSelectedWorkshop(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: .9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: .9, y: 20 }}
-              onClick={e => e.stopPropagation()}
-              className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 shadow-2xl"
-            >
-              <div
-                className="sticky top-0 p-4 sm:p-6 flex items-center justify-between z-10 rounded-t-2xl"
-                style={{
-                  background: `linear-gradient(135deg,${C.dark},${C.mid})`
-                }}
-              >
-                <h2
-                  className="text-xl sm:text-2xl font-bold text-white pr-8"
-                >
-                  {selectedWorkshop.title}
-                </h2>
-                <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: .9 }}
-                  onClick={() => setSelectedWorkshop(null)}
-                  className="text-white p-1 hover:bg-white/10 rounded-full transition-colors"
-                >
-                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
-                </motion.button>
-              </div>
-              <div className="p-4 sm:p-6 space-y-5">
-                <div
-                  className="p-4 rounded-xl border border-gray-200"
-                  style={{ background: C.light }}
-                >
-                  <p
-                    className="text-sm sm:text-base leading-relaxed"
-                    style={{ color: C.text }}
-                  >
-                    {selectedWorkshop.description}
-                  </p>
-                </div>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div
-                    className="p-4 rounded-xl border border-gray-200"
-                    style={{ background: C.light }}
-                  >
-                    <p
-                      className="font-semibold mb-2 flex items-center gap-2"
-                      style={{ color: C.dark }}
-                    >
-                      <Clock
-                        className="w-4 h-4"
-                        style={{ color: C.gold }}
-                      />{" "}
-                      Duration
-                    </p>
-                    <p className="text-lg" style={{ color: C.text }}>
-                      {selectedWorkshop.duration}
-                    </p>
-                  </div>
-                  <div
-                    className="p-4 rounded-xl border border-gray-200"
-                    style={{ background: C.light }}
-                  >
-                    <p
-                      className="font-semibold mb-2 flex items-center gap-2"
-                      style={{ color: C.dark }}
-                    >
-                      <Users
-                        className="w-4 h-4"
-                        style={{ color: C.gold }}
-                      />{" "}
-                      Best Suited For
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedWorkshop.suitedFor.map((branch, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1 text-sm rounded-full"
-                          style={{
-                            background: "#fff",
-                            color: C.dark,
-                            border: `1px solid ${C.gold}55`
-                          }}
-                        >
-                          {branch}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <h3
-                    className="text-lg font-bold mb-4 flex items-center gap-2"
-                    style={{ color: C.dark }}
-                  >
-                    <Code className="w-5 h-5" style={{ color: C.gold }} />{" "}
-                    Topics Covered
-                  </h3>
-                  <div className="space-y-2">
-                    {selectedWorkshop.topics.map((topic, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * .05 }}
-                        className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:border-[#D4AF37] transition-all"
-                        style={{ background: C.light }}
-                      >
-                        <CheckCircle
-                          className="w-5 h-5 flex-shrink-0 mt-0.5"
-                          style={{ color: C.gold }}
-                        />
-                        <span
-                          className="text-sm sm:text-base"
-                          style={{ color: C.text }}
-                        >
-                          {topic}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h3
-                    className="text-lg font-bold mb-4 flex items-center gap-2"
-                    style={{ color: C.dark }}
-                  >
-                    <Target className="w-5 h-5" style={{ color: C.gold }} />{" "}
-                    Learning Outcomes
-                  </h3>
-                  <div className="space-y-2">
-                    {selectedWorkshop.outcomes.map((outcome, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * .05 }}
-                        className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:border-[#D4AF37] transition-all"
-                        style={{ background: C.light }}
-                      >
-                        <Target
-                          className="w-5 h-5 flex-shrink-0 mt-0.5"
-                          style={{ color: C.gold }}
-                        />
-                        <span
-                          className="text-sm sm:text-base"
-                          style={{ color: C.text }}
-                        >
-                          {outcome}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: .98 }}
-                    onClick={() => setSelectedWorkshop(null)}
-                    className="flex-1 px-6 py-3 rounded-xl font-semibold border border-gray-200 hover:bg-gray-100 transition"
-                    style={{ background: "#f3f4f6", color: C.text }}
-                  >
-                    Close
-                  </motion.button>
-
-                  <MagBtn
-                    onClick={() => {
-                      setWorkshopForModal(selectedWorkshop);
-                      setSelectedWorkshop(null);
-                      setShowWorkshopRegModal(true);
-                    }}
-                    className="flex-1 px-6 py-3 text-black rounded-xl font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center gap-2"
-                    style={{
-                      background: `linear-gradient(135deg,${C.dark},${C.mid})`
-                    }}
-                  >
-                    Register Now <ChevronRight className="w-4 h-4" />
-                  </MagBtn>
-
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: .98 }}
-                    onClick={() => {
-                      const title = selectedWorkshop.title;
-                      setSelectedWorkshop(null);
-                      setQueryForm({
-                        ...queryForm,
-                        category: "workshop",
-                        subject: title,
-                        message: `I'm interested in the ${title} workshop.`
-                      });
-                      setShowQueryForm(true);
-                    }}
-                    className="flex-1 px-6 py-3 rounded-xl font-semibold border flex items-center justify-center gap-2 transition-all"
-                    style={{
-                      background: "#fff",
-                      color: C.text,
-                      borderColor: C.gold
-                    }}
-                  >
-                    <HelpCircle
-                      className="w-4 h-4"
-                      style={{ color: C.gold }}
-                    />{" "}
-                    Ask Question
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {showWorkshopRegModal && workshopForModal && (
-        <WorkshopRegistrationModal
-          workshop={workshopForModal}
+      {showInternshipRegModal && selectedInternship && (
+        <InternshipRegistrationModal
+          internship={selectedInternship}
           onClose={() => {
-            setShowWorkshopRegModal(false);
-            setWorkshopForModal(null);
+            setShowInternshipRegModal(false);
+            setSelectedInternship(null);
           }}
         />
       )}
@@ -1342,9 +1127,9 @@ function Workshops() {
                     <div className="flex flex-wrap gap-3">
                       {[
                         {
-                          id: "workshop",
-                          label: "Workshops",
-                          Icon: BookOpen
+                          id: "internship",
+                          label: "Internships",
+                          Icon: Briefcase
                         },
                         {
                           id: "general",
@@ -1522,4 +1307,4 @@ function Workshops() {
   );
 }
 
-export default Workshops;
+export default Internships;

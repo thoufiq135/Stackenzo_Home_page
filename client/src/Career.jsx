@@ -887,8 +887,8 @@ function NoOpeningsSection({ onSendResume }) {
 ══════════════════════════════════════════════ */
 const TESTIMONIALS = [
   { name:"Sujith Kumar", role:"Senior Developer",  icon:Code,   quote:"Stackenzo has given me the opportunity to work on cutting-edge technology while maintaining great work-life balance." },
-  { name:"Harsha",       role:"Marketing Lead",    icon:Target, quote:"The collaborative culture and focus on innovation makes every day exciting and deeply rewarding." },
-  { name:"Charan",       role:"AI & ML Engineer",  icon:Palette,quote:"I've grown tremendously here, surrounded by talented people who push me to be better every single day." },
+  { name:"Manoj",       role:"Marketing Lead",    icon:Target, quote:"The collaborative culture and focus on innovation makes every day exciting and deeply rewarding." },
+  { name:"Chandra Sekhar",       role:"Robotics Trainer",  icon:Palette,quote:"I've grown tremendously here, surrounded by talented people who push me to be better every single day." },
 ];
 
 function TeamSection() {

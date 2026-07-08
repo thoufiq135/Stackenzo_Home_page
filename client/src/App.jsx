@@ -34,6 +34,7 @@ import SummerCampGallery from "./SummerCampGallery";
 import SundayRobotics from "./SundayRobotics";
 import StackenzoBootcamp from "./StackenzoBootcamp";
 import Partners from "./Partners";
+import Internships from "./Internships";
 // import WelcomeDialog from "./WelcomeDialog";
 
 function App() {
@@ -108,6 +109,7 @@ function App() {
         <Route path="/sundayRobotics" element={<SundayRobotics />} />
         <Route path="/StackenzoBootcamp" element={<StackenzoBootcamp /> }/>
         <Route path="/Partners" element={<Partners />} />
+        <Route path="/internships" element={<Internships />} />
       </Routes>
       
       {/* <AnimatePresence>

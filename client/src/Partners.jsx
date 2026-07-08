@@ -122,6 +122,14 @@ const Partners = () => {
         {
             name: "Vidhyardhi School",
             logo: "/images/Partners/vidhyardhi logo.png"
+        },
+        {
+            name: "Sangamithra Narayana School",
+            logo: "/images/Partners/sangamithra Narayana logo.jpeg"
+        },
+        {
+            name: "Mount Litera group of Schools",
+            logo: "/images/Partners/Mount Litera group of schools.jpg"
         }
     ];
 
