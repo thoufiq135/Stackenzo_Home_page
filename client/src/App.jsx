@@ -35,6 +35,8 @@ import SundayRobotics from "./SundayRobotics";
 import StackenzoBootcamp from "./StackenzoBootcamp";
 import Partners from "./Partners";
 import Internships from "./Internships";
+import LabSetup from "./LabSetup";
+import EdContact from "./Ed_contact";
 // import WelcomeDialog from "./WelcomeDialog";
 
 function App() {
@@ -110,8 +112,10 @@ function App() {
         <Route path="/StackenzoBootcamp" element={<StackenzoBootcamp /> }/>
         <Route path="/Partners" element={<Partners />} />
         <Route path="/internships" element={<Internships />} />
+        <Route path="/roboticlab" element={<LabSetup />} />
+        <Route path = "/LabContact" element={<EdContact />} />
       </Routes>
-      
+    
       {/* <AnimatePresence>
         {showWelcome && (
           <WelcomeDialog 

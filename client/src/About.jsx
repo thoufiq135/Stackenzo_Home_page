@@ -1,22 +1,14 @@
-import {
-  motion, AnimatePresence, useInView, useScroll, useTransform,
-  useSpring, useMotionValue, useVelocity,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Target, Users, Award, Zap, Heart, Globe, BookOpen,
-  Briefcase, Code, TrendingUp, Rocket, Star, ArrowRight,UserPlus,
+  Briefcase, Code, TrendingUp, Rocket, Star, ArrowRight, UserPlus,
+  Sparkles as SparklesIcon, Eye, MessageCircle, ChevronRight,
 } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import ScrollToTop from "./ScrollToTop";
-
-/* ══════════════════════════════════════════════
-   EASING
-══════════════════════════════════════════════ */
-const EASE_EXPO = [0.16, 1, 0.3, 1];
-const EASE_BACK = [0.34, 1.56, 0.64, 1];
 
 /* ══════════════════════════════════════════════
    DATA
@@ -31,28 +23,15 @@ const PILLARS = [
   { icon: <TrendingUp className="w-6 h-6" />, title: "Marketing Solutions", desc: "Data-driven strategies and creative solutions designed to build strong digital presence and drive measurable growth.",                     color: "from-blue-500 to-red-500"    },
 ];
 
-const MISSION_ITEMS = [
-  "Build scalable, secure, and future-ready digital solutions",
-  "Bridge academic knowledge with real-world implementation",
-  "Empower startups, institutions, and enterprises through innovation",
-  "Automate complex processes to enhance productivity",
-  "Strengthen research-driven engineering culture",
-  "Promote continuous learning and technological excellence",
-];
-
 const VALUES = [
   { icon: <Heart className="w-10 h-10" />,  title: "Integrity",      desc: "We maintain the highest standards of integrity and transparency in all our operations at Stackenzo.",                         color: "from-red-400 to-pink-400"       },
-
   { icon: <Award className="w-10 h-10" />,  title: "Excellence",     desc: "We strive for excellence in everything we do, from curriculum design to learner success and support.",            color: "from-yellow-400 to-orange-400"  },
-
   { icon: <Zap className="w-10 h-10" />,    title: "Innovation",     desc: "We continuously innovate our teaching methods and programs to stay ahead of industry trends.",                   color: "from-[#F04A06] to-[#F04A06]"   },
-
   { icon: <Users className="w-10 h-10" />,  title: "Collaboration",  desc: "We believe strong collab between students, educators, and industry to drive innovation.",                color: "from-blue-400 to-purple-400"    },
-
   { icon: <Globe className="w-10 h-10" />,  title: "Accessibility",  desc: "We make quality education accessible to students from all backgrounds and locations.",                            color: "from-orange-400 to-red-400"     },
-
   { icon: <Target className="w-10 h-10" />, title: "Impact",         desc: "We focus on creating meaningful impact in the lives of our students and the community.",                          color: "from-purple-400 to-indigo-400"  },
 ];
+
 const STATS = [
   { number: "1200+", label: "Students Empowered", icon: Users    },
   { number: "150+",  label: "Projects Delivered", icon: Briefcase },
@@ -60,144 +39,34 @@ const STATS = [
   { number: "20+",   label: "Satisfied Clients",  icon: Users    },
 ];
 
-const IMAGE_STATS = [
-  { icon: Rocket,    value: "15+",  label: "R&D Projects",      pos: "bottom-6 left-6",   anim: { opacity:0, x:-20 } },
-  { icon: Code,      value: "50+",  label: "IT Solutions",      pos: "top-20 right-6",    anim: { opacity:0, y:20  } },
-  { icon: BookOpen,  value: "500+", label: "Students Trained",  pos: "top-6 left-6",      anim: { opacity:0, x:20  } },
-  { icon: TrendingUp,value: "100+", label: "Campaigns Run",     pos: "top-32 left-12",    anim: { opacity:0, y:-20 } },
-  { icon: Briefcase, value: "25+",  label: "Industry Partners", pos: "bottom-6 right-6",  anim: { opacity:0, y:-20 } },
-];
-
-/* ══════════════════════════════════════════════
-   HOOK — scroll direction
-══════════════════════════════════════════════ */
-function useScrollDir() {
-  const { scrollY } = useScroll();
-  const vel = useVelocity(scrollY);
-  const [dir, setDir] = useState("down");
-  useEffect(() => vel.on("change", v => setDir(v > 0 ? "down" : "up")), [vel]);
-  return dir;
-}
-
-/* ══════════════════════════════════════════════
-   BIDIRECTIONAL REVEAL
-══════════════════════════════════════════════ */
-function Reveal({ children, className = "", delay = 0, from = "bottom", once = false }) {
-  const ref = useRef(null);
-  const inV = useInView(ref, { once, margin: "-55px" });
-  const dir = useScrollDir();
-
-  const variants = {
-    bottom: { hidden:{ y:65, opacity:0, scale:.96, filter:"blur(6px)" }, visible:{ y:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ y:-48, opacity:0, scale:.97, filter:"blur(4px)" } },
-    top:    { hidden:{ y:-65,opacity:0, scale:.96, filter:"blur(6px)" }, visible:{ y:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ y:48,  opacity:0, scale:.97, filter:"blur(4px)" } },
-    left:   { hidden:{ x:-75,opacity:0, scale:.96, filter:"blur(6px)" }, visible:{ x:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ x:55,  opacity:0, scale:.97, filter:"blur(4px)" } },
-    right:  { hidden:{ x:75, opacity:0, scale:.96, filter:"blur(6px)" }, visible:{ x:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ x:-55, opacity:0, scale:.97, filter:"blur(4px)" } },
-    scale:  { hidden:{ scale:.75, opacity:0, filter:"blur(8px)" },        visible:{ scale:1, opacity:1, filter:"blur(0px)" },       exit:{ scale:.85, opacity:0, filter:"blur(6px)" } },
-  };
-  const { hidden, visible, exit } = variants[from] || variants.bottom;
-
-  return (
-    <motion.div ref={ref} className={className}
-      initial="hidden"
-      animate={inV ? "visible" : once ? "hidden" : dir === "up" ? "exit" : "hidden"}
-      variants={{ hidden, visible, exit }}
-      transition={{ duration: 0.75, delay, ease: EASE_EXPO }}>
-      {children}
-    </motion.div>
-  );
-}
-
-/* ══════════════════════════════════════════════
-   STAGGER CONTAINER
-══════════════════════════════════════════════ */
-function StaggerContainer({ children, className = "", stagger = 0.1, from = "bottom" }) {
-  const ref = useRef(null);
-  const inV = useInView(ref, { once: false, margin: "-55px" });
-  const dir = useScrollDir();
-
-  const base = {
-    bottom: { hidden:{ y:55, opacity:0, scale:.95, filter:"blur(5px)" }, visible:{ y:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ y:-38, opacity:0, scale:.97, filter:"blur(3px)" } },
-    left:   { hidden:{ x:-55,opacity:0 }, visible:{ x:0, opacity:1 }, exit:{ x:38,  opacity:0 } },
-    right:  { hidden:{ x:55, opacity:0 }, visible:{ x:0, opacity:1 }, exit:{ x:-38, opacity:0 } },
-  };
-  const { hidden, visible, exit } = base[from] || base.bottom;
-
-  return (
-    <motion.div ref={ref} className={className}
-      initial="hidden"
-      animate={inV ? "visible" : dir === "up" ? "exit" : "hidden"}
-      variants={{
-        hidden: {},
-        visible: { transition: { staggerChildren: stagger } },
-        exit:    { transition: { staggerChildren: stagger / 2, staggerDirection: -1 } },
-      }}>
-      {Array.isArray(children)
-        ? children.map((child, i) => (
-            <motion.div key={i} variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>{child}</motion.div>
-          ))
-        : <motion.div variants={{ hidden, visible, exit }} transition={{ duration: 0.7, ease: EASE_EXPO }}>{children}</motion.div>
-      }
-    </motion.div>
-  );
-}
-
-/* ══════════════════════════════════════════════
-   FLOAT
-══════════════════════════════════════════════ */
-function Float({ children, className = "", duration = 4, yRange = 14, delay = 0 }) {
-  return (
-    <motion.div className={className}
-      animate={{ y: [-yRange / 2, yRange / 2, -yRange / 2] }}
-      transition={{ duration, repeat: Infinity, ease: "easeInOut", delay }}>
-      {children}
-    </motion.div>
-  );
-}
-
-/* ══════════════════════════════════════════════
-   GLOW CARD
-══════════════════════════════════════════════ */
-function GlowCard({ children, className = "", accent = "#D4AF37" }) {
-  const ref  = useRef(null);
-  const inV  = useInView(ref, { once: false, margin: "-40px" });
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const onMove = e => {
-    const r = ref.current?.getBoundingClientRect();
-    if (r) setPos({ x: e.clientX - r.left, y: e.clientY - r.top });
-  };
-  return (
-    <motion.div ref={ref} className={`relative rounded-2xl overflow-hidden ${className}`} onMouseMove={onMove}
-      initial={{ opacity:0, y:40, scale:.96 }}
-      animate={inV ? { opacity:1, y:0, scale:1 } : { opacity:0, y:40, scale:.96 }}
-      transition={{ duration: 0.75, ease: EASE_EXPO }}>
-      <div className="absolute pointer-events-none rounded-2xl z-0"
-        style={{ inset:-1, background:`radial-gradient(320px circle at ${pos.x}px ${pos.y}px,${accent}30,transparent 60%)`, opacity: inV ? 1 : 0, transition:"opacity .3s" }} />
-      <motion.div className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-        animate={inV ? { opacity:[.28,.6,.28] } : { opacity:0 }}
-        transition={{ duration:2.5, repeat:Infinity, ease:"easeInOut" }}
-        style={{ boxShadow:`inset 0 0 0 1px ${accent}38` }} />
-      <div className="relative z-10">{children}</div>
-    </motion.div>
-  );
-}
-
-
-
 /* ══════════════════════════════════════════════
    SCROLL PROGRESS BAR
 ══════════════════════════════════════════════ */
 function ScrollProgressBar() {
-  const { scrollYProgress } = useScroll();
-  const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <motion.div
-      className="fixed top-0 right-0 w-[4px] h-full origin-top z-[9997]"
-      style={{
-        scaleY,
-        background: "linear-gradient(to bottom,#0d1f0d,#1E301E,#D4AF37,#2E7D32,#D4AF37)"
-      }}
-    />
+    <div className="fixed top-0 right-0 w-[4px] h-full z-[9997]">
+      <div 
+        className="w-full origin-top transition-all duration-200"
+        style={{ 
+          height: `${progress}%`,
+          background: "linear-gradient(to bottom,#0d1f0d,#1E301E,#D4AF37,#2E7D32,#D4AF37)"
+        }}
+      />
+    </div>
   );
 }
 
@@ -230,28 +99,139 @@ function SectionNavDots() {
   return (
     <div className="fixed right-5 top-1/2 -translate-y-1/2 z-[900] flex-col gap-4 hidden md:flex">
       {NAV_SECTIONS.map((id, i) => (
-        <motion.button
-  key={i}
-  onClick={() =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="relative flex items-center justify-center"
-  title={NAV_LABELS[i]}
->
-  {/* 🔹 DOT */}
-  <motion.div
-    animate={{
-      scale: active === i ? 1.4 : 1,
-      background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
-    }}
-    transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    className="w-2.5 h-2.5 rounded-full"
-  />
-
-
-  
-</motion.button>
+        <button
+          key={i}
+          onClick={() =>
+            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="relative flex items-center justify-center group"
+          title={NAV_LABELS[i]}
+        >
+          <div
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              active === i ? "bg-[#D4AF37] scale-150 shadow-lg shadow-[#D4AF37]/50" : "bg-[#F04A06]/40 group-hover:bg-[#F04A06]/70"
+            }`}
+          />
+          {active === i && (
+            <div className="absolute inset-0 rounded-full animate-ping bg-[#D4AF37]/40" style={{ animationDuration: '2s' }} />
+          )}
+        </button>
       ))}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
+   FLOAT ANIMATION
+══════════════════════════════════════════════ */
+function Float({ children, className = "", duration = 4, yRange = 14, delay = 0 }) {
+  return (
+    <div 
+      className={className}
+      style={{
+        animation: `float ${duration}s ease-in-out ${delay}s infinite`,
+      }}
+    >
+      {children}
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(-${yRange/2}px); }
+          50% { transform: translateY(${yRange/2}px); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
+   LIGHT BEAM - Subtle light overlay
+══════════════════════════════════════════════ */
+function LightBeam({ className = "" }) {
+  return (
+    <div className={`absolute pointer-events-none overflow-hidden ${className}`}>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent rotate-[-15deg] animate-light-sweep" />
+      <style>{`
+        @keyframes light-sweep {
+          0% { transform: translateX(-100%) rotate(-15deg); }
+          100% { transform: translateX(100%) rotate(-15deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
+   GLOW OVERLAY - Subtle glowing background
+══════════════════════════════════════════════ */
+function GlowOverlay({ color = "rgba(212,175,55,0.03)", className = "" }) {
+  return (
+    <div className={`absolute inset-0 pointer-events-none ${className}`}>
+      <div className="absolute inset-0 animate-glow-pulse" style={{ background: color }} />
+      <style>{`
+        @keyframes glow-pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
+   SPARKLE - Floating sparkle particles (FIXED)
+══════════════════════════════════════════════ */
+function Sparkles({ count = 20, className = "" }) {
+  const [sparkles, setSparkles] = useState([]);
+
+  useEffect(() => {
+    const newSparkles = Array.from({ length: count }, (_, index) => ({
+      id: index,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 2 + Math.random() * 4,
+      delay: Math.random() * 3,
+      duration: 3 + Math.random() * 4,
+    }));
+    setSparkles(newSparkles);
+  }, [count]);
+
+  return (
+    <div className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
+      {sparkles.map((sparkle) => (
+        <div
+          key={sparkle.id}
+          className="absolute rounded-full bg-[#D4AF37]/20 animate-sparkle"
+          style={{
+            left: `${sparkle.x}%`,
+            top: `${sparkle.y}%`,
+            width: sparkle.size,
+            height: sparkle.size,
+            animationDelay: `${sparkle.delay}s`,
+            animationDuration: `${sparkle.duration}s`,
+          }}
+        />
+      ))}
+      <style>{`
+        @keyframes sparkle {
+          0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+          50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
+   WAVE DIVIDER
+══════════════════════════════════════════════ */
+function WaveDivider({ color="#D4AF37", flip=false, toBg="#fff" }) {
+  return (
+    <div className={`relative w-full overflow-hidden ${flip?"rotate-180":""}`} style={{ height: 56 }}>
+      <svg viewBox="0 0 1440 56" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+        <path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28 L1440,56 L0,56 Z" fill={toBg} />
+        <path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28" stroke={color} strokeWidth="1.5" fill="none" opacity="1" />
+        <path d="M0,36 C240,8 480,64 720,36 C960,8 1200,64 1440,36" stroke={color} strokeWidth=".6" fill="none" opacity=".4" />
+      </svg>
     </div>
   );
 }
@@ -264,15 +244,15 @@ function NoiseCanvas({ color1="#FFD5B8", color2="#FFF4ED", opacity=0.4 }) {
   useEffect(() => {
     const c = ref.current; if (!c) return;
     const ctx = c.getContext("2d");
-    let t=0, id;
+    let t=0, animationId;
     const draw = () => {
       const w = c.width = c.offsetWidth, h = c.height = c.offsetHeight;
       const g = ctx.createRadialGradient(w*(.3+.22*Math.sin(t*.38)),h*(.3+.16*Math.cos(t*.28)),0,w*.5,h*.5,Math.max(w,h)*.88);
       g.addColorStop(0, color1+"cc"); g.addColorStop(.5, color2+"88"); g.addColorStop(1,"transparent");
       ctx.clearRect(0,0,w,h); ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
-      t+=.007; id=requestAnimationFrame(draw);
+      t+=.007; animationId=requestAnimationFrame(draw);
     };
-    draw(); return () => cancelAnimationFrame(id);
+    draw(); return () => cancelAnimationFrame(animationId);
   }, [color1, color2]);
   return <canvas ref={ref} className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity }} />;
 }
@@ -287,7 +267,7 @@ function ParticleCanvas({ count=28, color="rgba(230,107,38,0.10)" }) {
     const ctx = c.getContext("2d");
     let w=c.width=c.offsetWidth, h=c.height=c.offsetHeight;
     const pts = Array.from({length:count}, ()=>({ x:Math.random()*w, y:Math.random()*h, vx:(Math.random()-.5)*.38, vy:(Math.random()-.5)*.38, r:Math.random()*1.8+.8 }));
-    let id;
+    let animationId;
     const draw = () => {
       ctx.clearRect(0,0,w,h);
       pts.forEach(p=>{
@@ -299,264 +279,197 @@ function ParticleCanvas({ count=28, color="rgba(230,107,38,0.10)" }) {
         const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);
         if(d<90){ ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.strokeStyle=color.replace(/[\d.]+\)$/,`${(1-d/90)*.065})`); ctx.stroke(); }
       }
-      id=requestAnimationFrame(draw);
+      animationId=requestAnimationFrame(draw);
     };
     draw();
     const rz=()=>{w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;};
     window.addEventListener("resize",rz);
-    return ()=>{ cancelAnimationFrame(id); window.removeEventListener("resize",rz); };
+    return ()=>{ cancelAnimationFrame(animationId); window.removeEventListener("resize",rz); };
   }, [count, color]);
   return <canvas ref={ref} className="absolute inset-0 w-full h-full pointer-events-none" />;
 }
 
 /* ══════════════════════════════════════════════
-   SPOTLIGHT
-══════════════════════════════════════════════ */
-function Spotlight({ color="rgba(212,175,55,0.07)", size=600 }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const fn = e => {
-      if (!ref.current) return;
-      const r = ref.current.getBoundingClientRect();
-      ref.current.style.background = `radial-gradient(${size}px circle at ${e.clientX-r.left}px ${e.clientY-r.top}px,${color},transparent 70%)`;
-    };
-    window.addEventListener("mousemove", fn);
-    return () => window.removeEventListener("mousemove", fn);
-  }, [color, size]);
-  return <div ref={ref} className="absolute inset-0 pointer-events-none z-[1]" />;
-}
-
-/* ══════════════════════════════════════════════
-   WAVE DIVIDER
-══════════════════════════════════════════════ */
-function WaveDivider({ color="#D4AF37", flip=false, toBg="#fff" }) {
-  const ref = useRef(null);
-  const inV = useInView(ref, { once:true, margin:"-10px" });
-  return (
-    <div ref={ref} className={`relative w-full overflow-hidden ${flip?"rotate-180":""}`} style={{ height:56 }}>
-      <svg viewBox="0 0 1440 56" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-        <motion.path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28 L1440,56 L0,56 Z"
-          fill={toBg} initial={{ pathLength:0 }} animate={inV?{pathLength:1}:{}} transition={{ duration:1.2, ease:EASE_EXPO }} />
-        <motion.path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28"
-          stroke={color} strokeWidth="1.5" fill="none"
-          initial={{ pathLength:0, opacity:0 }} animate={inV?{pathLength:1,opacity:1}:{}} transition={{ duration:1.4, ease:EASE_EXPO, delay:.15 }} />
-        <motion.path d="M0,36 C240,8 480,64 720,36 C960,8 1200,64 1440,36"
-          stroke={color} strokeWidth=".6" fill="none" opacity=".4"
-          initial={{ pathLength:0 }} animate={inV?{pathLength:1}:{}} transition={{ duration:1.4, ease:EASE_EXPO, delay:.3 }} />
-      </svg>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════════
-   3-D TILT CARD
-══════════════════════════════════════════════ */
-function TiltCard({ children, className="", intensity=12 }) {
-  const ref = useRef(null);
-  const rx = useMotionValue(0), ry = useMotionValue(0);
-  const srx = useSpring(rx,{stiffness:200,damping:22}), sry = useSpring(ry,{stiffness:200,damping:22});
-  const mm = e => { const r=ref.current.getBoundingClientRect(); rx.set(-((e.clientY-r.top)/r.height-.5)*intensity); ry.set(((e.clientX-r.left)/r.width-.5)*intensity); };
-  const ml = () => { rx.set(0); ry.set(0); };
-  return (
-    <motion.div ref={ref} onMouseMove={mm} onMouseLeave={ml}
-      style={{ rotateX:srx, rotateY:sry, transformPerspective:900 }} className={className}>
-      {children}
-    </motion.div>
-  );
-}
-
-/* ══════════════════════════════════════════════
-   MAGNETIC BUTTON
-══════════════════════════════════════════════ */
-function MagBtn({ children, className="", onClick }) {
-  const ref = useRef(null);
-  const x = useMotionValue(0), y = useMotionValue(0);
-  const sx = useSpring(x,{stiffness:250,damping:16}), sy = useSpring(y,{stiffness:250,damping:16});
-  const mm = e => { const r=ref.current.getBoundingClientRect(); x.set((e.clientX-r.left-r.width/2)*.38); y.set((e.clientY-r.top-r.height/2)*.38); };
-  const ml = () => { x.set(0); y.set(0); };
-  return (
-    <motion.button ref={ref} style={{x:sx,y:sy}} onMouseMove={mm} onMouseLeave={ml} whileTap={{scale:.94}} onClick={onClick} className={className}>
-      {children}
-    </motion.button>
-  );
-}
-
-/* ══════════════════════════════════════════════
    ANIMATED COUNTER
 ══════════════════════════════════════════════ */
-function Counter({ value }) {
+function AnimatedCounter({ target, duration = 2000, suffix = "" }) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
   const ref = useRef(null);
-  const inV = useInView(ref, { once:false });
-  const num = parseInt(value.replace(/\D/g,""), 10);
-  const sfx = value.replace(/[0-9]/g,"");
-  const mv  = useMotionValue(0);
-  const sp  = useSpring(mv,{stiffness:55,damping:14});
-  const [d, setD] = useState(0);
-  useEffect(() => { mv.set(inV ? num : 0); }, [inV]);
-  useEffect(() => sp.on("change", v => setD(Math.round(v))), [sp]);
-  return <span ref={ref}>{d}{sfx}</span>;
-}
 
-/* ══════════════════════════════════════════════
-   SECTION LABEL
-══════════════════════════════════════════════ */
-function SLabel({ text, light=false }) {
-  return (
-    <Reveal from="top" className="flex items-center gap-3 justify-center mb-3">
-      <motion.div initial={{scaleX:0}} whileInView={{scaleX:1}} viewport={{once:false}} transition={{duration:.55}} className="h-px w-8 bg-[#D4AF37] origin-left" />
-      <span className={`font-bold tracking-[.2em] text-[11px] uppercase text-[#D4AF37]`}>{text}</span>
-      <motion.div initial={{scaleX:0}} whileInView={{scaleX:1}} viewport={{once:false}} transition={{duration:.55}} className="h-px w-8 bg-[#D4AF37] origin-right" />
-    </Reveal>
-  );
-}
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted) {
+          setHasStarted(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
 
-/* ══════════════════════════════════════════════
-   WORD-BY-WORD HEADING (bidirectional)
-══════════════════════════════════════════════ */
-function AHeading({ children, className="", delay=0 }) {
-  const ref  = useRef(null);
-  const inV  = useInView(ref,{once:false,margin:"-50px"});
-  const dir  = useScrollDir();
-  const words = typeof children === "string" ? children.split(" ") : [children];
-  return (
-    <h2 ref={ref} className={className}>
-      {words.map((w,i) => (
-        <span key={i} className="inline-block overflow-hidden mr-[.28em]">
-          <motion.span className="inline-block"
-            initial={{ y:"110%", opacity:0, skewY:5 }}
-            animate={inV ? {y:0,opacity:1,skewY:0} : dir==="up" ? {y:"-110%",opacity:0,skewY:-5} : {y:"110%",opacity:0,skewY:5}}
-            transition={{ duration:.72, delay:delay+i*.075, ease:EASE_EXPO }}>
-            {w}
-          </motion.span>
-        </span>
-      ))}
-    </h2>
-  );
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    const endValue = typeof target === 'number' ? target : parseInt(target);
+    if (isNaN(endValue) || endValue === 0) {
+      setCount(0);
+      return;
+    }
+
+    let startTime = null;
+    const startValue = 0;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(eased * endValue);
+      
+      setCount(current);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(endValue);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [hasStarted, target, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
 }
 
 /* ══════════════════════════════════════════════
    HERO SECTION
 ══════════════════════════════════════════════ */
 function HeroSection() {
-  const secRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target:secRef, offset:["start start","end start"] });
-  const { scrollY } = useScroll();
-const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
-  const hY   = useTransform(scrollYProgress,[0,1],[0,-110]);
-  const hO   = useTransform(scrollYProgress,[0,.6],[1,0.9]);
-  const hS   = useTransform(scrollYProgress,[0,1],[1,.84]);
-  const bigY = useTransform(scrollYProgress,[0,1],[0,180]);
-  const imgS = useTransform(scrollYProgress,[0,1],[1,1.14]);
+  const [scrollOpacity, setScrollOpacity] = useState(1);
 
-  const mx=useMotionValue(0), my=useMotionValue(0);
-  const smx=useSpring(mx,{stiffness:35,damping:18}), smy=useSpring(my,{stiffness:35,damping:18});
-  const b1x=useTransform(smx,[-1,1],[-28,28]), b1y=useTransform(smy,[-1,1],[-16,16]);
-  const b2x=useTransform(smx,[-1,1],[20,-20]),  b2y=useTransform(smy,[-1,1],[14,-14]);
-  useEffect(()=>{ const fn=e=>{mx.set((e.clientX/window.innerWidth-.5)*2); my.set((e.clientY/window.innerHeight-.5)*2);}; window.addEventListener("mousemove",fn); return()=>window.removeEventListener("mousemove",fn); },[]);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const opacity = Math.max(0, 1 - scrollY / 100);
+      setScrollOpacity(opacity);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section id="about-hero" ref={secRef} className="relative pt-32 pb-20 px-4 sm:px-6 overflow-hidden min-h-screen flex items-center">
-      {/* Parallax BG image */}
-      <motion.div className="absolute inset-0 z-0" style={{ scale:imgS }}>
+    <section id="about-hero" className="relative pt-32 pb-20 px-4 sm:px-6 overflow-hidden min-h-screen flex items-center">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
         <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
           alt="Team" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-white via-white/90 to-white" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#F04A06]/40 via-transparent to-[#F04A06]/40 mix-blend-overlay" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(255,255,255,0.7)_100%)]" />
-      </motion.div>
+      </div>
+
+      {/* ✨ Light overlays */}
+      <LightBeam className="w-full h-full top-0 left-0 z-[2]" />
+      <GlowOverlay color="rgba(212,175,55,0.03)" className="z-[2]" />
+      <Sparkles count={15} className="z-[2]" />
 
       {/* Particle layer */}
       <div className="absolute inset-0 z-[1]"><ParticleCanvas count={22} color="rgba(230,107,38,0.08)" /></div>
-
-      {/* Noise canvas */}
       <NoiseCanvas color1="#FFD5B8" color2="#FFF0E6" opacity={0.28} />
 
-      {/* Kinetic bg text */}
-      <motion.div style={{ y:bigY }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-[2]">
-        <span className="text-[22vw] font-black leading-none tracking-tighter uppercase whitespace-nowrap"
-          style={{ color:"rgba(230,107,38,0.018)" }}>ABOUT</span>
-      </motion.div>
-
-      {/* Parallax blobs */}
-      <motion.div style={{x:b1x,y:b1y}} className="absolute top-10 left-[4%] w-[380px] h-[380px] pointer-events-none z-[2]">
-        <div className="w-full h-full rounded-full blur-[110px] opacity-[.35]" style={{ background:"radial-gradient(circle,#FFD5B8,transparent)" }} />
-      </motion.div>
-      <motion.div style={{x:b2x,y:b2y}} className="absolute bottom-10 right-[4%] w-[460px] h-[460px] pointer-events-none z-[2]">
-        <div className="w-full h-full rounded-full blur-[120px] opacity-[.2]" style={{ background:"radial-gradient(circle,#D4AF37,transparent)" }} />
-      </motion.div>
-
-      {/* Floating decorative orbs */}
-      <Float className="absolute top-1/4 left-[8%] w-3 h-3 rounded-full bg-[#D4AF37]/30 z-[2]" duration={5} delay={0} />
-      <Float className="absolute top-1/3 right-[10%] w-2 h-2 rounded-full bg-[#F04A06]/25 z-[2]" duration={4} delay={1} />
-      <Float className="absolute bottom-1/4 left-[15%] w-4 h-4 rounded-full bg-[#F04A06]/20 z-[2]" duration={6} delay={2} />
-      <Float className="absolute bottom-1/3 right-[18%] w-2.5 h-2.5 rounded-full bg-[#D4AF37]/25 z-[2]" duration={5.5} delay={.5} />
-
-      {/* Animated bg gradient */}
-      <motion.div className="absolute inset-0 z-[2] opacity-30"
-        animate={{ background:["radial-gradient(circle at 20% 30%,rgba(230,107,38,0.15) 0%,transparent 40%)","radial-gradient(circle at 80% 70%,rgba(230,107,38,0.15) 0%,transparent 40%)","radial-gradient(circle at 20% 30%,rgba(230,107,38,0.15) 0%,transparent 40%)"] }}
-        transition={{ duration:10, repeat:Infinity, ease:"linear" }} />
-
       {/* Main content */}
-      <motion.div style={{y:hY,opacity:hO,scale:hS}} className="max-w-6xl mx-auto pb-24 text-center relative z-10">
+      <div className="max-w-6xl mx-auto pb-24 text-center relative z-10">
 
         {/* Badge */}
-        <motion.div initial={{scale:.7,opacity:0,y:20}} animate={{scale:1,opacity:1,y:0}} transition={{duration:.65,ease:EASE_BACK}}
-          className="inline-block mb-8">
-          <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#F04A06]/20 to-[#F04A06]/20 text-[#F04A06] rounded-full text-sm font-semibold border border-[#F04A06]/30 backdrop-blur-sm shadow-lg shadow-[#F04A06]/10">
-            <motion.span animate={{opacity:[.7,1,.7]}} transition={{duration:2,repeat:Infinity}} className="text-[#D4AF37]">✦</motion.span>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-block mb-8 relative"
+        >
+          <div className="absolute inset-0 bg-[#D4AF37]/20 blur-xl rounded-full animate-pulse" />
+          <span className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#F04A06]/20 to-[#F04A06]/20 text-[#F04A06] rounded-full text-sm font-semibold border border-[#F04A06]/30 backdrop-blur-sm shadow-lg shadow-[#F04A06]/10">
+            <span className="text-[#D4AF37] animate-pulse">✦</span>
             Empowering the Next Generation of Innovators
-            <motion.span animate={{opacity:[.7,1,.7]}} transition={{duration:2,repeat:Infinity}} className="text-[#D4AF37]">✦</motion.span>
+            <span className="text-[#D4AF37] animate-pulse" style={{ animationDelay: '1s' }}>✦</span>
           </span>
         </motion.div>
 
         {/* Heading */}
-        <motion.h1 initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{delay:.3,duration:.75,ease:EASE_EXPO}}
-          className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.75 }}
+          className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6"
+        >
           <span className="text-[#1A1A1A]">About</span>{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] via-[#F04A06] to-[#F04A06]">Stackenzo</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] via-[#F04A06] to-[#F04A06] relative">
+            Stackenzo
+          </span>
         </motion.h1>
 
         {/* Sub */}
-        <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.5,ease:EASE_EXPO}}
-          className="text-xl sm:text-2xl text-[#1A1A1A] max-w-4xl mx-auto leading-relaxed backdrop-blur-sm bg-white/20 p-6 rounded-2xl border border-gray-200 mb-10">
-          Where IT services, R&D, and EdTech unite to transform ideas into scalable, real-world digital solutions.
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="text-xl sm:text-2xl text-[#1A1A1A] max-w-4xl mx-auto leading-relaxed backdrop-blur-sm bg-white/20 p-6 rounded-2xl border border-gray-200 mb-10 relative"
+        >
+          Where IT services, R&D and EdTech unite to transform ideas into scalable, real-world digital solutions.
+          <span className="absolute -inset-1 bg-gradient-to-r from-[#F04A06]/5 to-[#D4AF37]/5 blur-xl animate-pulse" />
         </motion.p>
 
         {/* Stat pills */}
-        <motion.div initial={{opacity:0,y:28}} animate={{opacity:1,y:0}} transition={{delay:.7,ease:EASE_EXPO}}
-          className="flex flex-wrap justify-center gap-6 mt-4">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="flex flex-wrap justify-center gap-6 mt-4"
+        >
           {[{label:"Students Empowered",value:"1200+",icon:"🎓"},{label:"Projects Delivered",value:"150+",icon:"🚀"},{label:"Expert Mentors",value:"25+",icon:"👨‍🏫"},{label:"Satisfied Clients",value:"20+",icon:"👥"}].map((s,i)=>(
             <motion.div
-  key={i}
-  whileHover={{ scale: 1.07, y: -5, boxShadow: "0 14px 32px rgba(0,0,0,0.08)" }}
-  className="bg-white/85 backdrop-blur-md border border-gray-200 rounded-xl px-6 py-4 min-w-[160px] text-center shadow-sm cursor-default"
->
-  <div className="text-3xl mb-2">{s.icon}</div>
-  <div className="text-2xl font-black text-[#F04A06]">{s.value}</div>
-  <div className="text-sm text-[#1A1A1A] font-medium">{s.label}</div>
-</motion.div>
+              key={i}
+              whileHover={{ scale: 1.07, y: -5, boxShadow: "0 14px 32px rgba(0,0,0,0.08)" }}
+              className="relative group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/10 to-[#F04A06]/10 rounded-xl blur-md group-hover:blur-xl transition-all duration-500" />
+              <div className="relative bg-white/85 backdrop-blur-md border border-gray-200 rounded-xl px-6 py-4 min-w-[160px] text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">{s.icon}</div>
+                <div className="text-2xl font-black text-[#F04A06]">{s.value}</div>
+                <div className="text-sm text-[#1A1A1A] font-medium">{s.label}</div>
+              </div>
+            </motion.div>
           ))}
         </motion.div>
 
         {/* Scroll cue */}
-             <motion.div
-         style={{ opacity: scrollOpacity }}
-         initial={{ opacity: 0 }}
-         animate={{ opacity: 1 }}
-         transition={{ delay: 2.2 }}
-               className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 cursor-pointer"
-               onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior:"smooth" })}>
-               <Float duration={2} yRange={10}>
-                 <div className="w-7 h-12 border-2 border-[#F04A06]/28 rounded-full flex justify-center">
-         <motion.div
-           className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
-           animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
-           transition={{ duration: 1.8, repeat: Infinity }}
-         />
-       </div>
-               </Float>
-             </motion.div>
-      </motion.div>
+        <motion.div
+          style={{ opacity: scrollOpacity }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.2 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 cursor-pointer"
+          onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior:"smooth" })}
+        >
+          <Float duration={2} yRange={10}>
+            <div className="relative w-7 h-12 border-2 border-[#F04A06]/28 rounded-full flex justify-center">
+              <div className="absolute inset-0 bg-[#D4AF37]/5 rounded-full animate-pulse" />
+              <div className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3 animate-bounce" />
+            </div>
+          </Float>
+        </motion.div>
+      </div>
     </section>
   );
 }
@@ -570,90 +483,124 @@ function StorySection() {
       <WaveDivider color="#D4AF37" toBg="#FFF4ED" />
       <section id="about-story" className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{background:"#FFF4ED"}}>
         <NoiseCanvas color1="#FFD5B8" color2="#FFCBA4" opacity={0.25} />
+        <GlowOverlay color="rgba(212,175,55,0.02)" />
+        <Sparkles count={12} />
+        
         {/* Floating bg circles */}
         {[{l:"5%",t:"10%",s:120},{l:"85%",t:"60%",s:90},{l:"50%",t:"80%",s:70}].map((o,i)=>(
           <Float key={i} duration={6+i} yRange={18} delay={i} className="absolute pointer-events-none"
             style={{left:o.l,top:o.t}}>
-            <div className="rounded-full bg-[#F04A06]/[0.04]" style={{width:o.s,height:o.s}} />
+            <div className="rounded-full bg-[#F04A06]/[0.04] animate-pulse" style={{width:o.s,height:o.s}} />
           </Float>
         ))}
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-14">
-            <SLabel text="Our Story" />
-            <AHeading className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06]" delay={.05}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex items-center gap-3 justify-center mb-3"
+            >
+              <div className="h-px w-8 bg-[#D4AF37] relative">
+                <div className="absolute inset-0 bg-[#D4AF37]/50 animate-pulse" />
+              </div>
+              <span className="font-bold tracking-[.2em] text-[11px] uppercase text-[#D4AF37] relative">
+                Our Story
+              </span>
+              <div className="h-px w-8 bg-[#D4AF37] relative">
+                <div className="absolute inset-0 bg-[#D4AF37]/50 animate-pulse" />
+              </div>
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06] relative inline-block"
+            >
               How We Started
-            </AHeading>
+            </motion.h2>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left */}
             <div className="space-y-8">
-              <Reveal from="left">
-                <p className="text-lg text-[#1A1A1A] leading-relaxed">
-                  Founded with a vision to bridge the gap between academic learning and industry excellence
-                  <span className="text-[#F04A06] font-semibold mx-1">Stackenzo</span>
-                  is a technology-driven organization focused on three core pillars: advanced IT services, innovative R&D and transformative EdTech solutions.
-                </p>
-              </Reveal>
+              <motion.p
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-lg text-[#1A1A1A] leading-relaxed relative"
+              >
+                <span className="absolute -left-4 top-0 w-1 h-12 bg-gradient-to-b from-[#D4AF37] to-transparent rounded-full animate-pulse" />
+                Founded with a vision to bridge the gap between academic learning and industry excellence
+                <span className="text-[#F04A06] font-semibold mx-1">Stackenzo</span>
+                is a technology-driven organization focused on three core pillars: advanced IT services, innovative R&D and transformative EdTech solutions.
+              </motion.p>
 
-              <Reveal from="left" delay={.1}>
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
                 <h3 className="text-xl font-semibold text-[#1A1A1A] mb-4 flex items-center gap-2">
-                  <span className="w-1 h-6 bg-[#D4AF37] rounded-full" />
+                  <span className="w-1 h-6 bg-[#D4AF37] rounded-full animate-pulse" />
                   Our Comprehensive Offerings
                 </h3>
-                <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-4" stagger={0.1} from="bottom">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {PILLARS.map((item, i) => (
-                    <GlowCard key={i} accent="#F04A06">
-                      <TiltCard>
-                        <motion.div whileHover={{y:-5,scale:1.02,boxShadow:"0 20px 50px rgba(0,0,0,0.08)"}}
-                          className="group relative bg-white p-6 rounded-xl border border-orange-200 overflow-hidden h-full">
-                          <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                          <div className="relative z-10">
-                            <Float duration={4+i*.5} delay={i*.3}>
-                              <div className="text-[#F04A06] mb-3">{item.icon}</div>
-                            </Float>
-                            <h3 className="text-lg font-bold text-[#1A1A1A] mb-2 group-hover:text-[#F04A06] transition-colors">{item.title}</h3>
-                            <p className="text-sm text-[#1A1A1A]">{item.desc}</p>
-                          </div>
-                        </motion.div>
-                      </TiltCard>
-                    </GlowCard>
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: i * 0.1 }}
+                      whileHover={{ y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
+                      className="group relative bg-white p-6 rounded-xl border border-orange-200 overflow-hidden hover:shadow-xl transition-all duration-300"
+                    >
+                      <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                      <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37]/0 via-[#D4AF37]/5 to-[#D4AF37]/0 group-hover:animate-light-sweep" />
+                      <div className="relative z-10">
+                        <div className="text-[#F04A06] mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
+                        <h3 className="text-lg font-bold text-[#1A1A1A] mb-2 group-hover:text-[#F04A06] transition-colors">{item.title}</h3>
+                        <p className="text-sm text-[#1A1A1A]">{item.desc}</p>
+                      </div>
+                    </motion.div>
                   ))}
-                </StaggerContainer>
-              </Reveal>
-
-             
-
-          
+                </div>
+              </motion.div>
             </div>
 
             {/* Right — Image */}
-            <Reveal from="right" delay={.1} className="relative lg:sticky lg:top-24">
-              <TiltCard intensity={8}>
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                  <motion.img
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop"
-                    alt="Team collaboration" className="w-full h-auto object-cover"
-                    whileHover={{scale:1.04}} transition={{duration:.65}} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#F04A06] via-transparent to-transparent" />
-
-                  {IMAGE_STATS.map((s, i) => {
-  const Icon = s.icon;
-  
-})}
-                </div>
-              </TiltCard>
-            </Reveal>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="relative lg:sticky lg:top-24"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#F04A06]/20 via-transparent to-transparent z-10" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/10 to-transparent z-10 animate-pulse" />
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop"
+                  alt="Team collaboration" className="w-full h-auto object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#F04A06] via-transparent to-transparent" />
+              </div>
+            </motion.div>
           </div>
+          
           {/* FULL WIDTH PARAGRAPH */}
-<Reveal from="bottom" delay={.2}>
-  <div className="mt-12 max-w-5xl mx-auto border-l-4 border-[#D4AF37] pl-6">
-    <p className="text-[#1A1A1A] leading-relaxed italic text-center">
-      "Today, Stackenzo stands as a unified technology powerhouse where research drives IT solutions, those solutions power EdTech experiences, and strategic marketing amplifies their impact—creating a continuous cycle of innovation and growth."
-    </p>
-  </div>
-</Reveal>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-12 max-w-5xl mx-auto border-l-4 border-[#D4AF37] pl-6 relative"
+          >
+            <div className="absolute -left-2 top-0 w-4 h-4 bg-[#D4AF37]/20 rounded-full animate-pulse" />
+            <p className="text-[#1A1A1A] leading-relaxed italic text-center relative">
+              <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-4xl text-[#D4AF37]/20">"</span>
+              Today, Stackenzo stands as a unified technology powerhouse where research drives IT solutions, those solutions power EdTech experiences, and strategic marketing amplifies their impact—creating a continuous cycle of innovation and growth.
+              <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-4xl text-[#D4AF37]/20">"</span>
+            </p>
+          </motion.div>
         </div>
       </section>
       <WaveDivider color="#D4AF37" flip toBg="#fff" />
@@ -667,77 +614,106 @@ function StorySection() {
 function MissionSection() {
   return (
     <section id="about-mission" className="py-24 px-4 sm:px-6 bg-white relative overflow-hidden">
-      <Spotlight color="rgba(230,107,38,0.05)" size={550} />
       <div className="absolute inset-0 opacity-[.03]" style={{backgroundImage:"radial-gradient(circle,#F04A06 1px,transparent 1px)",backgroundSize:"28px 28px"}} />
-      <div className="absolute top-0 left-0 w-64 h-64 bg-[#F04A06] rounded-full filter blur-3xl opacity-[.06]" />
-      <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#F04A06] rounded-full filter blur-3xl opacity-[.06]" />
-
-      {/* Kinetic bg text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-        <motion.span className="text-[16vw] font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.018]"
-          animate={{y:[0,-10,0]}} transition={{duration:9,repeat:Infinity,ease:"easeInOut"}}>
-          MISSION
-        </motion.span>
-      </div>
+      <motion.div
+        className="absolute top-0 left-0 w-64 h-64 bg-[#F04A06] rounded-full filter blur-3xl opacity-[.06]"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.1, 0.06] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-0 right-0 w-64 h-64 bg-[#F04A06] rounded-full filter blur-3xl opacity-[.06]"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.1, 0.06] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
+      <GlowOverlay color="rgba(212,175,55,0.02)" />
+      <Sparkles count={10} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <SLabel text="Mission & Vision" />
-          <AHeading className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06]" delay={.05}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3 justify-center mb-3"
+          >
+            <div className="h-px w-8 bg-[#D4AF37] relative">
+              <div className="absolute inset-0 bg-[#D4AF37]/50 animate-pulse" />
+            </div>
+            <span className="font-bold tracking-[.2em] text-[11px] uppercase text-[#D4AF37] relative">
+              Mission & Vision
+            </span>
+            <div className="h-px w-8 bg-[#D4AF37] relative">
+              <div className="absolute inset-0 bg-[#D4AF37]/50 animate-pulse" />
+            </div>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06] relative inline-block"
+          >
             Our Mission & Vision
-          </AHeading>
+          </motion.h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Mission */}
-          <Reveal from="left">
-            <GlowCard accent="#F04A06" className="h-full">
-              <TiltCard intensity={8}>
-                <motion.div whileHover={{y:-6,boxShadow:"0 30px 70px rgba(0,0,0,0.10)"}}
-                  className="group relative bg-gradient-to-br from-[#FFF4ED] to-white p-8 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 h-full">
-                  <motion.div className="absolute inset-0 bg-gradient-to-r from-[#F04A06]/10 to-[#F04A06]/10"
-                    animate={{opacity:[.3,.6,.3]}} transition={{duration:3,repeat:Infinity,ease:"easeInOut"}} />
-                  <div className="relative z-10">
-                    <Float duration={4} yRange={8}>
-                      <Target className="w-14 h-14 text-[#D4AF37] mb-6 group-hover:scale-110 transition-transform" />
-                    </Float>
-                    <h3 className="text-3xl font-bold mb-5 text-[#1A1A1A]">Our Mission</h3>
-                    <p className="text-[#1A1A1A] leading-relaxed text-lg mb-6">
-                    Our mission is to design, develop and deliver intelligent technology solutions that solve real-world challenges with precision, scalability and long-term impact—across IT services, R&D and EdTech. We build scalable, secure and future-ready digital solutions while bridging academic knowledge with real-world implementation, empowering startups, institutions and enterprises through innovation, automating complex processes to enhance productivity, strengthening a research-driven engineering culture and promoting continuous learning and technological excellence.
-                    </p>
-                    
-                  </div>
-                </motion.div>
-              </TiltCard>
-            </GlowCard>
-          </Reveal>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            whileHover={{ y: -5, boxShadow: "0 20px 60px rgba(212,175,55,0.15)" }}
+            className="group relative bg-gradient-to-br from-[#FFF4ED] to-white p-8 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 transition-all duration-500"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#F04A06]/5 to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37]/0 via-[#D4AF37]/10 to-[#D4AF37]/0 group-hover:animate-light-sweep" />
+            <div className="relative z-10">
+              <Float duration={4} yRange={8}>
+                <div className="relative inline-block">
+                  <Target className="w-14 h-14 text-[#D4AF37] mb-6 group-hover:scale-110 transition-transform" />
+                  <div className="absolute -inset-2 bg-[#D4AF37]/10 rounded-full blur-xl animate-pulse" />
+                </div>
+              </Float>
+              <h3 className="text-3xl font-bold mb-5 text-[#1A1A1A]">Our Mission</h3>
+              <p className="text-[#1A1A1A] leading-relaxed text-lg mb-6">
+                Our mission is to design, develop and deliver intelligent technology solutions that solve real-world challenges with precision, scalability and long-term impact—across IT services, R&D and EdTech. We build scalable, secure and future-ready digital solutions while bridging academic knowledge with real-world implementation, empowering startups, institutions and enterprises through innovation, automating complex processes to enhance productivity, strengthening a research-driven engineering culture and promoting continuous learning and technological excellence.
+              </p>
+            </div>
+          </motion.div>
 
           {/* Vision */}
-          <Reveal from="right" delay={.1}>
-            <GlowCard accent="#D4AF37" className="h-full">
-              <TiltCard intensity={8}>
-                <motion.div whileHover={{y:-6,boxShadow:"0 30px 70px rgba(0,0,0,0.10)"}}
-                  className="group relative bg-gradient-to-br from-[#FFF4ED] to-white p-8 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 h-full">
-                  <motion.div className="absolute inset-0 bg-gradient-to-r from-[#F04A06]/10 to-[#F04A06]/10"
-                    animate={{opacity:[.3,.6,.3]}} transition={{duration:3,repeat:Infinity,ease:"easeInOut",delay:1.5}} />
-                  <div className="relative z-10">
-                    <Float duration={4.5} yRange={8}>
-                      <Globe className="w-14 h-14 text-[#D4AF37] mb-3 group-hover:scale-110 transition-transform" />
-                    </Float>
-                    <h3 className="text-3xl font-bold mb-6 text-[#1A1A1A]">Our Vision</h3>
-                    <p className="text-[#1A1A1A] leading-relaxed text-lg mb-3">
-                      To become a leading innovation-driven technology ecosystem where IT services, R&D and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future.</p>
-                    <Reveal from="bottom" delay={.35}>
-                      <div className="relative overflow-hidden rounded-2xl p-5" style={{ background:"linear-gradient(135deg,#FFF4ED,#FFF4ED)" }}>
-                        <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl bg-[#D4AF37]" />
-                        <p className="text-sm text-[#1A1A1A] italic leading-relaxed pl-3">"Through this innovation backbone, we strive to redefine education by integrating practical learning, industry exposure and technology-enabled experiences — empowering the next generation to learn, build and inspire."</p>
-                      </div>
-                    </Reveal>
-                  </div>
-                </motion.div>
-              </TiltCard>
-            </GlowCard>
-          </Reveal>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            whileHover={{ y: -5, boxShadow: "0 20px 60px rgba(212,175,55,0.15)" }}
+            className="group relative bg-gradient-to-br from-[#FFF4ED] to-white p-8 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 transition-all duration-500"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/5 to-[#F04A06]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37]/0 via-[#D4AF37]/10 to-[#D4AF37]/0 group-hover:animate-light-sweep" style={{ animationDelay: '0.5s' }} />
+            <div className="relative z-10">
+              <Float duration={4.5} yRange={8}>
+                <div className="relative inline-block">
+                  <Globe className="w-14 h-14 text-[#D4AF37] mb-3 group-hover:scale-110 transition-transform" />
+                  <div className="absolute -inset-2 bg-[#D4AF37]/10 rounded-full blur-xl animate-pulse" />
+                </div>
+              </Float>
+              <h3 className="text-3xl font-bold mb-6 text-[#1A1A1A]">Our Vision</h3>
+              <p className="text-[#1A1A1A] leading-relaxed text-lg mb-3">
+                To become a leading innovation-driven technology ecosystem where IT services, R&D and EdTech converge to create meaningful impact. We aim to advance applied research, transform breakthrough ideas into scalable digital solutions and deliver intelligent systems that empower businesses and learners alike. By integrating technological excellence with innovation and education, we strive to shape a smarter, more connected future.
+              </p>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="relative overflow-hidden rounded-2xl p-5" style={{ background:"linear-gradient(135deg,#FFF4ED,#FFF4ED)" }}
+              >
+                <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl bg-[#D4AF37] animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/5 to-transparent animate-pulse" />
+                <p className="text-sm text-[#1A1A1A] italic leading-relaxed pl-3">"Through this innovation backbone, we strive to redefine education by integrating practical learning, industry exposure and technology-enabled experiences — empowering the next generation to learn, build and inspire."</p>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -753,44 +729,72 @@ function ValuesSection() {
       <WaveDivider color="#D4AF37" toBg="#FFF4ED" />
       <section id="about-values" className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{background:"#FFF4ED"}}>
         <NoiseCanvas color1="#FFD5B8" color2="#FFCBA4" opacity={0.22} />
-        {/* Big floating bg text */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-          <motion.span className="text-[15vw] font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.02]"
-            animate={{y:[0,-12,0]}} transition={{duration:10,repeat:Infinity,ease:"easeInOut"}}>VALUES</motion.span>
-        </div>
+        <GlowOverlay color="rgba(212,175,55,0.02)" />
+        <Sparkles count={15} />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <SLabel text="Core Values" />
-            <AHeading className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06]" delay={.05}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex items-center gap-3 justify-center mb-3"
+            >
+              <div className="h-px w-8 bg-[#D4AF37] relative">
+                <div className="absolute inset-0 bg-[#D4AF37]/50 animate-pulse" />
+              </div>
+              <span className="font-bold tracking-[.2em] text-[11px] uppercase text-[#D4AF37] relative">
+                Core Values
+              </span>
+              <div className="h-px w-8 bg-[#D4AF37] relative">
+                <div className="absolute inset-0 bg-[#D4AF37]/50 animate-pulse" />
+              </div>
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06] relative inline-block"
+            >
               Our Core Values
-            </AHeading>
-            <Reveal from="bottom" delay={.25}>
-              <p className="text-xl text-[#1A1A1A] max-w-3xl mx-auto mt-4">The principles that guide everything we do at Stackenzo</p>
-            </Reveal>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-xl text-[#1A1A1A] max-w-3xl mx-auto mt-4"
+            >
+              The principles that guide everything we do at Stackenzo
+            </motion.p>
           </div>
 
-          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" stagger={0.1} from="bottom">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {VALUES.map((v, i) => (
-              <GlowCard key={i} accent="#D4AF37">
-                <TiltCard>
-                  <motion.div whileHover={{y:-10,scale:1.02,boxShadow:"0 28px 65px rgba(0,0,0,0.10)",transition:{type:"spring",stiffness:300}}}
-                    className="group relative bg-white p-8 rounded-2xl border border-gray-200 text-center overflow-hidden h-full">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${v.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                    <Float duration={4+i*.4} delay={i*.3}>
-                      <motion.div whileHover={{rotate:360,scale:1.2}} transition={{duration:.5}} className="text-[#D4AF37] mb-4 inline-block">
-                        {v.icon}
-                      </motion.div>
-                    </Float>
-                    <h3 className="text-2xl font-bold mb-3 text-[#1A1A1A] group-hover:text-[#F04A06] transition-colors">{v.title}</h3>
-                    <p className="text-[#1A1A1A]">{v.desc}</p>
-                    <motion.div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D4AF37] to-[#D4AF37]"
-                      initial={{scaleX:0}} whileHover={{scaleX:1}} transition={{duration:.3}} />
-                  </motion.div>
-                </TiltCard>
-              </GlowCard>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ y: -10, boxShadow: "0 20px 60px rgba(212,175,55,0.12)" }}
+                className="group relative bg-white p-8 rounded-2xl border border-gray-200 text-center overflow-hidden transition-all duration-500"
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${v.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37]/0 via-[#D4AF37]/10 to-[#D4AF37]/0 group-hover:animate-light-sweep" />
+                <Float duration={4+i*.4} delay={i*.3}>
+                  <div className="relative inline-block">
+                    <div className="text-[#D4AF37] mb-4 inline-block group-hover:scale-110 transition-transform duration-300">
+                      {v.icon}
+                    </div>
+                    <div className="absolute -inset-2 bg-[#D4AF37]/5 rounded-full blur-xl animate-pulse" />
+                  </div>
+                </Float>
+                <h3 className="text-2xl font-bold mb-3 text-[#1A1A1A] group-hover:text-[#F04A06] transition-colors">{v.title}</h3>
+                <p className="text-[#1A1A1A]">{v.desc}</p>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D4AF37] to-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-0 group-hover:opacity-50 animate-pulse" />
+              </motion.div>
             ))}
-          </StaggerContainer>
+          </div>
         </div>
       </section>
       <WaveDivider color="#D4AF37" flip toBg="#fff" />
@@ -799,55 +803,89 @@ function ValuesSection() {
 }
 
 /* ══════════════════════════════════════════════
-   STATS
+   STATS SECTION
 ══════════════════════════════════════════════ */
 function StatsSection() {
   return (
     <section id="about-stats" className="py-20 px-4 sm:px-6 bg-white relative overflow-hidden">
-      <Spotlight color="rgba(230,107,38,0.045)" size={500} />
-      <motion.div className="absolute inset-0 opacity-[.07]"
-        animate={{ background:["radial-gradient(circle at 20% 30%,rgba(197,83,26,0.1) 0%,transparent 30%)","radial-gradient(circle at 80% 70%,rgba(197,83,26,0.1) 0%,transparent 30%)","radial-gradient(circle at 20% 30%,rgba(197,83,26,0.1) 0%,transparent 30%)"] }}
-        transition={{ duration:8, repeat:Infinity, ease:"linear" }} />
+      <div className="absolute inset-0 opacity-[.07]" style={{ background: "radial-gradient(circle at 50% 50%, rgba(197,83,26,0.1) 0%, transparent 50%)" }} />
+      <GlowOverlay color="rgba(212,175,55,0.02)" />
+      <Sparkles count={12} />
+      
       {/* Floating orbs */}
       {[{x:"8%",y:"20%",s:70},{x:"88%",y:"70%",s:50},{x:"50%",y:"85%",s:60}].map((o,i)=>(
         <Float key={i} duration={5+i} yRange={18} delay={i} className="absolute pointer-events-none" style={{left:o.x,top:o.y}}>
-          <div className="rounded-full bg-[#D4AF37]/[0.05]" style={{width:o.s,height:o.s}} />
+          <div className="rounded-full bg-[#D4AF37]/[0.05] animate-pulse" style={{width:o.s,height:o.s}} />
         </Float>
       ))}
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-14">
-          <SLabel text="Our Impact" />
-          <AHeading className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06]" delay={.05}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3 justify-center mb-3"
+          >
+            <div className="h-px w-8 bg-[#D4AF37] relative">
+              <div className="absolute inset-0 bg-[#D4AF37]/50 animate-pulse" />
+            </div>
+            <span className="font-bold tracking-[.2em] text-[11px] uppercase text-[#D4AF37] relative">
+              Our Impact
+            </span>
+            <div className="h-px w-8 bg-[#D4AF37] relative">
+              <div className="absolute inset-0 bg-[#D4AF37]/50 animate-pulse" />
+            </div>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#F04A06] relative inline-block"
+          >
             Our Impact in Numbers
-          </AHeading>
+          </motion.h2>
         </div>
 
-        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" stagger={0.12} from="bottom">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {STATS.map((s, i) => {
             const Icon = s.icon;
+            const numericValue = parseInt(s.number.replace(/\D/g, ""));
+            const suffix = s.number.replace(/[0-9]/g, "");
+            
             return (
-              <GlowCard key={i} accent="#D4AF37">
-                <TiltCard>
-                  <motion.div whileHover={{y:-8,boxShadow:"0 24px 55px rgba(0,0,0,0.10)"}}
-                    className="bg-white rounded-xl p-4 sm:p-6 border border-gray-200 hover:border-[#D4AF37] transition-all duration-300 text-center h-full">
-                    <Float duration={4+i*.5} delay={i*.3}>
-                      <motion.div whileHover={{rotate:18,scale:1.18}} className="inline-flex justify-center mb-3">
-                        <div className="bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/20">
-                          <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                        </div>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="relative group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/10 to-[#F04A06]/10 rounded-xl blur-md group-hover:blur-xl transition-all duration-500 opacity-0 group-hover:opacity-100" />
+                <motion.div
+                  whileHover={{ y: -10, boxShadow: "0 20px 50px rgba(212,175,55,0.15)" }}
+                  className="relative bg-white rounded-xl p-4 sm:p-6 border border-gray-200 hover:border-[#D4AF37] transition-all duration-300 text-center"
+                >
+                  <Float duration={4+i*.5} delay={i*.3}>
+                    <div className="relative inline-flex justify-center mb-3">
+                      <div className="absolute inset-0 bg-[#F04A06]/20 rounded-xl blur-lg animate-pulse" />
+                      <motion.div
+                        whileHover={{ rotate: 15, scale: 1.1 }}
+                        className="relative bg-[#F04A06] p-3 rounded-xl shadow-lg shadow-[#F04A06]/20"
+                      >
+                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                       </motion.div>
-                    </Float>
-                    <div className="text-2xl sm:text-3xl md:text-4xl font-black text-[#F04A06] mb-1">
-                      <Counter value={s.number} />
                     </div>
-                    <div className="text-xs sm:text-sm text-[#1A1A1A] font-medium">{s.label}</div>
-                  </motion.div>
-                </TiltCard>
-              </GlowCard>
+                  </Float>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-black text-[#F04A06] mb-1 group-hover:scale-105 transition-transform duration-300">
+                    <AnimatedCounter target={numericValue} duration={2000} suffix={suffix} />
+                  </div>
+                  <div className="text-xs sm:text-sm text-[#1A1A1A] font-medium">{s.label}</div>
+                </motion.div>
+              </motion.div>
             );
           })}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
@@ -857,68 +895,79 @@ function StatsSection() {
    CTA SECTION
 ══════════════════════════════════════════════ */
 function CTASection() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target:ref, offset:["start end","end start"] });
-  const bgY = useTransform(scrollYProgress,[0,1],[-40,40]);
-
   return (
     <>
       <WaveDivider color="#F04A06" toBg="#3D1A0A" />
-      <section ref={ref} className="py-28 px-4 sm:px-6 relative overflow-hidden">
-        <motion.div className="absolute inset-0" style={{y:bgY}}>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#F04A06] to-[#F04A06]" />
-        </motion.div>
-        <Spotlight color="rgba(212,175,55,0.06)" />
-        <div className="absolute inset-0"><ParticleCanvas count={18} color="rgba(212,175,55,5)" /></div>
+      <section className="py-28 px-4 sm:px-6 relative overflow-hidden" style={{ background: "linear-gradient(to right, #F04A06, #F04A06)" }}>
+        <div className="absolute inset-0"><ParticleCanvas count={18} color="rgba(212,175,55,0.05)" /></div>
+        <GlowOverlay color="rgba(212,175,55,0.03)" />
+        <Sparkles count={15} className="opacity-50" />
+        
         {/* Floating rings */}
-        {[100,180,270].map((s,i)=>(
-          <Float key={i} duration={6+i*2} yRange={12} delay={i}
+        {[100, 180, 270].map((s, i) => (
+          <Float key={i} duration={6 + i * 2} yRange={12} delay={i}
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none rounded-full border border-[#D4AF37]/20"
-            style={{width:s,height:s}} />
+            style={{ width: s, height: s }} />
         ))}
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <Reveal from="top">
-            <div className="inline-flex items-center gap-2 border border-[#D4AF37]/38 rounded-full px-5 py-2 mb-8 bg-[#D4AF37]/10 backdrop-blur-sm">
-              <motion.div animate={{rotate:[0,20,-20,0]}} transition={{duration:2.8,repeat:Infinity,ease:"easeInOut"}}>
-                <Star className="w-4 h-4 text-[#D4AF37]" />
-              </motion.div>
-              <span className="text-sm text-[#D4AF37] font-bold">Build Your Future with Stackenzo</span>
-            </div>
-          </Reveal>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative inline-flex items-center gap-2 border border-[#D4AF37]/38 rounded-full px-5 py-2 mb-8 bg-[#D4AF37]/10 backdrop-blur-sm"
+          >
+            <div className="absolute inset-0 bg-[#D4AF37]/10 rounded-full blur-xl animate-pulse" />
+            <Star className="w-4 h-4 text-[#D4AF37] animate-pulse" />
+            <span className="text-sm text-[#D4AF37] font-bold">Build Your Future with Stackenzo</span>
+          </motion.div>
 
-          <Reveal from="bottom" delay={.1}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Where Your Growth Begins</h2>
-          </Reveal>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl md:text-5xl font-bold text-white mb-6"
+          >
+            Where Your Growth Begins
+          </motion.h2>
 
-          <Reveal from="bottom" delay={.2}>
-            <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-              Be part of a growing network of learners and innovators. Let’s shape the future of technology together.
-            </p>
-          </Reveal>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-white/80 mb-10 max-w-2xl mx-auto"
+          >
+            Be part of a growing network of learners and innovators. Let's shape the future of technology together.
+          </motion.p>
 
-          <Reveal from="bottom" delay={.35}>
-            <div className="flex flex-col sm:flex-row gap-3 
-                items-center sm:items-start 
-                justify-center">
-              {[
-                { to:"/Contact",          label:"Get in Touch",      Icon:Rocket   },
-                { to:"/StackenzoPrograms",label:"Explore Programs",  Icon:BookOpen },
-                { to:"/Services",         label:"Explore Services",  Icon:Target   },
-                { to:"/Community",         label:"Explore Community",  Icon:UserPlus   },
-              ].map(({to,label,Icon},i) => (
-                <Link key={i} to={to}>
-                  <motion.button whileHover={{scale:1.06,backgroundColor:"rgba(255,255,255,0.14)"}} whileTap={{scale:.96}}
-                    className="group px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2">
-                    <span>{label}</span>
-                    <motion.div animate={{x:[0,4,0]}} transition={{duration:1.5,repeat:Infinity}}>
-                      <Icon className="w-5 h-5" />
-                    </motion.div>
-                  </motion.button>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3"
+          >
+            {[
+              { to: "/Contact", label: "Get in Touch", Icon: Rocket },
+              { to: "/StackenzoPrograms", label: "Explore Programs", Icon: BookOpen },
+              { to: "/Services", label: "Explore Services", Icon: Target },
+              { to: "/Community", label: "Explore Community", Icon: UserPlus },
+            ].map(({ to, label, Icon }, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto"
+              >
+                <Link to={to}>
+                  <button className="relative group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden">
+                    <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
+                    <span className="relative z-10">{label}</span>
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </Link>
-              ))}
-            </div>
-          </Reveal>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
     </>
@@ -929,9 +978,36 @@ function CTASection() {
    ROOT
 ══════════════════════════════════════════════ */
 function About() {
+  // Inject CSS animations
+  const styleElement = document.createElement('style');
+  styleElement.textContent = `
+    @keyframes light-sweep {
+      0% { transform: translateX(-100%) rotate(-15deg); }
+      100% { transform: translateX(100%) rotate(-15deg); }
+    }
+    .animate-light-sweep {
+      animation: light-sweep 4s ease-in-out infinite;
+    }
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1) rotate(180deg); }
+    }
+    .animate-sparkle {
+      animation: sparkle 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(-7px); }
+      50% { transform: translateY(7px); }
+    }
+  `;
+  document.head.appendChild(styleElement);
+
   return (
     <div className="bg-white text-[#1A1A1A] min-h-screen overflow-x-hidden">
-     
       <ScrollProgressBar />
       <SectionNavDots />
       <Navbar />
@@ -945,6 +1021,25 @@ function About() {
 
       <Footer />
       <ScrollToTop />
+
+      {/* WhatsApp FAB */}
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        className="fixed bottom-6 right-6 z-50"
+      >
+        <motion.a
+          whileHover={{ scale: 1.1, boxShadow: "0 20px 40px rgba(240,74,6,0.3)" }}
+          whileTap={{ scale: 0.9 }}
+          href="https://wa.me/919247577907"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-14 h-14 bg-[#F04A06] text-white rounded-full shadow-2xl border border-[#F04A06] hover:bg-[#D94A06] transition-colors"
+        >
+          <MessageCircle className="w-6 h-6" />
+        </motion.a>
+      </motion.div>
     </div>
   );
 }

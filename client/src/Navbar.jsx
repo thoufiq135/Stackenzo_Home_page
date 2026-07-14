@@ -121,7 +121,8 @@ function Navbar() {
       name: "School Programs",
       path: "/Robotics",
       children: [
-        { name: "Bootcamp", path: "/StackenzoBootcamp" }
+        { name: "Bootcamp", path: "/StackenzoBootcamp" },
+        { name: "LabSetup", path: "/roboticlab"}
       ]
     }
   ];

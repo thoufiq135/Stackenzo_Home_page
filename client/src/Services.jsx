@@ -98,18 +98,18 @@ function useScrollDir() {
 }
 
 /* ══════════════════════════════════════════════
-   BIDIRECTIONAL REVEAL
+   REVEAL - NO DELAYS, NO TEXT EFFECTS
 ══════════════════════════════════════════════ */
-function Reveal({ children, className = "", delay = 0, from = "bottom", once = false }) {
+function Reveal({ children, className = "", from = "bottom", once = false }) {
   const ref = useRef(null);
   const inV = useInView(ref, { once, margin: "-55px" });
   const dir = useScrollDir();
   const V = {
-    bottom: { hidden:{ y:65,  opacity:0, scale:.96, filter:"blur(6px)" }, visible:{ y:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ y:-48, opacity:0, scale:.97, filter:"blur(4px)" } },
-    top:    { hidden:{ y:-65, opacity:0, scale:.96, filter:"blur(6px)" }, visible:{ y:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ y:48,  opacity:0, scale:.97, filter:"blur(4px)" } },
-    left:   { hidden:{ x:-75, opacity:0, scale:.96, filter:"blur(6px)" }, visible:{ x:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ x:55,  opacity:0, scale:.97, filter:"blur(4px)" } },
-    right:  { hidden:{ x:75,  opacity:0, scale:.96, filter:"blur(6px)" }, visible:{ x:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ x:-55, opacity:0, scale:.97, filter:"blur(4px)" } },
-    scale:  { hidden:{ scale:.75, opacity:0, filter:"blur(8px)" }, visible:{ scale:1, opacity:1, filter:"blur(0px)" }, exit:{ scale:.85, opacity:0, filter:"blur(6px)" } },
+    bottom: { hidden:{ y:65, opacity:0 }, visible:{ y:0, opacity:1 }, exit:{ y:-48, opacity:0 } },
+    top:    { hidden:{ y:-65, opacity:0 }, visible:{ y:0, opacity:1 }, exit:{ y:48, opacity:0 } },
+    left:   { hidden:{ x:-75, opacity:0 }, visible:{ x:0, opacity:1 }, exit:{ x:55, opacity:0 } },
+    right:  { hidden:{ x:75, opacity:0 }, visible:{ x:0, opacity:1 }, exit:{ x:-55, opacity:0 } },
+    scale:  { hidden:{ scale:.75, opacity:0 }, visible:{ scale:1, opacity:1 }, exit:{ scale:.85, opacity:0 } },
   };
   const { hidden, visible, exit } = V[from] || V.bottom;
   return (
@@ -117,21 +117,21 @@ function Reveal({ children, className = "", delay = 0, from = "bottom", once = f
       initial="hidden"
       animate={inV ? "visible" : once ? "hidden" : dir === "up" ? "exit" : "hidden"}
       variants={{ hidden, visible, exit }}
-      transition={{ duration:.75, delay, ease:EASE_EXPO }}>
+      transition={{ duration:0.5, ease:EASE_EXPO }}>
       {children}
     </motion.div>
   );
 }
 
 /* ══════════════════════════════════════════════
-   STAGGER CONTAINER
+   STAGGER CONTAINER - NO DELAYS
 ══════════════════════════════════════════════ */
-function StaggerContainer({ children, className = "", stagger = 0.1, from = "bottom" }) {
+function StaggerContainer({ children, className = "", stagger = 0.05, from = "bottom" }) {
   const ref = useRef(null);
   const inV = useInView(ref, { once:false, margin:"-55px" });
   const dir = useScrollDir();
   const B = {
-    bottom: { hidden:{ y:55,  opacity:0, scale:.95, filter:"blur(5px)" }, visible:{ y:0, opacity:1, scale:1, filter:"blur(0px)" }, exit:{ y:-38, opacity:0, scale:.97, filter:"blur(3px)" } },
+    bottom: { hidden:{ y:55, opacity:0 }, visible:{ y:0, opacity:1 }, exit:{ y:-38, opacity:0 } },
     left:   { hidden:{ x:-55, opacity:0 }, visible:{ x:0, opacity:1 }, exit:{ x:38, opacity:0 } },
     scale:  { hidden:{ scale:.8, opacity:0 }, visible:{ scale:1, opacity:1 }, exit:{ scale:.88, opacity:0 } },
   };
@@ -142,8 +142,8 @@ function StaggerContainer({ children, className = "", stagger = 0.1, from = "bot
       animate={inV ? "visible" : dir === "up" ? "exit" : "hidden"}
       variants={{ hidden:{}, visible:{ transition:{ staggerChildren:stagger }}, exit:{ transition:{ staggerChildren:stagger/2, staggerDirection:-1 }}}}>
       {Array.isArray(children)
-        ? children.map((c,i) => <motion.div key={i} variants={{ hidden, visible, exit }} transition={{ duration:.7, ease:EASE_EXPO }}>{c}</motion.div>)
-        : <motion.div variants={{ hidden, visible, exit }} transition={{ duration:.7, ease:EASE_EXPO }}>{children}</motion.div>}
+        ? children.map((c,i) => <motion.div key={i} variants={{ hidden, visible, exit }} transition={{ duration:0.4, ease:EASE_EXPO }}>{c}</motion.div>)
+        : <motion.div variants={{ hidden, visible, exit }} transition={{ duration:0.4, ease:EASE_EXPO }}>{children}</motion.div>}
     </motion.div>
   );
 }
@@ -171,9 +171,9 @@ function GlowCard({ children, className = "", accent = "#D4AF37" }) {
   const mv = e => { const r=ref.current?.getBoundingClientRect(); if(r) setPos({x:e.clientX-r.left,y:e.clientY-r.top}); };
   return (
     <motion.div ref={ref} className={`relative rounded-2xl overflow-hidden ${className}`} onMouseMove={mv}
-      initial={{ opacity:0, y:40, scale:.96 }}
-      animate={inV ? { opacity:1, y:0, scale:1 } : { opacity:0, y:40, scale:.96 }}
-      transition={{ duration:.72, ease:EASE_EXPO }}>
+      initial={{ opacity:0, y:30 }}
+      animate={inV ? { opacity:1, y:0 } : { opacity:0, y:30 }}
+      transition={{ duration:0.5, ease:EASE_EXPO }}>
       <div className="absolute pointer-events-none rounded-2xl z-0"
         style={{ inset:-1, background:`radial-gradient(300px circle at ${pos.x}px ${pos.y}px,${accent}28,transparent 60%)`, opacity:inV?1:0, transition:"opacity .3s" }}/>
       <motion.div className="absolute inset-0 rounded-2xl pointer-events-none z-0"
@@ -220,42 +220,39 @@ function MagBtn({ children, className = "", onClick }) {
 }
 
 /* ══════════════════════════════════════════════
-   COUNTER
+   COUNTER - FIXED FOR DECIMALS
 ══════════════════════════════════════════════ */
 function Counter({ value }) {
   const ref = useRef(null);
   const inV = useInView(ref, { once: false });
 
-  // Extract ONLY first number (not all numbers)
-  const match = String(value).match(/\d+/);
-  const num = match ? parseInt(match[0]) : 0;
-
-  // Keep original format
+  const numericMatch = String(value).match(/[\d.]+/);
+  const numericValue = numericMatch ? parseFloat(numericMatch[0]) : 0;
   const original = String(value);
 
   const mv = useMotionValue(0);
-  const sp = useSpring(mv, { stiffness: 55, damping: 14 });
-  const [display, setDisplay] = useState(num);
+  const sp = useSpring(mv, { stiffness: 55, damping: 14, precision: 0.01 });
+  const [display, setDisplay] = useState(String(value));
 
   useEffect(() => {
-    mv.set(inV ? num : 0);
-  }, [inV]);
+    mv.set(inV ? numericValue : 0);
+  }, [inV, numericValue]);
 
   useEffect(() => {
-    sp.on("change", v => {
-      const rounded = Math.round(v);
-
-      // Replace only first number in original string
-      const updated = original.replace(/\d+/, rounded);
-
+    return sp.on("change", v => {
+      let formatted;
+      if (Number.isInteger(numericValue)) {
+        formatted = Math.round(v);
+      } else {
+        formatted = v.toFixed(1);
+      }
+      const updated = original.replace(/[\d.]+/, formatted);
       setDisplay(updated);
     });
-  }, [sp, original]);
+  }, [sp, original, numericValue]);
 
   return <span ref={ref}>{display}</span>;
 }
-
-
 
 /* ══════════════════════════════════════════════
    SCROLL PROGRESS BAR
@@ -305,25 +302,22 @@ function SectionNavDots() {
     <div className="fixed right-5 top-1/2 -translate-y-1/2 z-[900] flex-col gap-4 hidden md:flex">
       {NAV_SECTIONS.map((id, i) => (
         <motion.button
-  key={i}
-  onClick={() =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="relative flex items-center justify-center"
-  title={NAV_LABELS[i]}
->
-  {/* 🔹 DOT */}
-  <motion.div
-    animate={{
-      scale: active === i ? 1.4 : 1,
-      background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
-    }}
-    transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    className="w-2.5 h-2.5 rounded-full"
-  />
-
- 
-</motion.button>
+          key={i}
+          onClick={() =>
+            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="relative flex items-center justify-center"
+          title={NAV_LABELS[i]}
+        >
+          <motion.div
+            animate={{
+              scale: active === i ? 1.4 : 1,
+              background: active === i ? "#D4AF37" : "rgba(230,107,38,0.4)"
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 22 }}
+            className="w-2.5 h-2.5 rounded-full"
+          />
+        </motion.button>
       ))}
     </div>
   );
@@ -398,13 +392,13 @@ function WaveDivider({ color="#D4AF37", flip=false, toBg="#fff" }) {
     <div ref={ref} className={`relative w-full overflow-hidden ${flip?"rotate-180":""}`} style={{height:56}}>
       <svg viewBox="0 0 1440 56" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
         <motion.path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28 L1440,56 L0,56 Z"
-          fill={toBg} initial={{pathLength:0}} animate={inV?{pathLength:1}:{}} transition={{duration:1.2,ease:EASE_EXPO}}/>
+          fill={toBg} initial={{pathLength:0}} animate={inV?{pathLength:1}:{}} transition={{duration:0.8,ease:EASE_EXPO}}/>
         <motion.path d="M0,28 C240,0 480,56 720,28 C960,0 1200,56 1440,28"
           stroke={color} strokeWidth="1.5" fill="none"
-          initial={{pathLength:0,opacity:0}} animate={inV?{pathLength:1,opacity:1}:{}} transition={{duration:1.4,ease:EASE_EXPO,delay:.15}}/>
+          initial={{pathLength:0,opacity:0}} animate={inV?{pathLength:1,opacity:1}:{}} transition={{duration:0.9,ease:EASE_EXPO,delay:0.05}}/>
         <motion.path d="M0,36 C240,8 480,64 720,36 C960,8 1200,64 1440,36"
           stroke={color} strokeWidth=".6" fill="none" opacity=".4"
-          initial={{pathLength:0}} animate={inV?{pathLength:1}:{}} transition={{duration:1.4,ease:EASE_EXPO,delay:.3}}/>
+          initial={{pathLength:0}} animate={inV?{pathLength:1}:{}} transition={{duration:0.9,ease:EASE_EXPO,delay:0.1}}/>
       </svg>
     </div>
   );
@@ -415,36 +409,19 @@ function WaveDivider({ color="#D4AF37", flip=false, toBg="#fff" }) {
 ══════════════════════════════════════════════ */
 function SLabel({ text }) {
   return (
-    <Reveal from="top" className="flex items-center gap-3 justify-center mb-3">
-      <motion.div initial={{scaleX:0}} whileInView={{scaleX:1}} viewport={{once:false}} transition={{duration:.55}} className="h-px w-8 bg-[#D4AF37] origin-left"/>
+    <div className="flex items-center gap-3 justify-center mb-3">
+      <div className="h-px w-8 bg-[#D4AF37]"/>
       <span className="text-[#D4AF37] font-bold tracking-[.2em] text-[11px] uppercase">{text}</span>
-      <motion.div initial={{scaleX:0}} whileInView={{scaleX:1}} viewport={{once:false}} transition={{duration:.55}} className="h-px w-8 bg-[#D4AF37] origin-right"/>
-    </Reveal>
+      <div className="h-px w-8 bg-[#D4AF37]"/>
+    </div>
   );
 }
 
 /* ══════════════════════════════════════════════
-   ANIMATED HEADING
+   STATIC HEADING - NO ANIMATION
 ══════════════════════════════════════════════ */
-function AHeading({ children, className = "", delay = 0 }) {
-  const ref=useRef(null);
-  const inV=useInView(ref,{once:false,margin:"-50px"});
-  const dir=useScrollDir();
-  const words=typeof children==="string"?children.split(" "):[children];
-  return (
-    <h2 ref={ref} className={className}>
-      {words.map((w,i)=>(
-        <span key={i} className="inline-block overflow-hidden mr-[.28em]">
-          <motion.span className="inline-block"
-            initial={{y:"110%",opacity:0,skewY:5}}
-            animate={inV?{y:0,opacity:1,skewY:0}:dir==="up"?{y:"-110%",opacity:0,skewY:-5}:{y:"110%",opacity:0,skewY:5}}
-            transition={{duration:.72,delay:delay+i*.075,ease:EASE_EXPO}}>
-            {w}
-          </motion.span>
-        </span>
-      ))}
-    </h2>
-  );
+function Heading({ children, className = "" }) {
+  return <h2 className={className}>{children}</h2>;
 }
 
 /* ══════════════════════════════════════════════
@@ -479,7 +456,7 @@ function HeroSection() {
   const secRef=useRef(null);
   const {scrollYProgress}=useScroll({target:secRef,offset:["start start","end start"]});
   const { scrollY } = useScroll();
-const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
   const hY  =useTransform(scrollYProgress,[0,1],[0,-110]);
   const hO  =useTransform(scrollYProgress,[0,.6],[1,0.9]);
@@ -500,17 +477,14 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
       <NoiseCanvas color1="#FFD5B8" color2="#FFF0E6" opacity={0.28}/>
       <div className="absolute inset-0 z-[1]"><ParticleCanvas count={20} color="rgba(230,107,38,0.07)"/></div>
 
-      {/* Kinetic bg text */}
       <motion.div style={{y:bigY}} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-[2]">
         <span className="text-[20vw] font-black leading-none tracking-tighter uppercase whitespace-nowrap"
           style={{color:"rgba(230,107,38,0.018)"}}>SERVICES</span>
       </motion.div>
 
-      {/* Dot grid */}
       <div className="absolute inset-0 z-[2] opacity-[.03]"
         style={{backgroundImage:"radial-gradient(circle,#F04A06 1px,transparent 1px)",backgroundSize:"32px 32px"}}/>
 
-      {/* Blobs */}
       <motion.div style={{x:b1x,y:b1y}} className="absolute top-10 left-[4%] w-[380px] h-[380px] pointer-events-none z-[2]">
         <div className="w-full h-full rounded-full blur-[110px] opacity-[.3]" style={{background:"radial-gradient(circle,#FFD5B8,transparent)"}}/>
       </motion.div>
@@ -518,19 +492,16 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
         <div className="w-full h-full rounded-full blur-[120px] opacity-[.16]" style={{background:"radial-gradient(circle,#D4AF37,transparent)"}}/>
       </motion.div>
 
-      {/* Floating orbs */}
       <Float className="absolute top-1/4 left-[7%] w-3 h-3 rounded-full bg-[#D4AF37]/28 z-[2]" duration={5} delay={0}/>
-      <Float className="absolute top-1/3 right-[9%] w-2 h-2 rounded-full bg-[#F04A06]/22 z-[2]" duration={4} delay={1}/>
-      <Float className="absolute bottom-1/3 left-[12%] w-4 h-4 rounded-full bg-[#C5531A]/18 z-[2]" duration={6} delay={2}/>
-      <Float className="absolute bottom-1/4 right-[15%] w-2.5 h-2.5 rounded-full bg-[#D4AF37]/20 z-[2]" duration={5.5} delay={.5}/>
+      <Float className="absolute top-1/3 right-[9%] w-2 h-2 rounded-full bg-[#F04A06]/22 z-[2]" duration={4} delay={0}/>
+      <Float className="absolute bottom-1/3 left-[12%] w-4 h-4 rounded-full bg-[#C5531A]/18 z-[2]" duration={6} delay={0}/>
+      <Float className="absolute bottom-1/4 right-[15%] w-2.5 h-2.5 rounded-full bg-[#D4AF37]/20 z-[2]" duration={5.5} delay={0}/>
 
       <motion.div style={{y:hY,opacity:hO,scale:hS}} className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-          {/* LEFT */}
-          <Reveal from="left">
-            {/* Badge */}
-            <motion.div initial={{scale:.7,opacity:0}} animate={{scale:1,opacity:1}} transition={{duration:.65,ease:EASE_BACK}}
+          <div>
+            <motion.div initial={{scale:.7,opacity:0}} animate={{scale:1,opacity:1}} transition={{duration:0.4,ease:EASE_BACK}}
               className="inline-flex items-center gap-2 bg-white/88 backdrop-blur-sm border border-gray-200 rounded-full px-5 py-2.5 mb-7 shadow-sm">
               <motion.div animate={{rotate:[0,20,-20,0]}} transition={{duration:2.8,repeat:Infinity,ease:"easeInOut"}}>
                 <Sparkles className="w-4 h-4 text-[#D4AF37]"/>
@@ -538,22 +509,17 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
               <span className="text-sm font-semibold text-[#F04A06]">Premium Services</span>
             </motion.div>
 
-            {/* H1 */}
-            <motion.h1 initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{delay:.25,duration:.75,ease:EASE_EXPO}}
-              className="text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-[1.05]">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-[1.05]">
               <span className="text-[#1A1A1A]">Transform Your</span>
               <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] via-[#C5531A] to-[#F04A06]">Business With Us</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.45,ease:EASE_EXPO}}
-              className="text-lg text-gray-500 mb-8 max-w-lg leading-relaxed">
+            <p className="text-lg text-gray-500 mb-8 max-w-lg leading-relaxed">
               Comprehensive technology solutions and innovative strategies designed to accelerate your growth and digital transformation journey.
-            </motion.p>
+            </p>
 
-            {/* CTAs */}
-            <motion.div initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:.6,ease:EASE_EXPO}}
-              className="flex flex-wrap gap-4 mb-8">
+            <div className="flex flex-wrap gap-4 mb-8">
               <Link to="/Contact">
                 <MagBtn className="group relative px-8 py-4 bg-[#F04A06] text-white rounded-xl font-bold overflow-hidden shadow-xl shadow-[#F04A06]/25">
                   <span className="relative z-10 flex items-center gap-2">
@@ -569,29 +535,25 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                   Learn More
                 </button>
               </Link>
-            </motion.div>
+            </div>
 
-            {/* Trust */}
-            <motion.div initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:.78,ease:EASE_EXPO}}
-              className="flex items-center gap-6">
-              
+            <div className="flex items-center gap-6">
               <div>
                 <div className="flex items-center gap-0.5 mb-0.5">
                   {[1,2,3,4,5].map(i=>(<Star key={i} className="w-4 h-4 fill-[#D4AF37] text-[#D4AF37]"/>))}
                 </div>
                 <p className="text-sm text-gray-500">Trusted by 500+ businesses</p>
               </div>
-            </motion.div>
-          </Reveal>
+            </div>
+          </div>
 
-          {/* RIGHT — stats grid */}
-          <StaggerContainer className="grid grid-cols-2 gap-4" stagger={0.1} from="scale">
+          <div className="grid grid-cols-2 gap-4">
             {HERO_STATS.map((s,i)=>{const Icon=s.icon; return (
               <GlowCard key={i} accent={s.color}>
                 <TiltCard>
                   <motion.div whileHover={{scale:1.05,y:-5,boxShadow:`0 20px 50px ${s.color}18`}}
                     className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-[#D4AF37] transition-all shadow-sm h-full">
-                    <Float duration={4+i*.5} delay={i*.3} yRange={8}>
+                    <Float duration={4+i*.5} delay={0} yRange={8}>
                       <Icon className="w-8 h-8 mb-3" style={{color:s.color}}/>
                     </Float>
                     <div className="text-3xl font-black text-[#1A1A1A] mb-1"><Counter value={s.value}/></div>
@@ -600,15 +562,14 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
                 </TiltCard>
               </GlowCard>
             );})}
-          </StaggerContainer>
+          </div>
         </div>
 
-        {/* Scroll cue */}
         <motion.div
-  style={{ opacity: scrollOpacity }}
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 2.2 }}
+          style={{ opacity: scrollOpacity }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
           className="flex justify-center mt-16 cursor-pointer"
           onClick={()=>document.getElementById("svc-services")?.scrollIntoView({behavior:"smooth"})}>
           <Float duration={2} yRange={10}>
@@ -616,12 +577,11 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
               <span className="text-xs font-medium">Scroll to explore</span>
               <div className="w-7 h-12 border-2 border-[#F04A06]/25 rounded-full flex justify-center">
                  <motion.div
-    className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
-    animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
-    transition={{ duration: 1.8, repeat: Infinity }}
-  />
-</div>
-
+                    className="w-1.5 h-3 bg-[#D4AF37] rounded-full mt-3"
+                    animate={{ y: [0, 14, 0], opacity: [1, 0.4, 1] }}
+                    transition={{ duration: 1.8, repeat: Infinity }}
+                  />
+              </div>
             </div>
           </Float>
         </motion.div>
@@ -636,52 +596,45 @@ const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 function ServicesShowcase() {
   return (
     <>
-      
       <WaveDivider color="#D4AF37" toBg="#FFF4ED"/>
       <section id="svc-services" className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{background:"#FFF4ED"}}>
         <NoiseCanvas color1="#FFD5B8" color2="#FFCBA4" opacity={0.22}/>
         <Spotlight color="rgba(230,107,38,0.04)" size={520}/>
 
-        {/* Kinetic bg */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
           <motion.span className="text-[15vw] font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.018]"
             animate={{y:[0,-10,0]}} transition={{duration:9,repeat:Infinity,ease:"easeInOut"}}>SOLUTIONS</motion.span>
         </div>
 
-        {/* Floating bg orbs */}
         {[{l:"5%",t:"15%",s:80},{l:"88%",t:"60%",s:60},{l:"45%",t:"80%",s:70}].map((o,i)=>(
-          <Float key={i} duration={6+i} yRange={18} delay={i} className="absolute pointer-events-none rounded-full bg-[#F04A06]/[0.03]" style={{left:o.l,top:o.t,width:o.s,height:o.s}}/>
+          <Float key={i} duration={6+i} yRange={18} delay={0} className="absolute pointer-events-none rounded-full bg-[#F04A06]/[0.03]" style={{left:o.l,top:o.t,width:o.s,height:o.s}}/>
         ))}
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <SLabel text="Our Services"/>
-            <AHeading className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A] mt-1" delay={.05}>
+            <Heading className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A] mt-1">
               Our Services
-            </AHeading>
-            <Reveal from="bottom" delay={.25}>
-              <div className="w-16 h-[3px] bg-[#D4AF37] mx-auto mt-4 rounded"/>
-              <p className="text-gray-500 max-w-2xl mx-auto mt-4">Comprehensive solutions tailored to your business needs, delivered with excellence</p>
-            </Reveal>
+            </Heading>
+            <div className="w-16 h-[3px] bg-[#D4AF37] mx-auto mt-4 rounded"/>
+            <p className="text-gray-500 max-w-2xl mx-auto mt-4">Comprehensive solutions tailored to your business needs, delivered with excellence</p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
             {SERVICES_DATA.map((svc,idx)=>{
               const Icon=svc.icon;
               return (
-                <Reveal key={svc.id} from={idx===0?"left":idx===2?"right":"bottom"} delay={idx*.1}>
+                <div key={svc.id}>
                   <GlowCard accent={svc.accent} className="h-full">
                     <TiltCard intensity={8} className="h-full">
                       <Link to={svc.link}>
                         <motion.div whileHover={{y:-8,boxShadow:`0 32px 70px ${svc.accent}20`}}
                           className="group relative bg-white rounded-3xl border border-gray-200 hover:border-[#F04A06] transition-all duration-500 overflow-hidden h-full shadow-sm">
 
-                          {/* Top gradient accent */}
                           <div className="h-1.5 w-full bg-gradient-to-r from-[#F04A06] to-[#C5531A] opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
 
                           <div className="p-8">
-                            {/* Icon */}
-                            <Float duration={4+idx*.5} delay={idx*.3} yRange={8}>
+                            <Float duration={4+idx*.5} delay={0} yRange={8}>
                               <motion.div whileHover={{rotate:360,scale:1.1}} transition={{duration:.6}}
                                 className="w-20 h-20 rounded-2xl bg-gradient-to-r from-[#F04A06] to-[#C5531A] p-0.5 mb-6">
                                 <div className="w-full h-full rounded-2xl bg-white flex items-center justify-center">
@@ -694,8 +647,7 @@ function ServicesShowcase() {
                             <p className="text-[#F04A06] font-semibold mb-4 text-sm">{svc.subtitle}</p>
                             <p className="text-gray-500 mb-6 leading-relaxed text-sm">{svc.description}</p>
 
-                            {/* Features */}
-                            <StaggerContainer className="space-y-2.5 mb-6" stagger={0.06} from="left">
+                            <div className="space-y-2.5 mb-6">
                               {svc.features.slice(0,4).map((f,i)=>(
                                 <div key={i} className="flex items-center gap-2">
                                   <motion.div animate={{scale:[1,1.3,1]}} transition={{duration:2.2,repeat:Infinity,delay:i*.22}}>
@@ -704,10 +656,9 @@ function ServicesShowcase() {
                                   <span className="text-sm text-[#1A1A1A]">{f}</span>
                                 </div>
                               ))}
-                            </StaggerContainer>
+                            </div>
 
-                            {/* Tech tags */}
-                            <StaggerContainer className="flex flex-wrap gap-2 mb-6" stagger={0.07} from="scale">
+                            <div className="flex flex-wrap gap-2 mb-6">
                               {svc.technologies.slice(0,3).map((t,i)=>(
                                 <motion.span key={i} whileHover={{scale:1.08}}
                                   className="text-xs px-2.5 py-1 rounded-full bg-[#FFF4ED] text-[#F04A06] border border-[#D4AF37]/28 font-medium cursor-default">
@@ -719,9 +670,8 @@ function ServicesShowcase() {
                                   +{svc.technologies.length-3}
                                 </span>
                               )}
-                            </StaggerContainer>
+                            </div>
 
-                            {/* Stats */}
                             <div className="grid grid-cols-3 gap-2 mb-6 p-4 bg-[#FFF4ED] rounded-xl border border-gray-200">
                               {Object.entries(svc.stats).map(([k,v])=>(
                                 <div key={k} className="text-center">
@@ -731,7 +681,6 @@ function ServicesShowcase() {
                               ))}
                             </div>
 
-                            {/* CTA row */}
                             <div className="flex items-center justify-between">
                               <span className="text-[#F04A06] font-bold text-sm group-hover:text-[#C5531A] transition-colors">Explore Service</span>
                               <motion.div animate={{x:[0,4,0]}} transition={{duration:1.5,repeat:Infinity}}
@@ -744,7 +693,7 @@ function ServicesShowcase() {
                       </Link>
                     </TiltCard>
                   </GlowCard>
-                </Reveal>
+                </div>
               );
             })}
           </div>
@@ -772,7 +721,6 @@ function WhySection() {
       <div className="absolute inset-0 opacity-[.028]"
         style={{backgroundImage:"radial-gradient(circle,#F04A06 1px,transparent 1px)",backgroundSize:"28px 28px"}}/>
 
-      {/* Kinetic bg */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
         <motion.span className="text-[14vw] font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.018]"
           animate={{y:[0,-10,0]}} transition={{duration:10,repeat:Infinity,ease:"easeInOut"}}>ADVANTAGE</motion.span>
@@ -781,46 +729,42 @@ function WhySection() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <SLabel text="Why Choose Us"/>
-          <AHeading className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]" delay={.05}>
+          <Heading className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]">
             The Stackenzo Advantage
-          </AHeading>
-          <Reveal from="bottom" delay={.25}>
-            <div className="w-16 h-[3px] bg-[#D4AF37] mx-auto mt-4 rounded"/>
-            <p className="text-gray-500 max-w-2xl mx-auto mt-4">We combine technical excellence with business acumen to deliver exceptional results</p>
-          </Reveal>
+          </Heading>
+          <div className="w-16 h-[3px] bg-[#D4AF37] mx-auto mt-4 rounded"/>
+          <p className="text-gray-500 max-w-2xl mx-auto mt-4">We combine technical excellence with business acumen to deliver exceptional results</p>
         </div>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.09} from="bottom">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {BENEFITS.map((b,i)=>{const Icon=b.icon; return (
             <GlowCard key={i} accent="#D4AF37">
               <TiltCard>
                 <motion.div whileHover={{scale:1.04,y:-8,boxShadow:"0 28px 60px rgba(0,0,0,0.09)"}}
                   className="group relative bg-white p-6 rounded-2xl border border-gray-200 hover:border-[#D4AF37] transition-all shadow-sm h-full">
                   <div className="absolute inset-0 bg-gradient-to-r from-[#F04A06] to-[#C5531A] rounded-2xl opacity-0 group-hover:opacity-[0.04] transition-opacity duration-300"/>
-                  <Float duration={4+i*.35} delay={i*.2} yRange={7}>
+                  <Float duration={4+i*.35} delay={0} yRange={7}>
                     <div className="text-[#D4AF37] mb-4 p-3 bg-[#FFF4ED] rounded-xl inline-block border border-[#D4AF37]/28">
                       <Icon className="w-6 h-6"/>
                     </div>
                   </Float>
                   <h3 className="text-lg font-black text-[#1A1A1A] mb-2 group-hover:text-[#F04A06] transition-colors">{b.title}</h3>
                   <p className="text-sm text-gray-500">{b.desc}</p>
-                  {/* Hover bottom bar */}
                   <motion.div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#F04A06] rounded-b-2xl"
                     initial={{scaleX:0}} whileHover={{scaleX:1}} transition={{duration:.35}}/>
                 </motion.div>
               </TiltCard>
             </GlowCard>
           );})}
-        </StaggerContainer>
+        </div>
 
-        {/* Bottom stats */}
-        <StaggerContainer className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6" stagger={0.12} from="bottom">
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           {BOTTOM_STATS.map((s,i)=>{const Icon=s.icon; return (
             <GlowCard key={i} accent="#D4AF37">
               <TiltCard>
                 <motion.div whileHover={{scale:1.06,y:-6,boxShadow:"0 20px 50px rgba(212,175,55,0.14)"}}
                   className="text-center p-6 bg-white rounded-2xl border border-gray-200 shadow-sm hover:border-[#D4AF37] transition-all">
-                  <Float duration={4+i*.5} delay={i*.3} yRange={7}>
+                  <Float duration={4+i*.5} delay={0} yRange={7}>
                     <Icon className="w-8 h-8 text-[#D4AF37] mx-auto mb-3"/>
                   </Float>
                   <div className="text-3xl font-black text-[#1A1A1A] mb-1"><Counter value={s.value}/></div>
@@ -829,7 +773,7 @@ function WhySection() {
               </TiltCard>
             </GlowCard>
           );})}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
@@ -845,7 +789,6 @@ function ProcessSection() {
       <section id="svc-process" className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{background:"#FFF4ED"}}>
         <NoiseCanvas color1="#FFD5B8" color2="#FFCBA4" opacity={0.2}/>
 
-        {/* Kinetic bg */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
           <motion.span className="text-[14vw] font-black leading-none tracking-tighter uppercase text-[#F04A06]/[0.018]"
             animate={{y:[0,-10,0]}} transition={{duration:8,repeat:Infinity,ease:"easeInOut"}}>PROCESS</motion.span>
@@ -854,29 +797,25 @@ function ProcessSection() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <SLabel text="How We Work"/>
-            <AHeading className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]" delay={.05}>
+            <Heading className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]">
               Our Process
-            </AHeading>
-            <Reveal from="bottom" delay={.25}>
-              <div className="w-16 h-[3px] bg-[#D4AF37] mx-auto mt-4 rounded"/>
-              <p className="text-gray-500 max-w-2xl mx-auto mt-4">A systematic approach to deliver exceptional results</p>
-            </Reveal>
+            </Heading>
+            <div className="w-16 h-[3px] bg-[#D4AF37] mx-auto mt-4 rounded"/>
+            <p className="text-gray-500 max-w-2xl mx-auto mt-4">A systematic approach to deliver exceptional results</p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6 relative">
-            {/* Connector line */}
             <div className="absolute top-[3.25rem] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-[#D4AF37]/20 via-[#F04A06]/20 to-[#D4AF37]/20 hidden md:block"/>
 
             {PROCESS_STEPS.map((item,i)=>{
               const Icon=item.icon;
               return (
-                <Reveal key={i} from="bottom" delay={i*.1}>
+                <div key={i}>
                   <GlowCard accent="#D4AF37" className="h-full">
                     <TiltCard>
                       <motion.div whileHover={{y:-10,boxShadow:"0 28px 60px rgba(212,175,55,0.14)"}}
                         className="relative z-10 bg-white p-6 rounded-2xl border border-gray-200 text-center shadow-sm hover:border-[#D4AF37] transition-all h-full">
-                        {/* Step number */}
-                        <Float duration={4+i*.5} delay={i*.4} yRange={8}>
+                        <Float duration={4+i*.5} delay={0} yRange={8}>
                           <div className="w-12 h-12 rounded-full bg-[#FFF4ED] flex items-center justify-center mx-auto mb-4 border border-[#D4AF37]/28 shadow-sm">
                             <span className="text-xl font-black text-[#F04A06]">{item.step}</span>
                           </div>
@@ -886,13 +825,12 @@ function ProcessSection() {
                         </motion.div>
                         <h3 className="text-lg font-black text-[#1A1A1A] mb-2">{item.title}</h3>
                         <p className="text-sm text-gray-500">{item.desc}</p>
-                        {/* Animated bottom accent */}
                         <motion.div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#F04A06] rounded-b-2xl"
                           initial={{scaleX:0}} whileHover={{scaleX:1}} transition={{duration:.35}}/>
                       </motion.div>
                     </TiltCard>
                   </GlowCard>
-                </Reveal>
+                </div>
               );
             })}
           </div>
@@ -915,82 +853,78 @@ function CTASection() {
     <section id="svc-cta" ref={ref} className="py-20 px-4 sm:px-6 bg-white relative overflow-hidden">
       <Spotlight color="rgba(230,107,38,0.03)" size={480}/>
       <div className="max-w-6xl mx-auto relative z-10">
-        <Reveal from="bottom">
-          <div className="relative overflow-hidden rounded-3xl shadow-2xl">
-            {/* BG */}
-            <motion.div className="absolute inset-0" style={{y:bgY}}>
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FFF4ED] via-[#FFF0E6] to-[#FFF4ED]"/>
-            </motion.div>
-            <div className="absolute inset-0 opacity-[.08]"
-              style={{backgroundImage:"radial-gradient(circle at 2px 2px,rgba(230,107,38,0.08) 1px,transparent 0)",backgroundSize:"40px 40px"}}/>
-            <ParticleCanvas count={14} color="rgba(230,107,38,0.5)"/>
-            <Spotlight color="rgba(212,175,55,0.06)" size={380}/>
+        <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+          <motion.div className="absolute inset-0" style={{y:bgY}}>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#FFF4ED] via-[#FFF0E6] to-[#FFF4ED]"/>
+          </motion.div>
+          <div className="absolute inset-0 opacity-[.08]"
+            style={{backgroundImage:"radial-gradient(circle at 2px 2px,rgba(230,107,38,0.08) 1px,transparent 0)",backgroundSize:"40px 40px"}}/>
+          <ParticleCanvas count={14} color="rgba(230,107,38,0.5)"/>
+          <Spotlight color="rgba(212,175,55,0.06)" size={380}/>
 
-            {/* Floating rings */}
-            {[80,140,210].map((s,i)=>(
-              <Float key={i} duration={6+i*2} yRange={12} delay={i}
-                className="absolute right-16 top-1/2 -translate-y-1/2 rounded-full border border-[#D4AF37]/12 pointer-events-none"
-                style={{width:s,height:s}}/>
-            ))}
+          {[80,140,210].map((s,i)=>(
+            <Float key={i} duration={6+i*2} yRange={12} delay={0}
+              className="absolute right-16 top-1/2 -translate-y-1/2 rounded-full border border-[#D4AF37]/12 pointer-events-none"
+              style={{width:s,height:s}}/>
+          ))}
 
-            <div className="relative z-10 border border-gray-200 rounded-3xl p-12 md:p-16 text-center">
-              <Reveal from="top">
-                <div className="inline-flex items-center gap-2 border border-[#D4AF37]/38 rounded-full px-5 py-2 mb-8 bg-[#D4AF37]/10 backdrop-blur-sm">
-                  <motion.div animate={{rotate:[0,20,-20,0]}} transition={{duration:2.8,repeat:Infinity}}>
-                    <Sparkles className="w-4 h-4 text-[#D4AF37]"/>
+          <div className="relative z-10 border border-gray-200 rounded-3xl p-12 md:p-16 text-center">
+            <div>
+              <div className="inline-flex items-center gap-2 border border-[#D4AF37]/38 rounded-full px-5 py-2 mb-8 bg-[#D4AF37]/10 backdrop-blur-sm">
+                <motion.div animate={{rotate:[0,20,-20,0]}} transition={{duration:2.8,repeat:Infinity}}>
+                  <Sparkles className="w-4 h-4 text-[#D4AF37]"/>
+                </motion.div>
+                <span className="text-sm text-[#F04A06] font-bold">Free Consultation Available</span>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]">
+                Ready to Transform Your Business?
+              </h2>
+            </div>
+
+            <div>
+              <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
+                Let's discuss how our services can help you achieve your goals. Get a free consultation today.
+              </p>
+            </div>
+
+            <div>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10">
+                <Link to="/Contact">
+                  <MagBtn className="group relative px-8 py-4 bg-[#F04A06] text-white rounded-xl font-black overflow-hidden shadow-xl shadow-[#F04A06]/20">
+                    <span className="relative z-10 flex items-center gap-2">
+                      Get Free Consultation
+                      <motion.span animate={{x:[0,4,0]}} transition={{duration:1.5,repeat:Infinity}}><ArrowRight className="w-5 h-5"/></motion.span>
+                    </span>
+                    <motion.div className="absolute inset-0 bg-[#C5531A] origin-left" initial={{scaleX:0}} whileHover={{scaleX:1}} transition={{duration:.4}}/>
+                  </MagBtn>
+                </Link>
+                <Link to="/portfolio">
+                  <motion.button whileHover={{scale:1.04,borderColor:"#F04A06",color:"#F04A06"}} whileTap={{scale:.96}}
+                    className="px-8 py-4 border-2 border-gray-200 bg-white text-[#1A1A1A] rounded-xl font-black hover:border-[#F04A06] hover:text-[#F04A06] transition-all flex items-center justify-center gap-2 shadow-sm">
+                    <Layers className="w-5 h-5"/>
+                    View Our Work
+                  </motion.button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <div className="flex flex-wrap justify-center gap-6">
+                {[{icon:Shield,text:"ISO Certified"},{icon:Award,text:"Award Winning"},{icon:Users,text:"Expert Team"}].map((b,i)=>(
+                  <motion.div key={i} whileHover={{scale:1.08,y:-3}} className="flex items-center gap-2 text-gray-500 cursor-default">
+                    <Float duration={4+i} delay={0} yRange={5}>
+                      <b.icon className="w-4 h-4 text-[#D4AF37]"/>
+                    </Float>
+                    <span className="text-sm font-medium">{b.text}</span>
                   </motion.div>
-                  <span className="text-sm text-[#F04A06] font-bold">Free Consultation Available</span>
-                </div>
-              </Reveal>
-
-              <Reveal from="bottom" delay={.1}>
-                <h2 className="text-4xl md:text-5xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#F04A06] to-[#C5531A]">
-                  Ready to Transform Your Business?
-                </h2>
-              </Reveal>
-
-              <Reveal from="bottom" delay={.2}>
-                <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
-                  Let's discuss how our services can help you achieve your goals. Get a free consultation today.
-                </p>
-              </Reveal>
-
-              <Reveal from="bottom" delay={.32}>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10">
-                  <Link to="/Contact">
-                    <MagBtn className="group relative px-8 py-4 bg-[#F04A06] text-white rounded-xl font-black overflow-hidden shadow-xl shadow-[#F04A06]/20">
-                      <span className="relative z-10 flex items-center gap-2">
-                        Get Free Consultation
-                        <motion.span animate={{x:[0,4,0]}} transition={{duration:1.5,repeat:Infinity}}><ArrowRight className="w-5 h-5"/></motion.span>
-                      </span>
-                      <motion.div className="absolute inset-0 bg-[#C5531A] origin-left" initial={{scaleX:0}} whileHover={{scaleX:1}} transition={{duration:.4}}/>
-                    </MagBtn>
-                  </Link>
-                  <Link to="/portfolio">
-                    <motion.button whileHover={{scale:1.04,borderColor:"#F04A06",color:"#F04A06"}} whileTap={{scale:.96}}
-                      className="px-8 py-4 border-2 border-gray-200 bg-white text-[#1A1A1A] rounded-xl font-black hover:border-[#F04A06] hover:text-[#F04A06] transition-all flex items-center justify-center gap-2 shadow-sm">
-                      <Layers className="w-5 h-5"/>
-                      View Our Work
-                    </motion.button>
-                  </Link>
-                </div>
-              </Reveal>
-
-              <Reveal from="bottom" delay={.44} className="mt-5">
-                <StaggerContainer className="flex flex-wrap justify-center gap-6" stagger={0.1} from="bottom">
-                  {[{icon:Shield,text:"ISO Certified"},{icon:Award,text:"Award Winning"},{icon:Users,text:"Expert Team"}].map((b,i)=>(
-                    <motion.div key={i} whileHover={{scale:1.08,y:-3}} className="flex items-center gap-2 text-gray-500 cursor-default">
-                      <Float duration={4+i} delay={i*.5} yRange={5}>
-                        <b.icon className="w-4 h-4 text-[#D4AF37]"/>
-                      </Float>
-                      <span className="text-sm font-medium">{b.text}</span>
-                    </motion.div>
-                  ))}
-                </StaggerContainer>
-              </Reveal>
+                ))}
+              </div>
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -1002,7 +936,6 @@ function CTASection() {
 function Services() {
   return (
     <div className="bg-white text-[#1A1A1A] min-h-screen overflow-x-hidden">
-     
       <ScrollProgressBar/>
       <SectionNavDots/>
       <Navbar/>

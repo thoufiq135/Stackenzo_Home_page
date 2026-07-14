@@ -378,17 +378,17 @@ function AHeading({ children, className = "", delay = 0 }) {
 ══════════════════════════════════════════════ */
 const contactInfo = [
   { icon: Mail,    title: "Email Us",       details: "hello@stackenzo.com",              link: "mailto:hello@stackenzo.com" },
-  { icon: Phone,   title: "Call Us",        details: "+91 9247577907",                 link: "tel:+919247577907" },
+  { icon: Phone,   title: "Call Us",        details: "+91 9247577906",                 link: "tel:+919247577906" },
   { icon: MapPin,  title: "Visit Us",       details: "Nellore, Andhra Pradesh, India",   link: "https://www.google.com/maps" },
   { icon: Clock,   title: "Working Hours",  details: "Mon - Sat: 9:00 AM - 6:00 PM",     link: "#" },
 ];
 
 const socialLinks = [
-  { icon: Linkedin,  name: "LinkedIn"  },
-  { icon: Twitter,   name: "Twitter"   },
+  { icon: Linkedin,  name: "LinkedIn"  ,href :"https://www.linkedin.com/company/stackenzo/"},
+  { icon: Twitter,   name: "Twitter"   ,href:"https://x.com/Stackenzo"},
   { icon: Instagram, name: "Instagram", href: "https://www.instagram.com/stackenzo" },
   { icon: Facebook,  name: "Facebook",  href: "https://www.facebook.com/stackenzo" },
-  { icon: Youtube,   name: "YouTube"   },
+  { icon: Youtube,   name: "YouTube"   , href:"https://www.youtube.com/results?search_query=stackenzo"},
 ];
 
 const stats = [

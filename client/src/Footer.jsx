@@ -31,7 +31,7 @@ function Footer() {
 
   const socialLinks = [
     { icon: Facebook, href: "https://facebook.com/stackenzo" },
-    { icon: Twitter, href: "https://twitter.com/stackenzo" },
+    { icon: Twitter, href: "https://x.com/Stackenzo" },
     { icon: Linkedin, href: "https://linkedin.com/company/stackenzo" },
     { icon: Instagram, href: "https://instagram.com/stackenzo" },
   ];
@@ -54,7 +54,7 @@ function Footer() {
                 <Mail size={16}/> hello@stackenzo.com
               </a>
               <a href="tel:+919247577907" className="flex gap-2 items-center">
-                <Phone size={16}/> +91 9247577907
+                <Phone size={16}/> +91 9247577906
               </a>
               <div className="flex gap-2 items-center">
                 <MapPin size={16}/> Nellore, Andhra Pradesh
