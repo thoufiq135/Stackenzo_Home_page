@@ -53,7 +53,7 @@ function Footer() {
               <a href="mailto:hello@stackenzo.com" className="flex gap-2 items-center">
                 <Mail size={16}/> hello@stackenzo.com
               </a>
-              <a href="tel:+919247577907" className="flex gap-2 items-center">
+              <a href="tel:+919247577906" className="flex gap-2 items-center">
                 <Phone size={16}/> +91 9247577906
               </a>
               <div className="flex gap-2 items-center">
@@ -123,7 +123,7 @@ function Footer() {
 
             <div className="space-y-3 text-sm">
               <div className="flex gap-2"><Mail size={16}/> hello@stackenzo.com</div>
-              <div className="flex gap-2"><Phone size={16}/> +91 9247577907</div>
+              <div className="flex gap-2"><Phone size={16}/> +91 9247577906</div>
               <div className="flex gap-2"><MapPin size={16}/> Nellore, AP</div>
             </div>
           </div>
