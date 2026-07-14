@@ -1750,7 +1750,7 @@ export default function Home() {
           <motion.a
             whileHover={{ scale: 1.1, boxShadow: "0 20px 40px rgba(240,74,6,0.3)" }}
             whileTap={{ scale: 0.9 }}
-            href="https://wa.me/919247577907"
+            href="https://wa.me/919247577906"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-14 h-14 bg-[#F04A06] text-white rounded-full shadow-2xl border border-[#F04A06] hover:bg-[#D94A06] transition-colors"
