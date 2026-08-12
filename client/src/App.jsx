@@ -2,6 +2,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
 import Home from "./Home";
 import RND from "./RND";
 import RNDProjectDetail from "./RNDProjectDetail";
@@ -124,6 +125,7 @@ function App() {
           />
         )}
       </AnimatePresence> */}
+      <Analytics />
     </>
   );
 }
